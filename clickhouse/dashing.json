@@ -1,0 +1,26 @@
+{
+  "allowJS": false,
+  "domains": "clickhouse.yandex",
+  "externalURL": "",
+  "icon32x32": "logo/logo.png",
+  "ignore": [],
+  "index": "html/clickhouse.yandex/docs/zh/index.html",
+  "logo": "html/clickhouse.yandex/docs/zh/images/logo.svg",
+  "name": "ClickHouse",
+  "package": "clickhouse",
+  "selectors": {
+    "h1": {
+      "matchpath": "data_types/.*\\.html",
+      "regexp": "¶",
+      "replacement": "",
+      "type": "Type"
+    },
+    "h2": {
+      "matchpath": "query_language/.*\\.html",
+      "regexp": "¶",
+      "replacement": "",
+      "type": "Query"
+    }
+  },
+  "url": "https://clickhouse.yandex/docs/zh/"
+}

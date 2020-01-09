@@ -1,0 +1,23 @@
+name: "ClickHouse"
+package: "clickhouse"
+index: "html/clickhouse.yandex/docs/zh/index.html"
+selectors:
+  h1:
+    type: "Type"
+    matchpath: "data_types/.*\\.html"
+    regexp: "¶"
+    replacement: ""
+  h2:
+    type: "Query"
+    matchpath: "query_language/.*\\.html"
+    regexp: "¶"
+    replacement: ""
+ignore: []
+icon32x32: "logo/logo.png"
+allowJS: false
+externalURL: ""
+
+# for Makefile
+url: "https://clickhouse.yandex/docs/zh/"
+domains: "clickhouse.yandex"
+logo: "html/clickhouse.yandex/docs/zh/images/logo.svg"
