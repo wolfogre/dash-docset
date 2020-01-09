@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Hardware sizing guidelines | InfluxData Documentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" Hardware sizing guidelines | InfluxData Documentation">
+    <meta name="twitter:description" content="">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" Hardware sizing guidelines | InfluxData Documentation" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Hardware sizing guidelines</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>This guide offers test general hardware recommendations for InfluxDB and addresses some frequently asked questions about hardware sizing. These recommendations are only for the <a href="../../concepts/storage_engine/index.html#the-new-influxdb-storage-engine-from-lsm-tree-to-b-tree-and-back-again-to-create-the-time-structured-merge-tree">Time Structured Merge</a> tree (<code>TSM</code>) storage engine.</p>
+
+<blockquote>
+<p><strong>Note</strong> Hardware guidelines for Time Series Index (TSI) are currently in testing.</p>
+</blockquote>
+
+<ul>
+<li><a href="index.html#single-node-or-cluster">Single node or Cluster?</a></li>
+<li><a href="index.html#general-hardware-guidelines-for-a-single-node">General hardware guidelines for a single node</a></li>
+<li><a href="index.html#general-hardware-guidelines-for-a-cluster">General hardware guidelines for a cluster</a></li>
+<li><a href="index.html#when-do-i-need-more-ram">When do I need more RAM?</a></li>
+<li><a href="index.html#what-kind-of-storage-do-i-need">What kind of storage do I need?</a></li>
+<li><a href="index.html#how-much-storage-do-i-need">How much storage do I need?</a></li>
+<li><a href="index.html#how-should-i-configure-my-hardware">How should I configure my hardware?</a></li>
+</ul>
+
+<h1 id="single-node-or-cluster">Single node or Cluster?</h1>
+
+<p>InfluxDB single node instances are fully open source.
+InfluxDB clustering requires our closed-source commercial product.
+Single node instances offer no redundancy. If the server is unavailable, writes and queries will fail immediately.
+Clustering offers high-availability and redundancy.
+Multiple copies of data are distributed across multiple servers, and the loss of any one server will not significantly impact the cluster.</p>
+
+<p>If your performance requirements fall into the <a href="index.html#general-hardware-guidelines-for-a-single-node">Moderate</a> or <a href="index.html#general-hardware-guidelines-for-a-single-node">Low load</a> ranges then you can likely use a single node instance of InfluxDB.
+If at least one of your performance requirements falls into the <a href="index.html#general-hardware-guidelines-for-a-single-node">Probably infeasible category</a>, then you will likely need to use a cluster to distribute the load among multiple servers.</p>
+
+<h1 id="general-hardware-guidelines-for-a-single-node">General hardware guidelines for a single node</h1>
+
+<p>We define the load that you&rsquo;ll be placing on InfluxDB by the number of fields written per second, the number of queries per second, and the number of unique <a href="../../concepts/glossary/index.html#series">series</a>. Based on your load, we make general CPU, RAM, and IOPS recommendations.</p>
+
+<p>InfluxDB should be run on locally attached SSDs. Any other storage configuration will have lower performance characteristics and may not be able to recover from even small interruptions in normal processing.</p>
+
+<table>
+<thead>
+<tr>
+<th>Load</th>
+<th>Field writes per second</th>
+<th>Moderate queries per second</th>
+<th>Unique series</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Low</strong></td>
+<td>&lt; 5 thousand</td>
+<td>&lt; 5</td>
+<td>&lt; 100 thousand</td>
+</tr>
+
+<tr>
+<td><strong>Moderate</strong></td>
+<td>&lt; 250 thousand</td>
+<td>&lt; 25</td>
+<td>&lt; 1 million</td>
+</tr>
+
+<tr>
+<td><strong>High</strong></td>
+<td>&gt; 250 thousand</td>
+<td>&gt; 25</td>
+<td>&gt; 1 million</td>
+</tr>
+
+<tr>
+<td><strong>Probably infeasible</strong></td>
+<td>&gt; 750 thousand</td>
+<td>&gt; 100</td>
+<td>&gt; 10 million</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p><strong>Note:</strong> Queries vary widely in their impact on the system.</p>
+
+<p>Simple queries:</p>
+
+<ul>
+<li>Have few if any functions and no regular expressions</li>
+<li>Are bounded in time to a few minutes, hours, or maybe a day</li>
+<li>Typically execute in a few milliseconds to a few dozen milliseconds</li>
+</ul>
+
+<p>Moderate queries:</p>
+
+<ul>
+<li>Have multiple functions and one or two regular expressions</li>
+<li>May also have complex <code>GROUP BY</code> clauses or sample a time range of multiple weeks</li>
+<li>Typically execute in a few hundred or a few thousand milliseconds</li>
+</ul>
+
+<p>Complex queries:</p>
+
+<ul>
+<li>Have multiple aggregation or transformation functions or multiple regular expressions</li>
+<li>May sample a very large time range of months or years</li>
+<li>Typically take multiple seconds to execute</li>
+</ul>
+</blockquote>
+
+<h3 id="low-load-recommendations">Low load recommendations</h3>
+
+<ul>
+<li>CPU: 2-4 cores</li>
+<li>RAM: 2-4 GB</li>
+<li>IOPS: 500</li>
+</ul>
+
+<h3 id="moderate-load-recommendations">Moderate load recommendations</h3>
+
+<ul>
+<li>CPU: 4-6 cores</li>
+<li>RAM: 8-32 GB</li>
+<li>IOPS: 500-1000</li>
+</ul>
+
+<h3 id="high-load-recommendations">High load recommendations</h3>
+
+<ul>
+<li>CPU: 8+ cores</li>
+<li>RAM: 32+ GB</li>
+<li>IOPS: 1000+</li>
+</ul>
+
+<h3 id="probably-infeasible-load">Probably infeasible load</h3>
+
+<p>Performance at this scale is a significant challenge and may not be achievable. Please contact us at <a href="mailto:sales@influxdb.com">sales@influxdb.com</a> for assistance with tuning your systems.</p>
+
+<h1 id="general-hardware-guidelines-for-a-cluster">General hardware guidelines for a cluster</h1>
+
+<h2 id="meta-nodes">Meta Nodes</h2>
+
+<p>A cluster must have at least three independent meta nodes to survive the loss of a server. A cluster with <code>2n + 1</code> meta nodes can tolerate the loss of <code>n</code> meta nodes. Clusters should have an odd number of meta nodes. There is no reason to have an even number of meta nodes, and it can lead to issues in certain configurations.</p>
+
+<p>Meta nodes do not need very much computing power. Regardless of the cluster load, we recommend the following for the meta nodes:</p>
+
+<h3 id="universal-recommendation">Universal recommendation</h3>
+
+<ul>
+<li>CPU: 1-2 cores</li>
+<li>RAM: 512 MB - 1 GB</li>
+<li>IOPS: 50</li>
+</ul>
+
+<h2 id="data-nodes">Data Nodes</h2>
+
+<p>A cluster with only one data node is valid but has no data redundancy. The redundancy is set by the <a href="../../concepts/glossary/index.html#replication-factor">replication factor</a> on the retention policy to which the data is written. A cluster can lose <code>n - 1</code> data nodes and still return complete query results, where <code>n</code> is the replication factor. For optimal data distribution within the cluster, InfluxData recommends using an even number of data nodes.</p>
+
+<p>The hardware recommendations for cluster data nodes are similar to the standalone instance recommendations. Data nodes should always have at least 2 CPU cores, as they must handle regular read and write traffic, as well as intra-cluster read and write traffic. Due to the cluster communication overhead, data nodes in a cluster handle less throughput than a standalone instance on the same hardware.</p>
+
+<table>
+<thead>
+<tr>
+<th>Load</th>
+<th>Field writes per second per node</th>
+<th>Moderate queries per second per node</th>
+<th>Unique series per node</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Low</strong></td>
+<td>&lt; 5 thousand</td>
+<td>&lt; 5</td>
+<td>&lt; 100 thousand</td>
+</tr>
+
+<tr>
+<td><strong>Moderate</strong></td>
+<td>&lt; 100 thousand</td>
+<td>&lt; 25</td>
+<td>&lt; 1 million</td>
+</tr>
+
+<tr>
+<td><strong>High</strong></td>
+<td>&gt; 100 thousand</td>
+<td>&gt; 25</td>
+<td>&gt; 1 million</td>
+</tr>
+
+<tr>
+<td><strong>Probably infeasible</strong></td>
+<td>&gt; 500 thousand</td>
+<td>&gt; 100</td>
+<td>&gt; 10 million</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p><strong>Note:</strong> Queries vary widely in their impact on the system.</p>
+
+<p>Simple queries:</p>
+
+<ul>
+<li>Have few if any functions and no regular expressions</li>
+<li>Are bounded in time to a few minutes, hours, or maybe a day</li>
+<li>Typically execute in a few milliseconds to a few dozen milliseconds</li>
+</ul>
+
+<p>Moderate queries:</p>
+
+<ul>
+<li>Have multiple functions and one or two regular expressions</li>
+<li>May also have complex <code>GROUP BY</code> clauses or sample a time range of multiple weeks</li>
+<li>Typically execute in a few hundred or a few thousand milliseconds</li>
+</ul>
+
+<p>Complex queries:</p>
+
+<ul>
+<li>Have multiple aggregation or transformation functions or multiple regular expressions</li>
+<li>May sample a very large time range of months or years</li>
+<li>Typically take multiple seconds to execute</li>
+</ul>
+</blockquote>
+
+<h3 id="low-load-recommendations-1">Low load recommendations</h3>
+
+<ul>
+<li>CPU: 2 cores</li>
+<li>RAM: 2-4 GB</li>
+<li>IOPS: 1000</li>
+</ul>
+
+<h3 id="moderate-load-recommendations-1">Moderate load recommendations</h3>
+
+<ul>
+<li>CPU: 4-6</li>
+<li>RAM: 8-32GB</li>
+<li>IOPS: 1000+</li>
+</ul>
+
+<h3 id="high-load-recommendations-1">High load recommendations</h3>
+
+<ul>
+<li>CPU: 8+</li>
+<li>RAM: 32+ GB</li>
+<li>IOPS: 1000+</li>
+</ul>
+
+<h2 id="enterprise-web-node">Enterprise Web Node</h2>
+
+<p>The Enterprise Web server is primarily an HTTP server with similar load requirements. For most applications it does not need to be very robust. The cluster will function with only one Web server, but for redundancy multiple Web servers can be connected to a single back-end Postgres database.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Production clusters should not use the SQLite database as it does not allow for redundant Web servers, nor can it handle high loads as gracefully as Postgres.</p>
+</blockquote>
+
+<h3 id="universal-recommendation-1">Universal recommendation</h3>
+
+<ul>
+<li>CPU: 1-4 cores</li>
+<li>RAM: 1-2 GB</li>
+<li>IOPS: 50</li>
+</ul>
+
+<h1 id="when-do-i-need-more-ram">When do I need more RAM?</h1>
+
+<p>In general, having more RAM helps queries return faster. There is no known downside to adding more RAM.</p>
+
+<p>The major component that affects your RAM needs is <a href="../../concepts/glossary/index.html#series-cardinality">series cardinality</a>.
+A series cardinality around or above 10 million can cause OOM failures even with large amounts of RAM. If this is the case, you can usually address the problem by redesigning your <a href="../../concepts/glossary/index.html#schema">schema</a>.</p>
+
+<p>The increase in RAM needs relative to series cardinality is exponential where the exponent is between one and two:</p>
+
+<p><img src="../../../../img/influxdb/series-cardinality.png" alt="Series Cardinality" /></p>
+
+<h1 id="what-kind-of-storage-do-i-need">What kind of storage do I need?</h1>
+
+<p>InfluxDB is designed to run on SSDs. InfluxData does not test on HDDs or networked storage devices, and we do not recommend them for production.  Performance is an order of magnitude lower on spinning disk drives and the system may break down under even moderate load. For best results InfluxDB servers must have at least 1000 IOPS on the storage system.</p>
+
+<p>Please note that cluster data nodes have very high IOPS requirements when the cluster is recovering from downtime. It is recommended that the storage system have at least 2000 IOPS to allow for rapid recovery. Below 1000 IOPS, the cluster may not be able to recover from even a brief outage.</p>
+
+<h1 id="how-much-storage-do-i-need">How much storage do I need?</h1>
+
+<p>Database names, <a href="../../concepts/glossary/index.html#measurement">measurements</a>, <a href="../../concepts/glossary/index.html#tag-key">tag keys</a>, <a href="../../concepts/glossary/index.html#field-key">field keys</a>, and <a href="../../concepts/glossary/index.html#tag-value">tag values</a> are stored only once and always as strings. Only <a href="../../concepts/glossary/index.html#field-value">field values</a> and <a href="../../concepts/glossary/index.html#timestamp">timestamps</a> are stored per-point.</p>
+
+<p>Non-string values require approximately three bytes. String values require variable space as determined by string compression.</p>
+
+<h1 id="how-should-i-configure-my-hardware">How should I configure my hardware?</h1>
+
+<p>When running InfluxDB in a production environment the <code>wal</code> directory and the <code>data</code> directory should be on separate storage devices. This optimization significantly reduces disk contention when the system is under heavy write load. This is an important consideration if the write load is highly variable. If the write load does not vary by more than 15% the optimization is probably unneeded.</p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/guides/hardware_sizing.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/guides/hardware_sizing/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

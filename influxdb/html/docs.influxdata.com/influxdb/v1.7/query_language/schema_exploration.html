@@ -1,0 +1,2075 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Schema exploration using InfluxQL | InfluxData Documentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" Schema exploration using InfluxQL | InfluxData Documentation">
+    <meta name="twitter:description" content="">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" Schema exploration using InfluxQL | InfluxData Documentation" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="schema_exploration.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Schema exploration using InfluxQL</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>InfluxQL is an SQL-like query language for interacting with data in InfluxDB.
+The following sections cover useful query syntax for exploring your <a href="../concepts/glossary/index.html#schema">schema</a>.</p>
+
+<table style="width:100%">
+  <tr>
+    <td><a href="schema_exploration.html#show-databases">SHOW DATABASES</a></td>
+    <td><a href="schema_exploration.html#show-retention-policies">SHOW RETENTION POLICIES</a></td>
+    <td><a href="schema_exploration.html#show-series">SHOW SERIES</a></td>
+  </tr>
+  <tr>
+    <td><a href="schema_exploration.html#show-measurements">SHOW MEASUREMENTS</a></td>
+    <td><a href="schema_exploration.html#show-tag-keys">SHOW TAG KEYS</a></td>
+    <td><a href="schema_exploration.html#show-tag-values">SHOW TAG VALUES</a></td>
+  </tr>
+  <tr>
+    <td><a href="schema_exploration.html#show-field-keys">SHOW FIELD KEYS</a></td>
+    <td><a href="schema_exploration.html#filter-meta-queries-by-time">Filter meta queries by time</a></td>
+    <td></td>
+  </tr>
+</table>
+
+<p><strong>Sample data</strong></p>
+
+<p>The data used in this document are available for download on the <a href="data_download/index.html">Sample Data</a> page.</p>
+
+<p>Before proceeding, login to the Influx CLI.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ influx -precision rfc3339
+Connected to http://localhost:8086 version <span class="m">1</span>.4.x
+InfluxDB shell <span class="m">1</span>.4.x
+&gt;</code></pre></div>
+<h2 id="show-databases"><code>SHOW DATABASES</code></h2>
+
+<p>Returns a list of all <a href="../concepts/glossary/index.html#database">databases</a> on your instance.</p>
+
+<h3 id="syntax">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">DATABASES</span></code></pre></div>
+<h3 id="examples">Examples</h3>
+
+<h4 id="run-a-show-databases-query">Run a <code>SHOW DATABASES</code> query</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">DATABASES</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">databases</span>
+<span class="n">name</span>
+<span class="c1">----
+</span><span class="c1"></span><span class="n">NOAA_water_database</span>
+<span class="n">_internal</span></code></pre></div>
+<p>The query returns database names in a tabular format.
+This InfluxDB instance has two databases: <code>NOAA_water_database</code> and <code>_internal</code>.</p>
+
+<h2 id="show-retention-policies"><code>SHOW RETENTION POLICIES</code></h2>
+
+<p>Returns a list of <a href="../concepts/glossary/index.html#retention-policy-rp">retention policies</a> for the specified <a href="../concepts/glossary/index.html#database">database</a>.</p>
+
+<h3 id="syntax-1">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">RETENTION</span> <span class="n">POLICIES</span> <span class="p">[</span><span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span><span class="p">]</span></code></pre></div>
+<h3 id="description-of-syntax">Description of syntax</h3>
+
+<p><code>ON &lt;database_name&gt;</code> is optional.
+If the query does not include <code>ON &lt;database_name&gt;</code>, you must specify the
+database with <code>USE &lt;database_name&gt;</code> in the <a href="../tools/shell/index.html">CLI</a> or with the <code>db</code> query
+string parameter in the <a href="../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<h3 id="examples-1">Examples</h3>
+
+<h4 id="run-a-show-retention-policies-query-with-the-on-clause">Run a <code>SHOW RETENTION POLICIES</code> query with the <code>ON</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">RETENTION</span> <span class="n">POLICIES</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span>
+
+<span class="n">name</span>      <span class="n">duration</span>   <span class="n">shardGroupDuration</span>   <span class="n">replicaN</span>   <span class="k">default</span>
+<span class="c1">----      --------   ------------------   --------   -------
+</span><span class="c1"></span><span class="n">autogen</span>   <span class="mi">0</span><span class="n">s</span>         <span class="mi">168</span><span class="n">h0m0s</span>             <span class="mi">1</span>          <span class="k">true</span></code></pre></div>
+<p>The query returns the list of retention policies in the <code>NOAA_water_database</code>
+database in tabular format.
+The database has one retention policy called <code>autogen</code>.
+The <code>autogen</code> retention policy has an infinite <a href="../concepts/glossary/index.html#duration">duration</a>,
+a seven-day <a href="../concepts/glossary/index.html#shard-group">shard group duration</a>,
+a <a href="../concepts/glossary/index.html#replication-factor">replication factor</a>
+of one, and it is the <code>DEFAULT</code> retention policy for the database.</p>
+
+<h4 id="run-a-show-retention-policies-query-without-the-on-clause">Run a <code>SHOW RETENTION POLICIES</code> query without the <code>ON</code> clause</h4>
+
+<p>
+<div class="tabs-container">
+  
+  
+<div class="tabs">
+  <p><a href="schema_exploration.html#">CLI</a>
+  <a href="schema_exploration.html#">InfluxDB API</a></p>
+
+</div>
+
+
+</div>
+
+
+<div class="tab-content-container">
+  
+
+
+<div class="tab-content">
+  <p>Specify the database with <code>USE &lt;database_name&gt;</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">NOAA_water_database</span>
+<span class="k">Using</span> <span class="k">database</span> <span class="n">NOAA_water_database</span>
+
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">RETENTION</span> <span class="n">POLICIES</span>
+
+<span class="n">name</span>      <span class="n">duration</span>   <span class="n">shardGroupDuration</span>   <span class="n">replicaN</span>   <span class="k">default</span>
+<span class="c1">----      --------   ------------------   --------   -------
+</span><span class="c1"></span><span class="n">autogen</span>   <span class="mi">0</span><span class="n">s</span>         <span class="mi">168</span><span class="n">h0m0s</span>             <span class="mi">1</span>          <span class="k">true</span></code></pre></div>
+</div>
+
+
+
+<div class="tab-content">
+  <p>Specify the database with the <code>db</code> query string parameter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~# curl -G <span class="s2">&#34;http://localhost:8086/query?db=NOAA_water_database&amp;pretty=true&#34;</span> --data-urlencode <span class="s2">&#34;q=SHOW RETENTION POLICIES&#34;</span>
+
+<span class="o">{</span>
+    <span class="s2">&#34;results&#34;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&#34;statement_id&#34;</span>: <span class="m">0</span>,
+            <span class="s2">&#34;series&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;name&#34;</span>,
+                        <span class="s2">&#34;duration&#34;</span>,
+                        <span class="s2">&#34;shardGroupDuration&#34;</span>,
+                        <span class="s2">&#34;replicaN&#34;</span>,
+                        <span class="s2">&#34;default&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;autogen&#34;</span>,
+                            <span class="s2">&#34;0s&#34;</span>,
+                            <span class="s2">&#34;168h0m0s&#34;</span>,
+                            <span class="m">1</span>,
+                            <span class="nb">true</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span></code></pre></div>
+</div>
+
+
+</div>
+</p>
+
+<h2 id="show-series"><code>SHOW SERIES</code></h2>
+
+<p>Returns a list of <a href="../concepts/glossary/index.html#series">series</a> for
+the specified <a href="../concepts/glossary/index.html#database">database</a>.</p>
+
+<h3 id="syntax-2">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">SERIES</span> <span class="p">[</span><span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="n">FROM_clause</span><span class="p">]</span> <span class="p">[</span><span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">tag_key</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="k">operator</span><span class="o">&gt;</span> <span class="p">[</span> <span class="s1">&#39;&lt;tag_value&gt;&#39;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">regular_expression</span><span class="o">&gt;</span><span class="p">]]</span> <span class="p">[</span><span class="n">LIMIT_clause</span><span class="p">]</span> <span class="p">[</span><span class="n">OFFSET_clause</span><span class="p">]</span></code></pre></div>
+<h3 id="description-of-syntax-1">Description of syntax</h3>
+
+<p><code>ON &lt;database_name&gt;</code> is optional.
+If the query does not include <code>ON &lt;database_name&gt;</code>, you must specify the
+database with <code>USE &lt;database_name&gt;</code> in the <a href="../tools/shell/index.html">CLI</a> or with the <code>db</code> query
+string parameter in the <a href="../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<p>The <code>FROM</code>, <code>WHERE</code>, <code>LIMIT</code>, and <code>OFFSET</code> clauses are optional.
+The <code>WHERE</code> clause supports tag comparisons; field comparisons are not
+valid for the <code>SHOW SERIES</code> query.</p>
+
+<p>Supported operators in the <code>WHERE</code> clause:
+<code>=</code>&emsp;&nbsp;&thinsp;equal to
+<code>&lt;&gt;</code>&emsp;not equal to
+<code>!=</code>&emsp;not equal to
+<code>=~</code>&emsp;matches against
+<code>!~</code>&emsp;doesn&rsquo;t match against</p>
+
+<p>See the Data Exploration page for documentation on the
+<a href="data_exploration/index.html#the-basic-select-statement"><code>FROM</code> clause</a>,
+<a href="data_exploration/index.html#the-limit-clause"><code>LIMIT</code> clause</a>,
+<a href="data_exploration/index.html#the-offset-clause"><code>OFFSET</code> clause</a>,
+and on <a href="data_exploration/index.html#regular-expressions">Regular Expressions in Queries</a>.</p>
+
+<h3 id="examples-2">Examples</h3>
+
+<h4 id="run-a-show-series-query-with-the-on-clause">Run a <code>SHOW SERIES</code> query with the <code>ON</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">//</span> <span class="k">Returns</span> <span class="n">series</span> <span class="k">for</span> <span class="k">all</span> <span class="n">shards</span> <span class="k">in</span> <span class="n">the</span> <span class="k">database</span>
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">SERIES</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span>
+
+<span class="k">key</span>
+<span class="c1">---
+</span><span class="c1"></span><span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span></code></pre></div>
+<p>The query&rsquo;s output is similar to the <a href="../concepts/glossary/index.html#influxdb-line-protocol">line protocol</a> format.
+Everything before the first comma is the <a href="../concepts/glossary/index.html#measurement">measurement</a> name.
+Everything after the first comma is either a <a href="../concepts/glossary/index.html#tag-key">tag key</a> or a <a href="../concepts/glossary/index.html#tag-value">tag value</a>.
+The <code>NOAA_water_database</code> has five different measurements and 14 different series.</p>
+
+<h4 id="run-a-show-series-query-without-the-on-clause">Run a <code>SHOW SERIES</code> query without the <code>ON</code> clause</h4>
+
+<p>
+<div class="tabs-container">
+  
+  
+<div class="tabs">
+  <p><a href="schema_exploration.html#">CLI</a>
+  <a href="schema_exploration.html#">InfluxDB API</a></p>
+
+</div>
+
+
+</div>
+
+
+<div class="tab-content-container">
+  
+
+
+<div class="tab-content">
+  <p>Specify the database with <code>USE &lt;database_name&gt;</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">NOAA_water_database</span>
+<span class="k">Using</span> <span class="k">database</span> <span class="n">NOAA_water_database</span>
+
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">SERIES</span>
+
+<span class="k">key</span>
+<span class="c1">---
+</span><span class="c1"></span><span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span></code></pre></div>
+</div>
+
+
+
+<div class="tab-content">
+  <p>Specify the database with the <code>db</code> query string parameter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~# curl -G <span class="s2">&#34;http://localhost:8086/query?db=NOAA_water_database&amp;pretty=true&#34;</span> --data-urlencode <span class="s2">&#34;q=SHOW SERIES&#34;</span>
+
+<span class="o">{</span>
+    <span class="s2">&#34;results&#34;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&#34;statement_id&#34;</span>: <span class="m">0</span>,
+            <span class="s2">&#34;series&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;key&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;average_temperature,location=coyote_creek&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;average_temperature,location=santa_monica&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_feet,location=coyote_creek&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_feet,location=santa_monica&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_pH,location=coyote_creek&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_pH,location=santa_monica&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_quality,location=coyote_creek,randtag=1&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_quality,location=coyote_creek,randtag=2&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_quality,location=coyote_creek,randtag=3&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_quality,location=santa_monica,randtag=1&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_quality,location=santa_monica,randtag=2&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_quality,location=santa_monica,randtag=3&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_temperature,location=coyote_creek&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;h2o_temperature,location=santa_monica&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span></code></pre></div>
+</div>
+
+
+</div>
+</p>
+
+<h4 id="run-a-show-series-query-with-several-clauses">Run a <code>SHOW SERIES</code> query with several clauses</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">SERIES</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_quality&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;location&#34;</span> <span class="o">=</span> <span class="s1">&#39;coyote_creek&#39;</span> <span class="k">LIMIT</span> <span class="mi">2</span>
+
+<span class="k">key</span>
+<span class="c1">---
+</span><span class="c1"></span><span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span></code></pre></div>
+<p>The query returns all series in the <code>NOAA_water_database</code> database that are
+associated with the <code>h2o_quality</code> measurement and the tag <code>location = coyote_creek</code>.
+The <code>LIMIT</code> clause limits the number of series returned to two.</p>
+
+<h4 id="run-a-show-series-query-limited-by-time">Run a <code>SHOW SERIES</code> query limited by time</h4>
+
+<p>Limit series returned within a specified shard group duration.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">//</span> <span class="k">Returns</span> <span class="k">all</span> <span class="n">series</span> <span class="k">in</span> <span class="n">the</span> <span class="k">current</span> <span class="n">shard</span><span class="p">.</span>
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">SERIES</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span> <span class="k">WHERE</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="n">m</span>
+
+<span class="k">key</span>
+<span class="c1">---
+</span><span class="c1"></span><span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span></code></pre></div>
+<p>The query above returns all series in the <code>NOAA_water_database</code> database in the current shard group. The <code>WHERE</code> clause limits results to series in the shard group that contain a timestamp in the last minute. Note, if a shard group duration is 7 days, results returned may be up to 7 days old.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">//</span> <span class="k">Returns</span> <span class="k">all</span> <span class="n">series</span> <span class="k">in</span> <span class="n">shard</span> <span class="n">groups</span> <span class="n">that</span> <span class="n">contain</span> <span class="n">a</span> <span class="k">timestamp</span> <span class="k">in</span> <span class="n">the</span> <span class="k">last</span> <span class="mi">28</span> <span class="n">days</span><span class="p">.</span>
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">SERIES</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span> <span class="k">WHERE</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="mi">28</span><span class="n">d</span>
+
+<span class="k">key</span>
+<span class="c1">---
+</span><span class="c1"></span><span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">average_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_feet</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_pH</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">h2o_quality</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span><span class="p">,</span><span class="n">randtag</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">coyote_creek</span>
+<span class="n">h2o_temperature</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="n">santa_monica</span></code></pre></div>
+<p>Note, if the specified shard group duration is 7 days, the query above returns series for the last 3 or 4 shards.</p>
+
+<h2 id="show-measurements"><code>SHOW MEASUREMENTS</code></h2>
+
+<p>Returns a list of <a href="../concepts/glossary/index.html#measurement">measurements</a>
+for the specified <a href="../concepts/glossary/index.html#database">database</a>.</p>
+
+<h3 id="syntax-3">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">MEASUREMENTS</span> <span class="p">[</span><span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="k">WITH</span> <span class="n">MEASUREMENT</span> <span class="o">&lt;</span><span class="n">regular_expression</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">tag_key</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="k">operator</span><span class="o">&gt;</span> <span class="p">[</span><span class="s1">&#39;&lt;tag_value&gt;&#39;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">regular_expression</span><span class="o">&gt;</span><span class="p">]]</span> <span class="p">[</span><span class="n">LIMIT_clause</span><span class="p">]</span> <span class="p">[</span><span class="n">OFFSET_clause</span><span class="p">]</span></code></pre></div>
+<h3 id="description-of-syntax-2">Description of Syntax</h3>
+
+<p><code>ON &lt;database_name&gt;</code> is optional.
+If the query does not include <code>ON &lt;database_name&gt;</code>, you must specify the
+database with <code>USE &lt;database_name&gt;</code> in the <a href="../tools/shell/index.html">CLI</a> or with the <code>db</code> query
+string parameter in the <a href="../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<p>The <code>WITH</code>, <code>WHERE</code>, <code>LIMIT</code> and <code>OFFSET</code> clauses are optional.
+The <code>WHERE</code> clause supports tag comparisons; field comparisons are not valid for the <code>SHOW MEASUREMENTS</code> query.</p>
+
+<p>Supported operators in the <code>WHERE</code> clause:
+<code>=</code>&emsp;&nbsp;&thinsp;equal to
+<code>&lt;&gt;</code>&emsp;not equal to
+<code>!=</code>&emsp;not equal to
+<code>=~</code>&emsp;matches against
+<code>!~</code>&emsp;doesn&rsquo;t match against</p>
+
+<p>See the Data Exploration page for documentation on the
+<a href="data_exploration/index.html#the-limit-clause"><code>LIMIT</code> clause</a>,
+<a href="data_exploration/index.html#the-offset-clause"><code>OFFSET</code> clause</a>,
+and on <a href="data_exploration/index.html#regular-expressions">Regular expressions in queries</a>.</p>
+
+<h3 id="examples-3">Examples</h3>
+
+<h4 id="run-a-show-measurements-query-with-the-on-clause">Run a <code>SHOW MEASUREMENTS</code> query with the <code>ON</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">MEASUREMENTS</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">measurements</span>
+<span class="n">name</span>
+<span class="c1">----
+</span><span class="c1"></span><span class="n">average_temperature</span>
+<span class="n">h2o_feet</span>
+<span class="n">h2o_pH</span>
+<span class="n">h2o_quality</span>
+<span class="n">h2o_temperature</span></code></pre></div>
+<p>The query returns the list of measurements in the <code>NOAA_water_database</code>
+database.
+The database has five measurements: <code>average_temperature</code>, <code>h2o_feet</code>,
+<code>h2o_pH</code>, <code>h2o_quality</code>, and <code>h2o_temperature</code>.</p>
+
+<h4 id="run-a-show-measurements-query-without-the-on-clause">Run a <code>SHOW MEASUREMENTS</code> query without the <code>ON</code> clause</h4>
+
+<p>
+<div class="tabs-container">
+  
+  
+<div class="tabs">
+  <p><a href="schema_exploration.html#">CLI</a>
+  <a href="schema_exploration.html#">InfluxDB API</a></p>
+
+</div>
+
+
+</div>
+
+
+<div class="tab-content-container">
+  
+
+
+<div class="tab-content">
+  <p>Specify the database with <code>USE &lt;database_name&gt;</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">NOAA_water_database</span>
+<span class="k">Using</span> <span class="k">database</span> <span class="n">NOAA_water_database</span>
+
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">MEASUREMENTS</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">measurements</span>
+<span class="n">name</span>
+<span class="c1">----
+</span><span class="c1"></span><span class="n">average_temperature</span>
+<span class="n">h2o_feet</span>
+<span class="n">h2o_pH</span>
+<span class="n">h2o_quality</span>
+<span class="n">h2o_temperature</span></code></pre></div>
+</div>
+
+
+
+<div class="tab-content">
+  <p>Specify the database with the <code>db</code> query string parameter:</p>
+
+<pre><code>~# curl -G &quot;http://localhost:8086/query?db=NOAA_water_database&amp;pretty=true&quot; --data-urlencode &quot;q=SHOW MEASUREMENTS&quot;
+
+{
+  {
+      &quot;results&quot;: [
+          {
+              &quot;statement_id&quot;: 0,
+              &quot;series&quot;: [
+                  {
+                      &quot;name&quot;: &quot;measurements&quot;,
+                      &quot;columns&quot;: [
+                          &quot;name&quot;
+                      ],
+                      &quot;values&quot;: [
+                          [
+                              &quot;average_temperature&quot;
+                          ],
+                          [
+                              &quot;h2o_feet&quot;
+                          ],
+                          [
+                              &quot;h2o_pH&quot;
+                          ],
+                          [
+                              &quot;h2o_quality&quot;
+                          ],
+                          [
+                              &quot;h2o_temperature&quot;
+                          ]
+                      ]
+                  }
+              ]
+          }
+      ]
+  }
+</code></pre>
+
+</div>
+
+
+</div>
+</p>
+
+<h4 id="run-a-show-measurements-query-with-several-clauses-i">Run a <code>SHOW MEASUREMENTS</code> query with several clauses (i)</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">MEASUREMENTS</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span> <span class="k">WITH</span> <span class="n">MEASUREMENT</span> <span class="o">=~</span> <span class="o">/</span><span class="n">h2o</span><span class="p">.</span><span class="o">*/</span> <span class="k">LIMIT</span> <span class="mi">2</span> <span class="k">OFFSET</span> <span class="mi">1</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">measurements</span>
+<span class="n">name</span>
+<span class="c1">----
+</span><span class="c1"></span><span class="n">h2o_pH</span>
+<span class="n">h2o_quality</span></code></pre></div>
+<p>The query returns the measurements in the <code>NOAA_water_database</code> database that
+start with <code>h2o</code>.
+The <code>LIMIT</code> and <code>OFFSET</code> clauses limit the number of measurement names returned to
+two and offset the results by one, skipping the <code>h2o_feet</code> measurement.</p>
+
+<h4 id="run-a-show-measurements-query-with-several-clauses-ii">Run a <code>SHOW MEASUREMENTS</code> query with several clauses (ii)</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">MEASUREMENTS</span> <span class="k">ON</span> <span class="n">NOAA_water_database</span> <span class="k">WITH</span> <span class="n">MEASUREMENT</span> <span class="o">=~</span> <span class="o">/</span><span class="n">h2o</span><span class="p">.</span><span class="o">*/</span> <span class="k">WHERE</span> <span class="s2">&#34;randtag&#34;</span>  <span class="o">=~</span> <span class="o">/</span><span class="err">\</span><span class="n">d</span><span class="o">/</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">measurements</span>
+<span class="n">name</span>
+<span class="c1">----
+</span><span class="c1"></span><span class="n">h2o_quality</span></code></pre></div>
+<p>The query returns all measurements in the <code>NOAA_water_database</code> that start
+with <code>h2o</code> and have values for the tag key <code>randtag</code> that include an integer.</p>
+
+<h2 id="show-tag-keys"><code>SHOW TAG KEYS</code></h2>
+
+<p>Returns a list of <a href="../concepts/glossary/index.html#tag-key">tag keys</a>
+associated with the specified <a href="../concepts/glossary/index.html#database">database</a>.</p>
+
+<h3 id="syntax-4">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">TAG</span> <span class="n">KEYS</span> <span class="p">[</span><span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="n">FROM_clause</span><span class="p">]</span> <span class="p">[</span><span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">tag_key</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="k">operator</span><span class="o">&gt;</span> <span class="p">[</span><span class="s1">&#39;&lt;tag_value&gt;&#39;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">regular_expression</span><span class="o">&gt;</span><span class="p">]]</span> <span class="p">[</span><span class="n">LIMIT_clause</span><span class="p">]</span> <span class="p">[</span><span class="n">OFFSET_clause</span><span class="p">]</span></code></pre></div>
+<h3 id="description-of-syntax-3">Description of syntax</h3>
+
+<p><code>ON &lt;database_name&gt;</code> is optional.
+If the query does not include <code>ON &lt;database_name&gt;</code>, you must specify the
+database with <code>USE &lt;database_name&gt;</code> in the <a href="../tools/shell/index.html">CLI</a> or with the <code>db</code> query
+string parameter in the <a href="../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<p>The <code>FROM</code> clause and the <code>WHERE</code> clause are optional.
+The <code>WHERE</code> clause supports tag comparisons; field comparisons are not
+valid for the <code>SHOW TAG KEYS</code> query.</p>
+
+<p>Supported operators in the <code>WHERE</code> clause:
+<code>=</code>&emsp;&nbsp;&thinsp;equal to
+<code>&lt;&gt;</code>&emsp;not equal to
+<code>!=</code>&emsp;not equal to
+<code>=~</code>&emsp;matches against
+<code>!~</code>&emsp;doesn&rsquo;t match against</p>
+
+<p>See the Data Exploration page for documentation on the
+<a href="data_exploration/index.html#the-basic-select-statement"><code>FROM</code> clause</a>,
+<a href="data_exploration/index.html#the-limit-clause"><code>LIMIT</code> clause</a>,
+<a href="data_exploration/index.html#the-offset-clause"><code>OFFSET</code> clause</a>,
+and on <a href="data_exploration/index.html#regular-expressions">Regular Expressions in Queries</a>.</p>
+
+<h3 id="examples-4">Examples</h3>
+
+<h4 id="run-a-show-tag-keys-query-with-the-on-clause">Run a <code>SHOW TAG KEYS</code> query with the <code>ON</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">TAG</span> <span class="n">KEYS</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">average_temperature</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_feet</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_pH</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+<span class="n">randtag</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_temperature</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span></code></pre></div>
+<p>The query returns the list of tag keys in the <code>NOAA_water_database</code> database.
+The output groups tag keys by measurement name;
+it shows that every measurement has the <code>location</code> tag key and that the
+<code>h2o_quality</code> measurement has an additional <code>randtag</code> tag key.</p>
+
+<h4 id="run-a-show-tag-keys-query-without-the-on-clause">Run a <code>SHOW TAG KEYS</code> query without the <code>ON</code> clause</h4>
+
+
+<div class="tabs-container">
+  
+
+<div class="tabs">
+  <p><a href="schema_exploration.html#">CLI</a>
+<a href="schema_exploration.html#">InfluxDB API</a></p>
+
+</div>
+
+
+<div class="tab-content-container">
+  
+
+
+<div class="tab-content">
+  <p>Specify the database with <code>USE &lt;database_name&gt;</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">NOAA_water_database</span>
+<span class="k">Using</span> <span class="k">database</span> <span class="n">NOAA_water_database</span>
+
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">TAG</span> <span class="n">KEYS</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">average_temperature</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_feet</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_pH</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span>
+<span class="n">randtag</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_temperature</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="k">location</span></code></pre></div>
+</div>
+
+
+
+<div class="tab-content">
+  <p>Specify the database with the <code>db</code> query string parameter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">~#</span> <span class="n">curl</span> <span class="o">-</span><span class="k">G</span> <span class="s2">&#34;http://localhost:8086/query?db=NOAA_water_database&amp;pretty=true&#34;</span> <span class="c1">--data-urlencode &#34;q=SHOW TAG KEYS&#34;
+</span><span class="c1"></span>
+<span class="err">{</span>
+    <span class="s2">&#34;results&#34;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="err">{</span>
+            <span class="s2">&#34;statement_id&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&#34;series&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="err">{</span>
+                    <span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;average_temperature&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;columns&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&#34;tagKey&#34;</span>
+                    <span class="p">],</span>
+                    <span class="s2">&#34;values&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span>
+                            <span class="s2">&#34;location&#34;</span>
+                        <span class="p">]</span>
+                    <span class="p">]</span>
+                <span class="err">}</span><span class="p">,</span>
+                <span class="err">{</span>
+                    <span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;h2o_feet&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;columns&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&#34;tagKey&#34;</span>
+                    <span class="p">],</span>
+                    <span class="s2">&#34;values&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span>
+                            <span class="s2">&#34;location&#34;</span>
+                        <span class="p">]</span>
+                    <span class="p">]</span>
+                <span class="err">}</span><span class="p">,</span>
+                <span class="err">{</span>
+                    <span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;h2o_pH&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;columns&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&#34;tagKey&#34;</span>
+                    <span class="p">],</span>
+                    <span class="s2">&#34;values&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span>
+                            <span class="s2">&#34;location&#34;</span>
+                        <span class="p">]</span>
+                    <span class="p">]</span>
+                <span class="err">}</span><span class="p">,</span>
+                <span class="err">{</span>
+                    <span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;h2o_quality&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;columns&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&#34;tagKey&#34;</span>
+                    <span class="p">],</span>
+                    <span class="s2">&#34;values&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span>
+                            <span class="s2">&#34;location&#34;</span>
+                        <span class="p">],</span>
+                        <span class="p">[</span>
+                            <span class="s2">&#34;randtag&#34;</span>
+                        <span class="p">]</span>
+                    <span class="p">]</span>
+                <span class="err">}</span><span class="p">,</span>
+                <span class="err">{</span>
+                    <span class="s2">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;h2o_temperature&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;columns&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&#34;tagKey&#34;</span>
+                    <span class="p">],</span>
+                    <span class="s2">&#34;values&#34;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span>
+                            <span class="s2">&#34;location&#34;</span>
+                        <span class="p">]</span>
+                    <span class="p">]</span>
+                <span class="err">}</span>
+            <span class="p">]</span>
+        <span class="err">}</span>
+    <span class="p">]</span>
+<span class="err">}</span></code></pre></div>
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+<h4 id="run-a-show-tag-keys-query-with-several-clauses">Run a <code>SHOW TAG KEYS</code> query with several clauses</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">TAG</span> <span class="n">KEYS</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_quality&#34;</span> <span class="k">LIMIT</span> <span class="mi">1</span> <span class="k">OFFSET</span> <span class="mi">1</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="n">tagKey</span>
+<span class="c1">------
+</span><span class="c1"></span><span class="n">randtag</span></code></pre></div>
+<p>The query returns tag keys from the <code>h2o_quality</code> measurement in the
+<code>NOAA_water_database</code> database.
+The <code>LIMIT</code> and <code>OFFSET</code> clauses limit the number of tag keys returned to one
+and offsets the results by one.</p>
+
+<h2 id="show-tag-values"><code>SHOW TAG VALUES</code></h2>
+
+<p>Returns the list of <a href="../concepts/glossary/index.html#tag-value">tag values</a>
+for the specified <a href="../concepts/glossary/index.html#tag-key">tag key(s)</a> in the database.</p>
+
+<h3 id="syntax-5">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">VALUES</span> <span class="p">[</span><span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span><span class="p">][</span><span class="n">FROM_clause</span><span class="p">]</span> <span class="k">WITH</span> <span class="k">KEY</span> <span class="p">[</span> <span class="p">[</span><span class="o">&lt;</span><span class="k">operator</span><span class="o">&gt;</span> <span class="s2">&#34;&lt;tag_key&gt;&#34;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">regular_expression</span><span class="o">&gt;</span><span class="p">]</span> <span class="o">|</span> <span class="p">[</span><span class="k">IN</span> <span class="p">(</span><span class="s2">&#34;&lt;tag_key1&gt;&#34;</span><span class="p">,</span><span class="s2">&#34;&lt;tag_key2&#34;</span><span class="p">)]]</span> <span class="p">[</span><span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">tag_key</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="k">operator</span><span class="o">&gt;</span> <span class="p">[</span><span class="s1">&#39;&lt;tag_value&gt;&#39;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">regular_expression</span><span class="o">&gt;</span><span class="p">]]</span> <span class="p">[</span><span class="n">LIMIT_clause</span><span class="p">]</span> <span class="p">[</span><span class="n">OFFSET_clause</span><span class="p">]</span></code></pre></div>
+<h3 id="description-of-syntax-4">Description of syntax</h3>
+
+<p><code>ON &lt;database_name&gt;</code> is optional.
+If the query does not include <code>ON &lt;database_name&gt;</code>, you must specify the
+database with <code>USE &lt;database_name&gt;</code> in the <a href="../tools/shell/index.html">CLI</a> or with the <code>db</code> query string parameter in the <a href="../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<p>The <code>WITH</code> clause is required.
+It supports specifying a single tag key, a regular expression, and multiple tag keys.</p>
+
+<p>The <code>FROM</code>, <code>WHERE</code>, <code>LIMIT</code>, and <code>OFFSET</code> clauses are optional.
+The <code>WHERE</code> clause supports tag comparisons; field comparisons are not
+valid for the <code>SHOW TAG KEYS</code> query.</p>
+
+<p>Supported operators in the <code>WITH</code> and <code>WHERE</code> clauses:
+<code>=</code>&emsp;&nbsp;&thinsp;equal to
+<code>&lt;&gt;</code>&emsp;not equal to
+<code>!=</code>&emsp;not equal to
+<code>=~</code>&emsp;matches against
+<code>!~</code>&emsp;doesn&rsquo;t match against</p>
+
+<p>See the Data Exploration page for documentation on the
+<a href="data_exploration/index.html#the-basic-select-statement"><code>FROM</code> clause</a>,
+<a href="data_exploration/index.html#the-limit-clause"><code>LIMIT</code> clause</a>,
+<a href="data_exploration/index.html#the-offset-clause"><code>OFFSET</code> clause</a>,
+and on <a href="data_exploration/index.html#regular-expressions">Regular Expressions in Queries</a>.</p>
+
+<h3 id="examples-5">Examples</h3>
+
+<h4 id="run-a-show-tag-values-query-with-the-on-clause">Run a <code>SHOW TAG VALUES</code> query with the <code>ON</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">VALUES</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">WITH</span> <span class="k">KEY</span> <span class="o">=</span> <span class="s2">&#34;randtag&#34;</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="k">key</span>       <span class="n">value</span>
+<span class="c1">---       -----
+</span><span class="c1"></span><span class="n">randtag</span>   <span class="mi">1</span>
+<span class="n">randtag</span>   <span class="mi">2</span>
+<span class="n">randtag</span>   <span class="mi">3</span></code></pre></div>
+<p>The query returns all tag values of the <code>randtag</code> tag key in the <code>NOAA_water_database</code>
+database.
+<code>SHOW TAG VALUES</code> groups query results by measurement name.</p>
+
+<h4 id="run-a-show-tag-values-query-without-the-on-clause">Run a <code>SHOW TAG VALUES</code> query without the <code>ON</code> clause</h4>
+
+<p>
+<div class="tabs-container">
+  
+  
+<div class="tabs">
+  <p><a href="schema_exploration.html#">CLI</a>
+  <a href="schema_exploration.html#">InfluxDB API</a></p>
+
+</div>
+
+
+</div>
+
+
+<div class="tab-content-container">
+  
+
+
+<div class="tab-content">
+  <p>Specify the database with <code>USE &lt;database_name&gt;</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">NOAA_water_database</span>
+<span class="k">Using</span> <span class="k">database</span> <span class="n">NOAA_water_database</span>
+
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">VALUES</span> <span class="k">WITH</span> <span class="k">KEY</span> <span class="o">=</span> <span class="s2">&#34;randtag&#34;</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="k">key</span>       <span class="n">value</span>
+<span class="c1">---       -----
+</span><span class="c1"></span><span class="n">randtag</span>   <span class="mi">1</span>
+<span class="n">randtag</span>   <span class="mi">2</span>
+<span class="n">randtag</span>   <span class="mi">3</span></code></pre></div>
+</div>
+
+
+
+<div class="tab-content">
+  <p>Specify the database with the <code>db</code> query string parameter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~# curl -G <span class="s2">&#34;http://localhost:8086/query?db=NOAA_water_database&amp;pretty=true&#34;</span> --data-urlencode <span class="s1">&#39;q=SHOW TAG VALUES WITH KEY = &#34;randtag&#34;&#39;</span>
+
+<span class="o">{</span>
+    <span class="s2">&#34;results&#34;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&#34;statement_id&#34;</span>: <span class="m">0</span>,
+            <span class="s2">&#34;series&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;h2o_quality&#34;</span>,
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;key&#34;</span>,
+                        <span class="s2">&#34;value&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;randtag&#34;</span>,
+                            <span class="s2">&#34;1&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;randtag&#34;</span>,
+                            <span class="s2">&#34;2&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;randtag&#34;</span>,
+                            <span class="s2">&#34;3&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span></code></pre></div>
+</div>
+
+
+</div>
+</p>
+
+<h4 id="run-a-show-tag-values-query-with-several-clauses">Run a <code>SHOW TAG VALUES</code> query with several clauses</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">VALUES</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">WITH</span> <span class="k">KEY</span> <span class="k">IN</span> <span class="p">(</span><span class="s2">&#34;location&#34;</span><span class="p">,</span><span class="s2">&#34;randtag&#34;</span><span class="p">)</span> <span class="k">WHERE</span> <span class="s2">&#34;randtag&#34;</span> <span class="o">=~</span> <span class="o">/</span><span class="p">.</span><span class="o">/</span> <span class="k">LIMIT</span> <span class="mi">3</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="k">key</span>        <span class="n">value</span>
+<span class="c1">---        -----
+</span><span class="c1"></span><span class="k">location</span>   <span class="n">coyote_creek</span>
+<span class="k">location</span>   <span class="n">santa_monica</span>
+<span class="n">randtag</span>	   <span class="mi">1</span></code></pre></div>
+<p>The query returns the tag values of the tag keys <code>location</code> and <code>randtag</code> for
+all measurements in the <code>NOAA_water_database</code> database where <code>randtag</code> has tag values.
+The <code>LIMIT</code> clause limits the number of tag values returned to three.</p>
+
+<h2 id="show-field-keys"><code>SHOW FIELD KEYS</code></h2>
+
+<p>Returns the <a href="../concepts/glossary/index.html#field-key">field keys</a> and the
+<a href="../write_protocols/line_protocol_reference/index.html#data-types">data type</a> of their
+<a href="../concepts/glossary/index.html#field-value">field values</a>.</p>
+
+<h3 id="syntax-6">Syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">FIELD</span> <span class="n">KEYS</span> <span class="p">[</span><span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="k">FROM</span> <span class="o">&lt;</span><span class="n">measurement_name</span><span class="o">&gt;</span><span class="p">]</span></code></pre></div>
+<h3 id="description-of-syntax-5">Description of syntax</h3>
+
+<p><code>ON &lt;database_name&gt;</code> is optional.
+If the query does not include <code>ON &lt;database_name&gt;</code>, you must specify the
+database with <code>USE &lt;database_name&gt;</code> in the <a href="../tools/shell/index.html">CLI</a> or with the <code>db</code> query
+string parameter in the <a href="../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<p>The <code>FROM</code> clause is also optional.
+See the Data Exploration page for documentation on the
+<a href="data_exploration/index.html#the-basic-select-statement"><code>FROM</code> clause</a>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> A field&rsquo;s data type <a href="../troubleshooting/frequently-asked-questions/index.html#how-does-influxdb-handle-field-type-discrepancies-across-shards">can differ</a> across
+<a href="../concepts/glossary/index.html#shard">shards</a>.
+If your field has more than one type, <code>SHOW FIELD KEYS</code> returns the type that
+occurs first in the following list: float, integer, string, boolean.</p>
+</blockquote>
+
+<h3 id="examples-6">Examples</h3>
+
+<h4 id="run-a-show-field-keys-query-with-the-on-clause">Run a <code>SHOW FIELD KEYS</code> query with the <code>ON</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">FIELD</span> <span class="n">KEYS</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">average_temperature</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="n">degrees</span>             <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_feet</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="k">level</span> <span class="n">description</span>   <span class="n">string</span>
+<span class="n">water_level</span>         <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_pH</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="n">pH</span>                  <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="k">index</span>               <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_temperature</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="n">degrees</span>             <span class="nb">float</span></code></pre></div>
+<p>The query returns the field keys and field value data types for each
+measurement in the <code>NOAA_water_database</code> database.</p>
+
+<h4 id="run-a-show-field-keys-query-without-the-on-clause">Run a <code>SHOW FIELD KEYS</code> query without the <code>ON</code> clause</h4>
+
+<p>
+<div class="tabs-container">
+  
+  
+<div class="tabs">
+  <p><a href="schema_exploration.html#">CLI</a>
+  <a href="schema_exploration.html#">InfluxDB API</a></p>
+
+</div>
+
+
+</div>
+
+
+<div class="tab-content-container">
+  
+
+
+<div class="tab-content">
+  <p>Specify the database with <code>USE &lt;database_name&gt;</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="n">USE</span> <span class="n">NOAA_water_database</span>
+<span class="k">Using</span> <span class="k">database</span> <span class="n">NOAA_water_database</span>
+
+<span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">FIELD</span> <span class="n">KEYS</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">average_temperature</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="n">degrees</span>             <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_feet</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="k">level</span> <span class="n">description</span>   <span class="n">string</span>
+<span class="n">water_level</span>         <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_pH</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="n">pH</span>                  <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_quality</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="k">index</span>               <span class="nb">float</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_temperature</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="n">degrees</span>             <span class="nb">float</span></code></pre></div>
+</div>
+
+
+
+<div class="tab-content">
+  <p>Specify the database with the <code>db</code> query string parameter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">~# curl -G <span class="s2">&#34;http://localhost:8086/query?db=NOAA_water_database&amp;pretty=true&#34;</span> --data-urlencode <span class="s1">&#39;q=SHOW FIELD KEYS&#39;</span>
+
+<span class="o">{</span>
+    <span class="s2">&#34;results&#34;</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">&#34;statement_id&#34;</span>: <span class="m">0</span>,
+            <span class="s2">&#34;series&#34;</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                    <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;average_temperature&#34;</span>,
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;fieldKey&#34;</span>,
+                        <span class="s2">&#34;fieldType&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;degrees&#34;</span>,
+                            <span class="s2">&#34;float&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;h2o_feet&#34;</span>,
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;fieldKey&#34;</span>,
+                        <span class="s2">&#34;fieldType&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;level description&#34;</span>,
+                            <span class="s2">&#34;string&#34;</span>
+                        <span class="o">]</span>,
+                        <span class="o">[</span>
+                            <span class="s2">&#34;water_level&#34;</span>,
+                            <span class="s2">&#34;float&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;h2o_pH&#34;</span>,
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;fieldKey&#34;</span>,
+                        <span class="s2">&#34;fieldType&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;pH&#34;</span>,
+                            <span class="s2">&#34;float&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;h2o_quality&#34;</span>,
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;fieldKey&#34;</span>,
+                        <span class="s2">&#34;fieldType&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;index&#34;</span>,
+                            <span class="s2">&#34;float&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>,
+                <span class="o">{</span>
+                    <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;h2o_temperature&#34;</span>,
+                    <span class="s2">&#34;columns&#34;</span>: <span class="o">[</span>
+                        <span class="s2">&#34;fieldKey&#34;</span>,
+                        <span class="s2">&#34;fieldType&#34;</span>
+                    <span class="o">]</span>,
+                    <span class="s2">&#34;values&#34;</span>: <span class="o">[</span>
+                        <span class="o">[</span>
+                            <span class="s2">&#34;degrees&#34;</span>,
+                            <span class="s2">&#34;float&#34;</span>
+                        <span class="o">]</span>
+                    <span class="o">]</span>
+                <span class="o">}</span>
+            <span class="o">]</span>
+        <span class="o">}</span>
+    <span class="o">]</span>
+<span class="o">}</span></code></pre></div>
+</div>
+
+
+</div>
+</p>
+
+<h4 id="run-a-show-field-keys-query-with-the-from-clause">Run a <code>SHOW FIELD KEYS</code> query with the <code>FROM</code> clause</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">FIELD</span> <span class="n">KEYS</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_feet&#34;</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_feet</span>
+<span class="n">fieldKey</span>            <span class="n">fieldType</span>
+<span class="c1">--------            ---------
+</span><span class="c1"></span><span class="k">level</span> <span class="n">description</span>   <span class="n">string</span>
+<span class="n">water_level</span>         <span class="nb">float</span></code></pre></div>
+<p>The query returns the fields keys and field value data types for the <code>h2o_feet</code>
+measurement in the <code>NOAA_water_database</code> database.</p>
+
+<h3 id="common-issues-with-show-field-keys">Common Issues with <code>SHOW FIELD KEYS</code></h3>
+
+<h4 id="show-field-keys-and-field-type-discrepancies">SHOW FIELD KEYS and field type discrepancies</h4>
+
+<p>Field value
+<a href="../write_protocols/line_protocol_reference/index.html#data-types">data types</a>
+cannot differ within a <a href="../concepts/glossary/index.html#shard">shard</a> but they
+can differ across shards.
+<code>SHOW FIELD KEYS</code> returns every data type, across every shard, associated with
+the field key.</p>
+
+<h5 id="example">Example</h5>
+
+<p>The <code>all_the_types</code> field stores four different data types:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">FIELD</span> <span class="n">KEYS</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">mymeas</span>
+<span class="n">fieldKey</span>        <span class="n">fieldType</span>
+<span class="c1">--------        ---------
+</span><span class="c1"></span><span class="n">all_the_types</span>   <span class="nb">integer</span>
+<span class="n">all_the_types</span>   <span class="nb">float</span>
+<span class="n">all_the_types</span>   <span class="n">string</span>
+<span class="n">all_the_types</span>   <span class="nb">boolean</span></code></pre></div>
+<p>Note that <code>SHOW FIELD KEYS</code> handles field type discrepancies differently from
+<code>SELECT</code> statements.
+For more information, see the
+<a href="../troubleshooting/frequently-asked-questions/index.html#how-does-influxdb-handle-field-type-discrepancies-across-shards">How does InfluxDB handle field type discrepancies across shards?</a>.</p>
+
+<h3 id="filter-meta-queries-by-time">Filter meta queries by time</h3>
+
+<p>When you filter meta queries by time, you may see results outside of your specified time. Meta query results are filtered at the shard level, so results can be approximately as granular as your shard group duration. If your time filter spans multiple shards, you&rsquo;ll get results from all shards with points in the specified time range. To review your shards and timestamps on points in the shard, run <code>SHOW SHARDS</code>. To learn more about shards and their duration, see <a href="../concepts/schema_and_data_layout/index.html#shard-group-duration-recommendations">recommended shard groups durations</a>.</p>
+
+<p>The example below shows how to filter <code>SHOW TAG KEYS</code> by approximately one hour using a 1h shard group duration. To filter other meta data, replace <code>SHOW TAG KEYS</code> with <code>SHOW TAG VALUES</code>, <code>SHOW SERIES</code>, <code>SHOW MEASUREMENTS</code>, <code>SHOW FIELD KEYS</code>, and so on.</p>
+
+<h4 id="example-filtering-show-tag-keys-by-time">Example filtering <code>SHOW TAG KEYS</code> by time</h4>
+
+<ol>
+<li><p>Specify a shard duration on a new database or <a href="database_management/index.html#modify-retention-policies-with-alter-retention-policy">alter an existing shard duration</a>. To specify a 1h shard duration when creating a new database, run the following command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">&gt; CREATE database mydb with duration 7d REPLICATION <span class="m">1</span> SHARD DURATION 1h name myRP<span class="p">;</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> The minimum shard duration is 1h.</p>
+</blockquote></li>
+
+<li><p>Verify the shard duration has the correct time interval (precision) by running the <code>SHOW SHARDS</code> command. The example below shows a shard duration with an hour precision.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">&gt; SHOW SHARDS
+name: mydb
+id database retention_policy shard_group start_time end_time expiry_time owners
+-- -------- ---------------- ----------- ---------- -------- ----------- ------
+&gt; precision h</code></pre></div></li>
+
+<li><p>(Optional) Insert sample tag keys. This step is for demonstration purposes. If you already have tag keys (or other meta data) to search for, skip this step.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">// Insert a sample tag called <span class="s2">&#34;test_key&#34;</span> into the <span class="s2">&#34;test&#34;</span> measurement, and <span class="k">then</span> check the timestamp:
+&gt; INSERT test,test_key<span class="o">=</span>hello <span class="nv">value</span><span class="o">=</span><span class="m">1</span>
+
+&gt; <span class="k">select</span> * from <span class="nb">test</span>
+name: <span class="nb">test</span>
+<span class="nb">time</span> test_key value
+---- -------- -----
+<span class="m">434820</span> hello <span class="m">1</span>
+
+// Add new tag keys with timestamps one, two, and three hours earlier:
+
+&gt; INSERT test,test_key_1<span class="o">=</span>hello <span class="nv">value</span><span class="o">=</span><span class="m">1</span> <span class="m">434819</span>
+&gt; INSERT test,test_key_2<span class="o">=</span>hello <span class="nv">value</span><span class="o">=</span><span class="m">1</span> <span class="m">434819</span>
+&gt; INSERT test,test_key_3_<span class="o">=</span>hello <span class="nv">value</span><span class="o">=</span><span class="m">1</span> <span class="m">434818</span>
+&gt; INSERT test,test_key_4<span class="o">=</span>hello <span class="nv">value</span><span class="o">=</span><span class="m">1</span> <span class="m">434817</span>
+&gt; INSERT test,test_key_5_<span class="o">=</span>hello <span class="nv">value</span><span class="o">=</span><span class="m">1</span> <span class="m">434817</span></code></pre></div></li>
+
+<li><p>To find tag keys within a shard duration, run one of the following commands:</p>
+
+<p><code>SHOW TAG KEYS ON database-name &lt;WHERE time clause&gt;</code> OR</p>
+
+<p><code>SELECT * FROM measurement &lt;WHERE time clause&gt;</code></p>
+
+<p>The examples below use test data from step 3.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">//Using data from Step <span class="m">3</span>, show tag keys between now and an hour ago
+&gt; SHOW TAG KEYS ON mydb where <span class="nb">time</span> &gt; now<span class="o">()</span> -1h and <span class="nb">time</span> &lt; now<span class="o">()</span>
+name: <span class="nb">test</span>
+tagKey
+------
+test_key
+test_key_1
+test_key_2
+
+// Find tag keys between one and two hours ago
+&gt; SHOW TAG KEYS ON mydb where &gt; <span class="nb">time</span> &gt; now<span class="o">()</span> -2h and <span class="nb">time</span> &lt; now<span class="o">()</span>-1h
+name: <span class="nb">test</span>
+tagKey
+------
+test_key_1
+test_key_2
+test_key_3
+
+// Find tag keys between two and three hours ago
+&gt; SHOW TAG KEYS ON mydb where &gt; <span class="nb">time</span> &gt; now<span class="o">()</span> -3h and <span class="nb">time</span> &lt; now<span class="o">()</span>-2h
+name: <span class="nb">test</span>
+tagKey
+------
+test_key_3
+test_key_4
+test_key_5
+
+// For a specified measurement, find tag keys in a given shard by specifying the <span class="nb">time</span> boundaries of the shard
+&gt; SELECT * FROM <span class="nb">test</span> WHERE <span class="nb">time</span> &gt;<span class="o">=</span> <span class="s1">&#39;2019-08-09T00:00:00Z&#39;</span> and <span class="nb">time</span> &lt; <span class="s1">&#39;2019-08-09T10:00:00Z&#39;</span>
+name: <span class="nb">test</span>
+<span class="nb">time</span> test_key_4 test_key_5 value
+---- ------------ ------------ -----
+<span class="m">434817</span> hello <span class="m">1</span>
+<span class="m">434817</span> hello <span class="m">1</span>
+
+// For a specified database, find tag keys in a given shard by specifying the <span class="nb">time</span> boundaries of the shard
+&gt; SHOW TAG KEYS ON mydb WHERE <span class="nb">time</span> &gt;<span class="o">=</span> <span class="s1">&#39;2019-08-09T00:00:00Z&#39;</span> and <span class="nb">time</span> &lt; <span class="s1">&#39;2019-08-09T10:00:00Z&#39;</span>
+name: <span class="nb">test</span>
+tagKey
+------
+test_key_4
+test_key_5</code></pre></div></li>
+</ol>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/query_language/schema_exploration.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/query_language/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

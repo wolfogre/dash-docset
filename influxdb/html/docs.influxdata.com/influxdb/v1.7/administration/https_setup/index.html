@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Enabling HTTPS with InfluxDB | InfluxData Documentation</title>
+    <meta name="description" content="Enable HTTPS and Transport Security Layer (TLS) secure communication between clients and your InfluxDB servers.. ">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" Enabling HTTPS with InfluxDB | InfluxData Documentation">
+    <meta name="twitter:description" content="Enable HTTPS and Transport Security Layer (TLS) secure communication between clients and your InfluxDB servers.. ">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" Enabling HTTPS with InfluxDB | InfluxData Documentation" />
+    <meta property="og:description" content="Enable HTTPS and Transport Security Layer (TLS) secure communication between clients and your InfluxDB servers.. " />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Enabling HTTPS with InfluxDB</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>Enabling HTTPS encrypts the communication between clients and the InfluxDB server.
+When configured with a signed certificate, HTTPS can also verify the authenticity of the InfluxDB server to connecting clients.</p>
+
+<p>InfluxData <a href="../security/index.html">strongly recommends</a> enabling HTTPS, especially if you plan on sending requests to InfluxDB over a network.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>To enable HTTPS with InfluxDB, you&rsquo;ll need an existing or new InfluxDB instance
+and a Transport Layer Security (TLS) certificate (also known as a Secured Sockets Layer (SSL) certificate).</p>
+
+<p>InfluxDB supports three types of TLS certificates:</p>
+
+<ul>
+<li><p><strong>Single domain certificates signed by a Certificate Authority</strong></p>
+
+<p>Single domain certificates provide cryptographic security to HTTPS requests and allow clients to verify the identity of the InfluxDB server.
+With this certificate option, every InfluxDB instance requires a unique single domain certificate.</p></li>
+
+<li><p><strong>Wildcard certificates signed by a Certificate Authority</strong></p>
+
+<p>Wildcard certificates provide cryptographic security to HTTPS requests and allow clients to verify the identity of the InfluxDB server.
+Wildcard certificates can be used across multiple InfluxDB instances on different servers.</p></li>
+
+<li><p><strong>Self-signed certificates</strong></p>
+
+<p>Self-signed certificates are <em>not</em> signed by a Certificate Authority (CA).
+<a href="index.html#step-1-generate-a-self-signed-certificate">Generate a self-signed certificate</a> on your own machine.
+Unlike CA-signed certificates, self-signed certificates only provide cryptographic security to HTTPS requests.
+They do not allow clients to verify the identity of the InfluxDB server.
+With this certificate option, every InfluxDB instance requires a unique self-signed certificate.</p></li>
+</ul>
+
+<p>Regardless of your certificate&rsquo;s type, InfluxDB supports certificates composed of
+a private key file (<code>.key</code>) and a signed certificate file (<code>.crt</code>) file pair, as well as certificates
+that combine the private key file and the signed certificate file into a single bundled file (<code>.pem</code>).</p>
+
+<p>The following two sections outline how to set up HTTPS with InfluxDB <a href="index.html#setup-https-with-a-ca-signed-certificate">using a CA-signed
+certificate</a> and <a href="index.html#setup-https-with-a-self-signed-certificate">using a self-signed certificate</a>
+on Ubuntu 16.04.
+Steps may vary for other operating systems.</p>
+
+<h2 id="set-up-https-with-a-ca-certificate">Set up HTTPS with a CA certificate</h2>
+
+<h4 id="step-1-install-the-certificate">Step 1: Install the certificate</h4>
+
+<p>Place the private key file (<code>.key</code>) and the signed certificate file (<code>.crt</code>)
+or the single bundled file (<code>.pem</code>) in the <code>/etc/ssl</code> directory.</p>
+
+<h4 id="step-2-set-certificate-file-permissions">Step 2: Set certificate file permissions</h4>
+
+<p>Users running InfluxDB must have read permissions on the TLS certificate.</p>
+
+<blockquote>
+<p><strong><em>Note</em></strong>: You may opt to set up multiple users, groups, and permissions. Ultimately, make sure all users running InfluxDB have read permissions for the TLS certificate.</p>
+</blockquote>
+
+<p>Run the following command to give InfluxDB read and write permissions on the certificate files.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo chown influxdb:influxdb /etc/ssl/&lt;CA-certificate-file&gt;
+sudo chmod <span class="m">644</span> /etc/ssl/&lt;CA-certificate-file&gt;
+sudo chmod <span class="m">600</span> /etc/ssl/&lt;private-key-file&gt;</code></pre></div>
+<h4 id="step-3-review-the-tls-configuration-settings">Step 3: Review the TLS configuration settings</h4>
+
+<p>By default, InfluxDB supports the values for TLS <code>ciphers</code>, <code>min-version</code>, and <code>max-version</code> listed in the <a href="https://golang.org/pkg/crypto/tls/#pkg-constants">Constants section of the Go <code>crypto/tls</code> package documentation</a> and depends on the version of Go used to build InfluxDB. You can configure InfluxDB to support a restricted list of TLS cipher suite IDs and versions.
+For more information, see <a href="../config.html#transport-layer-security-tls-settings">Transport Layer Security (TLS) configuration settings</a>.</p>
+
+<h4 id="step-4-enable-https-in-the-influxdb-configuration-file">Step 4: Enable HTTPS in the InfluxDB configuration file</h4>
+
+<p>HTTPS is disabled by default.
+Enable HTTPS in the <code>[http]</code> section of the configuration file (<code>/etc/influxdb/influxdb.conf</code>) by setting:</p>
+
+<ul>
+<li><code>https-enabled</code> to <code>true</code></li>
+<li><code>https-certificate</code> to <code>/etc/ssl/&lt;signed-certificate-file&gt;.crt</code> (or to <code>/etc/ssl/&lt;bundled-certificate-file&gt;.pem</code>)</li>
+<li><code>https-private-key</code> to <code>/etc/ssl/&lt;private-key-file&gt;.key</code> (or to <code>/etc/ssl/&lt;bundled-certificate-file&gt;.pem</code>)</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">http</span><span class="p">]</span>
+
+  <span class="p">[...]</span>
+
+  <span class="c"># Determines whether HTTPS is enabled.</span>
+  <span class="nx">https</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+
+  <span class="p">[...]</span>
+
+  <span class="c"># The SSL certificate to use when HTTPS is enabled.</span>
+  <span class="nx">https</span><span class="err">-</span><span class="nx">certificate</span> <span class="p">=</span> <span class="s2">&#34;&lt;bundled-certificate-file&gt;.pem&#34;</span>
+
+  <span class="c"># Use a separate private key location.</span>
+  <span class="nx">https</span><span class="err">-</span><span class="nx">private</span><span class="err">-</span><span class="nx">key</span> <span class="p">=</span> <span class="s2">&#34;&lt;bundled-certificate-file&gt;.pem&#34;</span></code></pre></div>
+<h4 id="step-5-restart-the-influxdb-service">Step 5: Restart the InfluxDB service</h4>
+
+<p>Restart the InfluxDB process for the configuration changes to take effect:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl restart influxdb</code></pre></div>
+<h4 id="step-6-verify-the-https-setup">Step 6: Verify the HTTPS setup</h4>
+
+<p>Verify that HTTPS is working by connecting to InfluxDB with the <a href="../../tools/shell/index.html">CLI tool</a>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">influx -ssl -host &lt;domain_name&gt;.com</code></pre></div>
+<p>A successful connection returns the following:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Connected to https://&lt;domain_name&gt;.com:8086 version <span class="m">1</span>.x.x
+InfluxDB shell version: <span class="m">1</span>.x.x
+&gt;</code></pre></div>
+<p>That&rsquo;s it! You&rsquo;ve successfully set up HTTPS with InfluxDB.</p>
+
+<h2 id="set-up-https-with-a-self-signed-certificate">Set up HTTPS with a self-signed certificate</h2>
+
+<h4 id="step-1-generate-a-self-signed-certificate">Step 1: Generate a self-signed certificate</h4>
+
+<p>The following command generates a private key file (<code>.key</code>) and a self-signed
+certificate file (<code>.crt</code>) which remain valid for the specified <code>NUMBER_OF_DAYS</code>.
+It outputs those files to the InfluxDB database&rsquo;s default certificate file paths and gives them
+the required permissions.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/ssl/influxdb-selfsigned.key -out /etc/ssl/influxdb-selfsigned.crt -days &lt;NUMBER_OF_DAYS&gt;</code></pre></div>
+<p>When you execute the command, it will prompt you for more information.
+You can choose to fill out that information or leave it blank;
+both actions generate valid certificate files.</p>
+
+<p>Run the following command to give InfluxDB read and write permissions on the certificate.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">chown influxdb:influxdb /etc/ssl/influxdb-selfsigned.*</code></pre></div>
+<h4 id="step-2-review-the-tls-configuration-settings">Step 2: Review the TLS configuration settings</h4>
+
+<p>By default, InfluxDB supports the values for TLS <code>ciphers</code>, <code>min-version</code>, and <code>max-version</code> listed in the <a href="https://golang.org/pkg/crypto/tls/#pkg-constants">Constants section of the Go <code>crypto/tls</code> package documentation</a> and depends on the version of Go used to build InfluxDB. You can configure InfluxDB to support a restricted list of TLS cipher suite IDs and versions. For more information, see <a href="../config.html#transport-layer-security-tls-settings">Transport Layer Security (TLS) settings <code>[tls]</code></a>.</p>
+
+<h4 id="step-3-enable-https-in-the-configuration-file">Step 3: Enable HTTPS in the configuration file</h4>
+
+<p>HTTPS is disabled by default.
+Enable HTTPS in the <code>[http]</code> section of the configuration file (<code>/etc/influxdb/influxdb.conf</code>) by setting:</p>
+
+<ul>
+<li><code>https-enabled</code> to <code>true</code></li>
+<li><code>https-certificate</code> to <code>/etc/ssl/influxdb-selfsigned.crt</code></li>
+<li><code>https-private-key</code> to <code>/etc/ssl/influxdb-selfsigned.key</code></li>
+</ul>
+
+<pre><code>[http]
+
+  [...]
+
+  # Determines whether HTTPS is enabled.
+  https-enabled = true
+
+  [...]
+
+  # The TLS or SSL certificate to use when HTTPS is enabled.
+  https-certificate = &quot;/etc/ssl/influxdb-selfsigned.crt&quot;
+
+  # Use a separate private key location.
+  https-private-key = &quot;/etc/ssl/influxdb-selfsigned.key&quot;
+</code></pre>
+
+<blockquote>
+<p>If setting up HTTPS for <a href="https://docs.influxdata.com/enterprise_influxdb">InfluxDB Enterprise</a>, you also need to configure insecure TLS connections between both meta and data nodes in your cluster.
+Instructions are provided in the <a href="https://docs.influxdata.com/enterprise_influxdb/latest/guides/https_setup/#setup-https-with-a-self-signed-certificate">InfluxDB Enterprise HTTPS Setup guide</a>.</p>
+</blockquote>
+
+<h4 id="step-4-restart-influxdb">Step 4: Restart InfluxDB</h4>
+
+<p>Restart the InfluxDB process for the configuration changes to take effect:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl restart influxdb</code></pre></div>
+<h4 id="step-5-verify-the-https-setup">Step 5: Verify the HTTPS setup</h4>
+
+<p>Verify that HTTPS is working by connecting to InfluxDB with the <a href="../../tools/shell/index.html">CLI tool</a>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">influx -ssl -unsafeSsl -host &lt;domain_name&gt;.com</code></pre></div>
+<p>A successful connection returns the following:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Connected to https://&lt;domain_name&gt;.com:8086 version <span class="m">1</span>.x.x
+InfluxDB shell version: <span class="m">1</span>.x.x
+&gt;</code></pre></div>
+<p>That&rsquo;s it! You&rsquo;ve successfully set up HTTPS with InfluxDB.</p>
+
+<h2 id="connect-telegraf-to-a-secured-influxdb-instance">Connect Telegraf to a secured InfluxDB instance</h2>
+
+<p>Connecting <a href="https://docs.influxdata.com/telegraf/latest/">Telegraf</a> to an InfluxDB instance that&rsquo;s using
+HTTPS requires some additional steps.</p>
+
+<p>In the Telegraf configuration file (<code>/etc/telegraf/telegraf.conf</code>), edit the <code>urls</code>
+setting to indicate <code>https</code> instead of <code>http</code> and change <code>localhost</code> to the
+relevant domain name.
+If you&rsquo;re using a self-signed certificate, uncomment the <code>insecure_skip_verify</code>
+setting and set it to <code>true</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml">    <span class="c">###############################################################################</span>
+    <span class="c">#                            OUTPUT PLUGINS                                   #</span>
+    <span class="c">###############################################################################</span>
+<span class="err">&gt;</span>
+    <span class="c"># Configuration for InfluxDB server to send metrics to</span>
+    <span class="p">[[</span><span class="nx">outputs</span><span class="p">.</span><span class="nx">influxdb</span><span class="p">]]</span>
+      <span class="c">## The full HTTP or UDP endpoint URL for your InfluxDB instance.</span>
+      <span class="c">## Multiple urls can be specified as part of the same cluster,</span>
+      <span class="c">## this means that only ONE of the urls will be written to each interval.</span>
+      <span class="c"># urls = [&#34;udp://localhost:8089&#34;] # UDP endpoint example</span>
+      <span class="nx">urls</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;https://&lt;domain_name&gt;.com:8086&#34;</span><span class="p">]</span>
+<span class="err">&gt;</span>
+    <span class="p">[...]</span>
+<span class="err">&gt;</span>
+      <span class="c">## Optional SSL Config</span>
+      <span class="p">[...]</span>
+      <span class="nx">insecure_skip_verify</span> <span class="p">=</span> <span class="kc">true</span> <span class="c"># &lt;-- Update only if you&#39;re using a self-signed certificate</span></code></pre></div>
+<p>Next, restart Telegraf and you&rsquo;re all set!</p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/administration/https_setup.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/administration/https_setup/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

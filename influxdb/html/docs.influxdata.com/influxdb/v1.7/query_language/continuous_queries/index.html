@@ -1,0 +1,1697 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> InfluxQL Continuous Queries | InfluxData Documentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" InfluxQL Continuous Queries | InfluxData Documentation">
+    <meta name="twitter:description" content="">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" InfluxQL Continuous Queries | InfluxData Documentation" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>InfluxQL Continuous Queries</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Continuous queries (CQ) are InfluxQL queries that run automatically and
+periodically on realtime data and store query results in a
+specified measurement.</p>
+
+<table style="width:100%">
+  <tr>
+    <td><a href="index.html#basic-syntax">Basic Syntax</a></td>
+    <td><a href="index.html#advanced-syntax">Advanced Syntax</a></td>
+    <td><a href="index.html#continuous-query-management">CQ Management</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#examples-of-basic-syntax">Examples of Basic Syntax</a></td>
+    <td><a href="index.html#examples-of-advanced-syntax">Examples of Advanced Syntax</a></td>
+    <td><a href="index.html#continuous-query-use-cases">CQ Use Cases</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#common-issues-with-basic-syntax">Common Issues with Basic Syntax</a></td>
+    <td><a href="index.html#common-issues-with-advanced-syntax">Common Issues with Advanced Syntax</a></td>
+    <td><a href="index.html#further-information">Further information</a></td>
+  </tr>
+</table>
+
+<h2 id="syntax">Syntax</h2>
+
+<h3 id="basic-syntax">Basic syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="o">&lt;</span><span class="n">cq_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span>
+<span class="k">BEGIN</span>
+  <span class="o">&lt;</span><span class="n">cq_query</span><span class="o">&gt;</span>
+<span class="k">END</span></code></pre></div>
+<h4 id="description-of-basic-syntax">Description of basic syntax</h4>
+
+<h5 id="the-cq-query">The <code>cq_query</code></h5>
+
+<p>The <code>cq_query</code> requires a
+<a href="../../concepts/glossary/index.html#function">function</a>,
+an <a href="../spec/index.html#clauses"><code>INTO</code> clause</a>,
+and a <a href="../spec/index.html#clauses"><code>GROUP BY time()</code> clause</a>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">&lt;</span><span class="k">function</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">INTO</span> <span class="o">&lt;</span><span class="n">destination_measurement</span><span class="o">&gt;</span> <span class="k">FROM</span> <span class="o">&lt;</span><span class="n">measurement</span><span class="o">&gt;</span> <span class="p">[</span><span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">stuff</span><span class="o">&gt;</span><span class="p">]</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="o">&lt;</span><span class="nb">interval</span><span class="o">&gt;</span><span class="p">)[,</span><span class="o">&lt;</span><span class="n">tag_key</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">&gt;</span><span class="p">]</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> Notice that the <code>cq_query</code> does not require a time range in a <code>WHERE</code> clause.
+InfluxDB automatically generates a time range for the <code>cq_query</code> when it executes the CQ.
+Any user-specified time ranges in the <code>cq_query</code>&rsquo;s <code>WHERE</code> clause will be ignored
+by the system.</p>
+</blockquote>
+
+<h5 id="schedule-and-coverage">Schedule and coverage</h5>
+
+<p>Continuous queries operate on real-time data.
+They use the local server’s timestamp, the <code>GROUP BY time()</code> interval, and
+InfluxDB database&rsquo;s preset time boundaries to determine when to execute and what time
+range to cover in the query.</p>
+
+<p>CQs execute at the same interval as the <code>cq_query</code>&rsquo;s <code>GROUP BY time()</code> interval,
+and they run at the start of the InfluxDB database&rsquo;s preset time boundaries.
+If the <code>GROUP BY time()</code> interval is one hour, the CQ executes at the start of
+every hour.</p>
+
+<p>When the CQ executes, it runs a single query for the time range between
+<a href="../../concepts/glossary/index.html#now"><code>now()</code></a> and <code>now()</code> minus the
+<code>GROUP BY time()</code> interval.
+If the <code>GROUP BY time()</code> interval is one hour and the current time is 17:00,
+the query&rsquo;s time range is between 16:00 and 16:59.999999999.</p>
+
+<h4 id="examples-of-basic-syntax">Examples of basic syntax</h4>
+
+<p>The examples below use the following sample data in the <code>transportation</code>
+database.
+The measurement <code>bus_data</code> stores 15-minute resolution data on the number of bus
+<code>passengers</code> and <code>complaints</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span><span class="p">:</span> <span class="n">bus_data</span>
+<span class="c1">--------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">passengers</span>   <span class="n">complaints</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">5</span>            <span class="mi">9</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">8</span>            <span class="mi">9</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">8</span>            <span class="mi">9</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>            <span class="mi">9</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">8</span>            <span class="mi">9</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">15</span>           <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">15</span>           <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">17</span>           <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T09</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">20</span>           <span class="mi">7</span></code></pre></div>
+<h5 id="automatically-downsampling-data">Automatically downsampling data</h5>
+
+<p>Use a simple CQ to automatically downsample data from a single field
+and write the results to another measurement in the same database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_basic&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_basic</code> calculates the average hourly number of passengers from the
+<code>bus_data</code> measurement and stores the results in the <code>average_passengers</code>
+measurement in the <code>transportation</code> database.</p>
+
+<p><code>cq_basic</code> executes at one-hour intervals, the same interval as the
+<code>GROUP BY time()</code> interval.
+Every hour, <code>cq_basic</code> runs a single query that covers the time range between
+<code>now()</code> and <code>now()</code> minus the <code>GROUP BY time()</code> interval, that is, the time
+range between <code>now()</code> and one hour prior to <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_basic</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;08:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">9</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_basic</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;8:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<h5 id="automatically-downsampling-data-into-another-retention-policy">Automatically downsampling data into another retention policy</h5>
+
+<p><a href="../data_exploration/index.html#the-basic-select-statement">Fully qualify</a>
+the destination measurement to store the downsampled data in a non-<code>DEFAULT</code>
+<a href="../../concepts/glossary/index.html#retention-policy-rp">retention policy</a> (RP).</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_basic_rp&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;transportation&#34;</span><span class="p">.</span><span class="s2">&#34;three_weeks&#34;</span><span class="p">.</span><span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_basic_rp</code> calculates the average hourly number of passengers from the
+<code>bus_data</code> measurement and stores the results in the <code>transportation</code> database,
+the <code>three_weeks</code> RP, and the <code>average_passengers</code> measurement.</p>
+
+<p><code>cq_basic_rp</code> executes at one-hour intervals, the same interval as the
+<code>GROUP BY time()</code> interval.
+Every hour, <code>cq_basic_rp</code> runs a single query that covers the time range between
+<code>now()</code> and <code>now()</code> minus the <code>GROUP BY time()</code> interval, that is, the time
+range between <code>now()</code> and one hour prior to <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_basic_rp</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;8:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic_rp</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">three_weeks</span><span class="o">`</span> <span class="n">RP</span> <span class="k">and</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">9</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_basic_rp</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span>
+<span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;8:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic_rp</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">three_weeks</span><span class="o">`</span> <span class="n">RP</span> <span class="k">and</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;transportation&#34;</span><span class="p">.</span><span class="s2">&#34;three_weeks&#34;</span><span class="p">.</span><span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<p><code>cq_basic_rp</code> uses CQs and retention policies to automatically downsample data
+and keep those downsampled data for an alternative length of time.
+See the <a href="../../guides/downsampling_and_retention/index.html">Downsampling and Data Retention</a>
+guide for an in-depth discussion about this CQ use case.</p>
+
+<h5 id="automatically-downsampling-a-database-with-backreferencing">Automatically downsampling a database with backreferencing</h5>
+
+<p>Use a function with a wildcard (<code>*</code>) and <code>INTO</code> query&rsquo;s
+<a href="../data_exploration/index.html#the-into-clause">backreferencing syntax</a>
+to automatically downsample data from all measurements and numerical fields in
+a database.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_basic_br&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;downsampled_transportation&#34;</span><span class="p">.</span><span class="s2">&#34;autogen&#34;</span><span class="p">.:</span><span class="n">MEASUREMENT</span> <span class="k">FROM</span> <span class="o">/</span><span class="p">.</span><span class="o">*/</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">),</span><span class="o">*</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_basic_br</code> calculates the 30-minute average of <code>passengers</code> and <code>complaints</code>
+from every measurement in the <code>transportation</code> database (in this case, there&rsquo;s only the
+<code>bus_data</code> measurement).
+It stores the results in the <code>downsampled_transportation</code> database.</p>
+
+<p><code>cq_basic_br</code> executes at 30 minutes intervals, the same interval as the
+<code>GROUP BY time()</code> interval.
+Every 30 minutes, <code>cq_basic_br</code> runs a single query that covers the time range
+between <code>now()</code> and <code>now()</code> minus the <code>GROUP BY time()</code> interval, that is,
+the time range between <code>now()</code> and 30 minutes prior to <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">7</span><span class="p">:</span><span class="mi">30</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_basic_br</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;7:30&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic_br</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">bus_data</span><span class="o">`</span> <span class="n">measurement</span> <span class="k">in</span> <span class="n">the</span> <span class="o">`</span><span class="n">downsampled_transportation</span><span class="o">`</span> <span class="k">database</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">bus_data</span>
+    <span class="c1">--------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean_complaints</span>   <span class="n">mean_passengers</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">9</span>                 <span class="mi">6</span><span class="p">.</span><span class="mi">5</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_basic_br</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:30&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;8:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic_br</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">bus_data</span><span class="o">`</span> <span class="n">measurement</span> <span class="k">in</span> <span class="n">the</span> <span class="o">`</span><span class="n">downsampled_transportation</span><span class="o">`</span> <span class="k">database</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">bus_data</span>
+    <span class="c1">--------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean_complaints</span>   <span class="n">mean_passengers</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">9</span>                 <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+<span class="o">&gt;</span>
+<span class="p">[...]</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">9</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_basic_br</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;8:30&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_basic_br</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">bus_data</span><span class="o">`</span> <span class="n">measurement</span> <span class="k">in</span> <span class="n">the</span> <span class="o">`</span><span class="n">downsampled_transportation</span><span class="o">`</span> <span class="k">database</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">bus_data</span>
+    <span class="c1">--------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean_complaints</span>   <span class="n">mean_passengers</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>                 <span class="mi">16</span></code></pre></div>
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;downsampled_transportation.&#34;</span><span class="n">autogen</span><span class="s2">&#34;.&#34;</span><span class="n">bus_data</span><span class="s2">&#34;
+</span><span class="s2">name: bus_data
+</span><span class="s2">--------------
+</span><span class="s2">time                   mean_complaints   mean_passengers
+</span><span class="s2">2016-08-28T07:00:00Z   9                 6.5
+</span><span class="s2">2016-08-28T07:30:00Z   9                 7.5
+</span><span class="s2">2016-08-28T08:00:00Z   8                 11.5
+</span><span class="s2">2016-08-28T08:30:00Z   7                 16</span></code></pre></div>
+<h5 id="automatically-downsampling-data-and-configuring-cq-time-boundaries">Automatically downsampling data and configuring CQ time boundaries</h5>
+
+<p>Use an
+<a href="../data_exploration/index.html#advanced-group-by-time-syntax">offset interval</a>
+in the <code>GROUP BY time()</code> clause to alter both the CQ&rsquo;s default execution time and
+preset time boundaries.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_basic_offset&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">,</span><span class="mi">15</span><span class="n">m</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_basic_offset</code>calculates the average hourly number of passengers from the
+<code>bus_data</code> measurement and stores the results in the <code>average_passengers</code>
+measurement.</p>
+
+<p><code>cq_basic_offset</code> executes at one-hour intervals, the same interval as the
+<code>GROUP BY time()</code> interval.
+The 15 minute offset interval forces the CQ to execute 15 minutes after the
+default execution time; <code>cq_basic_offset</code> executes at 8:15 instead of 8:00.</p>
+
+<p>Every hour, <code>cq_basic_offset</code> runs a single query that covers the time range
+between <code>now()</code> and <code>now()</code> minus the <code>GROUP BY time()</code> interval, that is, the
+time range between <code>now()</code> and one hour prior to <code>now()</code>.
+The 15 minute offset interval shifts forward the generated preset time boundaries in the
+CQ&rsquo;s <code>WHERE</code> clause; <code>cq_basic_offset</code> queries between 7:15 and 8:14.999999999 instead of 7:00 and 7:59.999999999.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+
+<pre><code>&gt;
+At **8:15** `cq_basic_offset` executes a query with the time range `time &gt;= '7:15' AND time &lt; '8:15'`.
+`cq_basic_offset` writes one point to the `average_passengers` measurement:
+&gt;
+    name: average_passengers
+    ------------------------
+    time                   mean
+    2016-08-28T07:15:00Z   7.75
+&gt;
+At **9:15** `cq_basic_offset` executes a query with the time range `time &gt;= '8:15' AND time &lt; '9:15'`.
+`cq_basic_offset` writes one point to the `average_passengers` measurement:
+&gt;
+    name: average_passengers
+    ------------------------
+    time                   mean
+    2016-08-28T08:15:00Z   16.75
+</code></pre>
+
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">75</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">16</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<p>Notice that the timestamps are for 7:15 and 8:15 instead of 7:00 and 8:00.</p>
+
+<h4 id="common-issues-with-basic-syntax">Common issues with basic syntax</h4>
+
+<h5 id="handling-time-intervals-with-no-data">Handling time intervals with no data</h5>
+
+<p>CQs do not write any results for a time interval if no data fall within that
+time range.</p>
+
+<p>Note that the basic syntax does not support using
+<a href="../data_exploration/index.html#group-by-time-intervals-and-fill"><code>fill()</code></a>
+to change the value reported for intervals with no data.
+Basic syntax CQs ignore <code>fill()</code> if it&rsquo;s included in the CQ query.
+A possible workaround is to use the
+<a href="index.html#example-4-configuring-cq-time-ranges-and-filling-empty-results">advanced CQ syntax</a>.</p>
+
+<h5 id="resampling-previous-time-intervals">Resampling previous time intervals</h5>
+
+<p>The basic CQ runs a single query that covers the time range between <code>now()</code>
+and <code>now()</code> minus the <code>GROUP BY time()</code> interval.
+See the <a href="index.html#advanced-syntax">advanced syntax</a> for how to configure the query&rsquo;s
+time range.</p>
+
+<h5 id="backfilling-results-for-older-data">Backfilling results for older data</h5>
+
+<p>CQs operate on realtime data, that is, data with timestamps that occur
+relative to <a href="../../concepts/glossary/index.html#now"><code>now()</code></a>.
+Use a basic
+<a href="../data_exploration/index.html#the-into-clause"><code>INTO</code> query</a>
+to backfill results for data with older timestamps.</p>
+
+<h5 id="missing-tags-in-the-cq-results">Missing tags in the CQ results</h5>
+
+<p>By default, all
+<a href="../data_exploration/index.html#the-into-clause"><code>INTO</code> queries</a>
+convert any tags in the source measurement to fields in the destination
+measurement.</p>
+
+<p>Include <code>GROUP BY *</code> in the CQ to preserve tags in the destination measurement.</p>
+
+<h3 id="advanced-syntax">Advanced syntax</h3>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">CREATE CONTINUOUS QUERY <span class="s">&lt;cq_name&gt;</span> ON <span class="s">&lt;database_name&gt;</span>
+RESAMPLE EVERY <span class="s">&lt;interval&gt;</span> FOR <span class="s">&lt;interval&gt;</span>
+BEGIN
+  <span class="s">&lt;cq_query&gt;</span>
+END</code></pre></div>
+<h4 id="description-of-advanced-syntax">Description of advanced syntax</h4>
+
+<h5 id="the-cq-query-1">The <code>cq_query</code></h5>
+
+<p>See <a href="index.html#description-of-basic-syntax"> Description of Basic Syntax</a>.</p>
+
+<h5 id="scheduling-and-coverage">Scheduling and coverage</h5>
+
+<p>CQs operate on real-time data. With the advanced syntax, CQs use the local
+server’s timestamp, the information in the <code>RESAMPLE</code> clause, and the InfluxDB
+server&rsquo;s preset time boundaries to determine when to execute and what time range to
+cover in the query.</p>
+
+<p>CQs execute at the same interval as the <code>EVERY</code> interval in the <code>RESAMPLE</code>
+clause, and they run at the start of InfluxDB’s preset time boundaries.
+If the <code>EVERY</code> interval is two hours, InfluxDB executes the CQ at the top of
+every other hour.</p>
+
+<p>When the CQ executes, it runs a single query for the time range between
+<a href="../../concepts/glossary/index.html#now"><code>now()</code></a> and <code>now()</code> minus the <code>FOR</code> interval in the <code>RESAMPLE</code> clause.
+If the <code>FOR</code> interval is two hours and the current time is 17:00, the query&rsquo;s
+time range is between 15:00 and 16:59.999999999.</p>
+
+<p>Both the <code>EVERY</code> interval and the <code>FOR</code> interval accept
+<a href="../spec/index.html#durations">duration literals</a>.
+The <code>RESAMPLE</code> clause works with either or both of the <code>EVERY</code> and <code>FOR</code> intervals
+configured.
+CQs default to the relevant
+<a href="index.html#description-of-basic-syntax">basic syntax behavior</a>
+if the <code>EVERY</code> interval or <code>FOR</code> interval is not provided (see the first issue in
+<a href="index.html#common-issues-with-advanced-syntax">Common Issues with Advanced Syntax</a>
+for an anomalous case).</p>
+
+<h4 id="examples-of-advanced-syntax">Examples of advanced syntax</h4>
+
+<p>The examples below use the following sample data in the <code>transportation</code> database.
+The measurement <code>bus_data</code> stores 15-minute resolution data on the number of bus
+<code>passengers</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span><span class="p">:</span> <span class="n">bus_data</span>
+<span class="c1">--------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">passengers</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T06</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T06</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">4</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">8</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">8</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">8</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">15</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">15</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">17</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T09</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">20</span></code></pre></div>
+<h5 id="configuring-execution-intervals">Configuring execution intervals</h5>
+
+<p>Use an <code>EVERY</code> interval in the <code>RESAMPLE</code> clause to specify the CQ&rsquo;s execution
+interval.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_advanced_every&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="n">RESAMPLE</span> <span class="k">EVERY</span> <span class="mi">30</span><span class="n">m</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_advanced_every</code> calculates the one-hour average of <code>passengers</code>
+from the <code>bus_data</code> measurement and stores the results in the
+<code>average_passengers</code> measurement in the <code>transportation</code> database.</p>
+
+<p><code>cq_advanced_every</code> executes at 30-minute intervals, the same interval as the
+<code>EVERY</code> interval.
+Every 30 minutes, <code>cq_advanced_every</code> runs a single query that covers the time
+range for the current time bucket, that is, the one-hour time bucket that
+intersects with <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_advanced_every</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;8:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_every</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">30</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_advanced_every</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;8:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_every</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">12</span><span class="p">.</span><span class="mi">6667</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">9</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_advanced_every</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;8:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_every</span><span class="o">`</span> <span class="n">writes</span> <span class="n">one</span> <span class="n">point</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span></code></pre></div>
+<p>Notice that <code>cq_advanced_every</code> calculates the result for the 8:00 time interval
+twice.
+First, it runs at 8:30 and calculates the average for every available data point
+between 8:00 and 9:00 (<code>8</code>,<code>15</code>, and <code>15</code>).
+Second, it runs at 9:00 and calculates the average for every available data
+point between 8:00 and 9:00 (<code>8</code>, <code>15</code>, <code>15</code>, and <code>17</code>).
+Because of the way InfluxDB
+<a href="../../troubleshooting/frequently-asked-questions/index.html#how-does-influxdb-handle-duplicate-points">handles duplicate points</a>
+, the second result simply overwrites the first result.</p>
+
+<h5 id="configuring-time-ranges-for-resampling">Configuring time ranges for resampling</h5>
+
+<p>Use a <code>FOR</code> interval in the <code>RESAMPLE</code> clause to specify the length of the CQ&rsquo;s
+time range.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_advanced_for&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="n">RESAMPLE</span> <span class="k">FOR</span> <span class="mi">1</span><span class="n">h</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_advanced_for</code> calculates the 30-minute average of <code>passengers</code>
+from the <code>bus_data</code> measurement and stores the results in the <code>average_passengers</code>
+measurement in the <code>transportation</code> database.</p>
+
+<p><code>cq_advanced_for</code> executes at 30-minute intervals, the same interval as the
+<code>GROUP BY time()</code> interval.
+Every 30 minutes, <code>cq_advanced_for</code> runs a single query that covers the time
+range between <code>now()</code> and <code>now()</code> minus the <code>FOR</code> interval, that is, the time
+range between <code>now()</code> and one hour prior to <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_advanced_for</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;8:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_for</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">6</span><span class="p">.</span><span class="mi">5</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">30</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_advanced_for</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span>  <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:30&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;8:30&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_for</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">11</span><span class="p">.</span><span class="mi">5</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">9</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_advanced_for</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;8:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_for</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">11</span><span class="p">.</span><span class="mi">5</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">16</span></code></pre></div>
+<p>Notice that <code>cq_advanced_for</code> will calculate the result for every time interval
+twice.
+The CQ calculates the average for the 7:30 time interval at 8:00 and at 8:30,
+and it calculates the average for the 8:00 time interval at 8:30 and 9:00.</p>
+
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">6</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">11</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">16</span></code></pre></div>
+<h5 id="configuring-execution-intervals-and-cq-time-ranges">Configuring execution intervals and CQ time ranges</h5>
+
+<p>Use an <code>EVERY</code> interval and <code>FOR</code> interval in the <code>RESAMPLE</code> clause to specify
+the CQ&rsquo;s execution interval and the length of the CQ&rsquo;s time range.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_advanced_every_for&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="n">RESAMPLE</span> <span class="k">EVERY</span> <span class="mi">1</span><span class="n">h</span> <span class="k">FOR</span> <span class="mi">90</span><span class="n">m</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_advanced_every_for</code> calculates the 30-minute average of
+<code>passengers</code> from the <code>bus_data</code> measurement and stores the results in the
+<code>average_passengers</code> measurement in the <code>transportation</code> database.</p>
+
+<p><code>cq_advanced_every_for</code> executes at one-hour intervals, the same interval as the
+<code>EVERY</code> interval.
+Every hour, <code>cq_advanced_every_for</code> runs a single query that covers the time
+range between <code>now()</code> and <code>now()</code> minus the <code>FOR</code> interval, that is, the time
+range between <code>now()</code> and 90 minutes prior to <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">8</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_advanced_every_for</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;6:30&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;8:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_every_for</span><span class="o">`</span> <span class="n">writes</span> <span class="n">three</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T06</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">3</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">6</span><span class="p">.</span><span class="mi">5</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">9</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span> <span class="o">`</span><span class="n">cq_advanced_every_for</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;7:30&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;9:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_every_for</span><span class="o">`</span> <span class="n">writes</span> <span class="n">three</span> <span class="n">points</span> <span class="k">to</span> <span class="n">the</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span> <span class="n">measurement</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">11</span><span class="p">.</span><span class="mi">5</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">16</span></code></pre></div>
+<p>Notice that <code>cq_advanced_every_for</code> will calculate the result for every time
+interval twice.
+The CQ calculates the average for the 7:30 interval at 8:00 and 9:00.</p>
+
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T06</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">3</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">6</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">11</span><span class="p">.</span><span class="mi">5</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">16</span></code></pre></div>
+<h5 id="configuring-cq-time-ranges-and-filling-empty-results">Configuring CQ time ranges and filling empty results</h5>
+
+<p>Use a <code>FOR</code> interval and <code>fill()</code> to change the value reported for time
+intervals with no data.
+Note that at least one data point must fall within the <code>FOR</code> interval for <code>fill()</code>
+to operate.
+If no data fall within the <code>FOR</code> interval the CQ writes no points to the
+destination measurement.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;cq_advanced_for_fill&#34;</span> <span class="k">ON</span> <span class="s2">&#34;transportation&#34;</span>
+<span class="n">RESAMPLE</span> <span class="k">FOR</span> <span class="mi">2</span><span class="n">h</span>
+<span class="k">BEGIN</span>
+  <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;passengers&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_passengers&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bus_data&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">)</span> <span class="n">fill</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="k">END</span></code></pre></div>
+<p><code>cq_advanced_for_fill</code> calculates the one-hour average of <code>passengers</code> from the
+<code>bus_data</code> measurement and stores the results in the <code>average_passengers</code>
+measurement in the <code>transportation</code> database.
+Where possible, it writes the value <code>1000</code> for time intervals with no results.</p>
+
+<p><code>cq_advanced_for_fill</code> executes at one-hour intervals, the same interval as the
+<code>GROUP BY time()</code> interval.
+Every hour, <code>cq_advanced_for_fill</code> runs a single query that covers the time
+range between <code>now()</code> and <code>now()</code> minus the <code>FOR</code> interval, that is, the time
+range between <code>now()</code> and two hours prior to <code>now()</code>.</p>
+
+<p>Annotated log output on the morning of August 28, 2016:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">6</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_advanced_for_fill</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;4:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;6:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_for_fill</span><span class="o">`</span> <span class="n">writes</span> <span class="k">nothing</span> <span class="k">to</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span><span class="p">;</span> <span class="o">`</span><span class="n">bus_data</span><span class="o">`</span> <span class="n">has</span> <span class="k">no</span> <span class="k">data</span>
+<span class="n">that</span> <span class="n">fall</span> <span class="n">within</span> <span class="n">that</span> <span class="n">time</span> <span class="n">range</span><span class="p">.</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">7</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_advanced_for_fill</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;5:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;7:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_for_fill</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="n">time</span>                   <span class="n">mean</span>
+    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T05</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">1000</span>          <span class="o">&lt;</span><span class="c1">------ fill(1000)
+</span><span class="c1"></span>    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T06</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">3</span>             <span class="o">&lt;</span><span class="c1">------ average of 2 and 4
+</span><span class="c1"></span><span class="o">&gt;</span>
+<span class="p">[...]</span>
+<span class="o">&gt;</span>
+<span class="k">At</span> <span class="o">**</span><span class="mi">11</span><span class="p">:</span><span class="mi">00</span><span class="o">**</span><span class="p">,</span> <span class="o">`</span><span class="n">cq_advanced_for_fill</span><span class="o">`</span> <span class="n">executes</span> <span class="n">a</span> <span class="n">query</span> <span class="k">with</span> <span class="n">the</span> <span class="n">time</span> <span class="n">range</span> <span class="o">`</span><span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;9:00&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;11:00&#39;</span><span class="o">`</span><span class="p">.</span>
+<span class="o">`</span><span class="n">cq_advanced_for_fill</span><span class="o">`</span> <span class="n">writes</span> <span class="n">two</span> <span class="n">points</span> <span class="k">to</span> <span class="o">`</span><span class="n">average_passengers</span><span class="o">`</span><span class="p">:</span>
+<span class="o">&gt;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+    <span class="c1">------------------------
+</span><span class="c1"></span>    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T09</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">20</span>            <span class="o">&lt;</span><span class="c1">------ average of 20
+</span><span class="c1"></span>    <span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">1000</span>          <span class="o">&lt;</span><span class="c1">------ fill(1000)
+</span><span class="c1"></span><span class="o">&gt;</span></code></pre></div>
+<p>At <strong>12:00</strong>, <code>cq_advanced_for_fill</code> executes a query with the time range <code>WHERE time &gt;= '10:00' AND time &lt; '12:00'</code>.
+<code>cq_advanced_for_fill</code> writes nothing to <code>average_passengers</code>; <code>bus_data</code> has no data
+that fall within that time range.</p>
+
+<p>Here are the results:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;average_passengers&#34;</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">average_passengers</span>
+<span class="c1">------------------------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">mean</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T05</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">1000</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T06</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">3</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T07</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">7</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">13</span><span class="p">.</span><span class="mi">75</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T09</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">20</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">28</span><span class="n">T10</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">1000</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>fill(previous)</code> doesn’t fill the result for a time interval if the
+previous value is outside the query’s time range.
+See <a href="../../troubleshooting/frequently-asked-questions/index.html#why-does-fill-previous-return-empty-results">Frequently Asked Questions</a>
+for more information.</p>
+</blockquote>
+
+<h4 id="common-issues-with-advanced-syntax">Common issues with advanced syntax</h4>
+
+<h5 id="if-the-every-interval-is-greater-than-the-group-by-time-interval">If the <code>EVERY</code> interval is greater than the <code>GROUP BY time()</code> interval</h5>
+
+<p>If the <code>EVERY</code> interval is greater than the <code>GROUP BY time()</code> interval, the CQ
+executes at the same interval as the <code>EVERY</code> interval and runs a single query
+that covers the time range between <code>now()</code> and <code>now()</code> minus the <code>EVERY</code>
+interval (not between <code>now()</code> and <code>now()</code> minus the <code>GROUP BY time()</code> interval).</p>
+
+<p>For example, if the <code>GROUP BY time()</code> interval is <code>5m</code> and the <code>EVERY</code> interval
+is <code>10m</code>, the CQ executes every ten minutes.
+Every ten minutes, the CQ runs a single query that covers the time range
+between <code>now()</code> and <code>now()</code> minus the <code>EVERY</code> interval, that is, the time
+range between <code>now()</code> and ten minutes prior to <code>now()</code>.</p>
+
+<p>This behavior is intentional and prevents the CQ from missing data between
+execution times.</p>
+
+<h5 id="if-the-for-interval-is-less-than-the-execution-interval">If the <code>FOR</code> interval is less than the execution interval</h5>
+
+<p>If the <code>FOR</code> interval is less than the <code>GROUP BY time()</code> interval or, if
+specified, the <code>EVERY</code> interval, InfluxDB returns the following error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="k">FOR</span> <span class="n">duration</span> <span class="n">must</span> <span class="n">be</span> <span class="o">&gt;=</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span> <span class="n">duration</span><span class="p">:</span> <span class="n">must</span> <span class="n">be</span> <span class="n">a</span> <span class="n">minimum</span> <span class="k">of</span> <span class="o">&lt;</span><span class="n">minimum</span><span class="o">-</span><span class="n">allowable</span><span class="o">-</span><span class="nb">interval</span><span class="o">&gt;</span> <span class="n">got</span> <span class="o">&lt;</span><span class="k">user</span><span class="o">-</span><span class="n">specified</span><span class="o">-</span><span class="nb">interval</span><span class="o">&gt;</span></code></pre></div>
+<p>To avoid missing data between execution times, the <code>FOR</code> interval must be equal
+to or greater than the <code>GROUP BY time()</code> interval or, if specified, the <code>EVERY</code>
+interval.</p>
+
+<p>Currently, this is the intended behavior.
+GitHub Issue <a href="https://github.com/influxdata/influxdb/issues/6963">#6963</a>
+outlines a feature request for CQs to support gaps in data coverage.</p>
+
+<h2 id="continuous-query-management">Continuous query management</h2>
+
+<p>Only admin users are allowed to work with CQs. For more on user privileges, see <a href="../../administration/authentication_and_authorization/index.html#user-types-and-privileges">Authentication and Authorization</a>.</p>
+
+<h3 id="listing-continuous-queries">Listing continuous queries</h3>
+
+<p>List every CQ on an InfluxDB instance with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">CONTINUOUS</span> <span class="n">QUERIES</span></code></pre></div>
+<p><code>SHOW CONTINUOUS QUERIES</code> groups results by database.</p>
+
+<h5 id="examples">Examples</h5>
+
+<p>The output shows that the <code>telegraf</code> and <code>mydb</code> databases have CQs:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">CONTINUOUS</span> <span class="n">QUERIES</span>
+<span class="n">name</span><span class="p">:</span> <span class="n">_internal</span>
+<span class="c1">---------------
+</span><span class="c1"></span><span class="n">name</span>   <span class="n">query</span>
+
+
+<span class="n">name</span><span class="p">:</span> <span class="n">telegraf</span>
+<span class="c1">--------------
+</span><span class="c1"></span><span class="n">name</span>           <span class="n">query</span>
+<span class="n">idle_hands</span>     <span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="n">idle_hands</span> <span class="k">ON</span> <span class="n">telegraf</span> <span class="k">BEGIN</span> <span class="k">SELECT</span> <span class="k">min</span><span class="p">(</span><span class="n">usage_idle</span><span class="p">)</span> <span class="k">INTO</span> <span class="n">telegraf</span><span class="p">.</span><span class="n">autogen</span><span class="p">.</span><span class="n">min_hourly_cpu</span> <span class="k">FROM</span> <span class="n">telegraf</span><span class="p">.</span><span class="n">autogen</span><span class="p">.</span><span class="n">cpu</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">)</span> <span class="k">END</span>
+<span class="n">feeling_used</span>   <span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="n">feeling_used</span> <span class="k">ON</span> <span class="n">telegraf</span> <span class="k">BEGIN</span> <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="n">used</span><span class="p">)</span> <span class="k">INTO</span> <span class="n">downsampled_telegraf</span><span class="p">.</span><span class="n">autogen</span><span class="p">.:</span><span class="n">MEASUREMENT</span> <span class="k">FROM</span> <span class="n">telegraf</span><span class="p">.</span><span class="n">autogen</span><span class="p">.</span><span class="o">/</span><span class="p">.</span><span class="o">*/</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">)</span> <span class="k">END</span>
+
+
+<span class="n">name</span><span class="p">:</span> <span class="n">downsampled_telegraf</span>
+<span class="c1">--------------------------
+</span><span class="c1"></span><span class="n">name</span>   <span class="n">query</span>
+
+
+<span class="n">name</span><span class="p">:</span> <span class="n">mydb</span>
+<span class="c1">----------
+</span><span class="c1"></span><span class="n">name</span>      <span class="n">query</span>
+<span class="n">vampire</span>   <span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="n">vampire</span> <span class="k">ON</span> <span class="n">mydb</span> <span class="k">BEGIN</span> <span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="n">dracula</span><span class="p">)</span> <span class="k">INTO</span> <span class="n">mydb</span><span class="p">.</span><span class="n">autogen</span><span class="p">.</span><span class="n">all_of_them</span> <span class="k">FROM</span> <span class="n">mydb</span><span class="p">.</span><span class="n">autogen</span><span class="p">.</span><span class="n">one</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">5</span><span class="n">m</span><span class="p">)</span> <span class="k">END</span></code></pre></div>
+<h3 id="deleting-continuous-queries">Deleting continuous queries</h3>
+
+<p>Delete a CQ from a specific database with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="o">&lt;</span><span class="n">cq_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span></code></pre></div>
+<p><code>DROP CONTINUOUS QUERY</code> returns an empty result.</p>
+
+<h5 id="examples-1">Examples</h5>
+
+<p>Drop the <code>idle_hands</code> CQ from the <code>telegraf</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">DROP</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;idle_hands&#34;</span> <span class="k">ON</span> <span class="s2">&#34;telegraf&#34;</span><span class="o">`</span>
+<span class="o">&gt;</span></code></pre></div>
+<h3 id="altering-continuous-queries">Altering continuous queries</h3>
+
+<p>CQs cannot be altered once they&rsquo;re created.
+To change a CQ, you must <code>DROP</code> and re<code>CREATE</code> it with the updated settings.</p>
+
+<h3 id="continuous-query-statistics">Continuous query statistics</h3>
+
+<p>If <code>query-stats-enabled</code> is set to <code>true</code> in your <code>influxdb.conf</code> or using the <code>INFLUXDB_CONTINUOUS_QUERIES_QUERY_STATS_ENABLED</code> environment variable, data will be written to <code>_internal</code> with information about when continuous queries ran and their duration.
+Information about CQ configuration settings is available in the <a href="../../administration/config/index.html#continuous-queries-settings">Configuration</a> documentation.</p>
+
+<blockquote>
+<p><strong>Note:</strong> <code>_internal</code> houses internal system data and is meant for internal use.
+The structure of and data stored in <code>_internal</code> can change at any time.
+Use of this data falls outside the scope of official InfluxData support.</p>
+</blockquote>
+
+<h2 id="continuous-query-use-cases">Continuous query use cases</h2>
+
+<h3 id="downsampling-and-data-retention">Downsampling and Data Retention</h3>
+
+<p>Use CQs with InfluxDB database
+<a href="../../concepts/glossary/index.html#retention-policy-rp">retention policies</a>
+(RPs) to mitigate storage concerns.
+Combine CQs and RPs to automatically downsample high precision data to a lower
+precision and remove the dispensable, high precision data from the database.</p>
+
+<p>See the
+<a href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a>
+guide for a detailed walkthrough of this common use case.</p>
+
+<h3 id="precalculating-expensive-queries">Precalculating expensive queries</h3>
+
+<p>Shorten query runtimes by pre-calculating expensive queries with CQs.
+Use a CQ to automatically downsample commonly-queried, high precision data to a
+lower precision.
+Queries on lower precision data require fewer resources and return faster.</p>
+
+<p><strong>Tip:</strong> Pre-calculate queries for your preferred graphing tool to accelerate
+the population of graphs and dashboards.</p>
+
+<h3 id="substituting-for-a-having-clause">Substituting for a <code>HAVING</code> clause</h3>
+
+<p>InfluxQL does not support <a href="https://en.wikipedia.org/wiki/Having_%28SQL%29"><code>HAVING</code> clauses</a>.
+Get the same functionality by creating a CQ to aggregate the data and querying
+the CQ results to apply the <code>HAVING</code> clause.</p>
+
+<blockquote>
+<p><strong>Note:</strong> InfluxQL supports <a href="../data_exploration/index.html#subqueries">subqueries</a> which also offer similar functionality to <code>HAVING</code> clauses.
+See <a href="../data_exploration/index.html#subqueries">Data Exploration</a> for more information.</p>
+</blockquote>
+
+<h5 id="example">Example</h5>
+
+<p>InfluxDB does not accept the following query with a <code>HAVING</code> clause.
+The query calculates the average number of <code>bees</code> at <code>30</code> minute intervals and
+requests averages that are greater than <code>20</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;bees&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;farm&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">)</span> <span class="k">HAVING</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;bees&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">20</span></code></pre></div>
+<p>To get the same results:</p>
+
+<p><strong>1. Create a CQ</strong></p>
+
+<p>This step performs the <code>mean(&quot;bees&quot;)</code> part of the query above.
+Because this step creates CQ you only need to execute it once.</p>
+
+<p>The following CQ automatically calculates the average number of <code>bees</code> at
+<code>30</code> minutes intervals and writes those averages to the <code>mean_bees</code> field in the
+<code>aggregate_bees</code> measurement.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;bee_cq&#34;</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span> <span class="k">BEGIN</span> <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;bees&#34;</span><span class="p">)</span> <span class="k">AS</span> <span class="s2">&#34;mean_bees&#34;</span> <span class="k">INTO</span> <span class="s2">&#34;aggregate_bees&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;farm&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">)</span> <span class="k">END</span></code></pre></div>
+<p><strong>2. Query the CQ results</strong></p>
+
+<p>This step performs the <code>HAVING mean(&quot;bees&quot;) &gt; 20</code> part of the query above.</p>
+
+<p>Query the data in the measurement <code>aggregate_bees</code> and request values of the <code>mean_bees</code> field that are greater than <code>20</code> in the <code>WHERE</code> clause:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;mean_bees&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;aggregate_bees&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;mean_bees&#34;</span> <span class="o">&gt;</span> <span class="mi">20</span></code></pre></div>
+<h3 id="substituting-for-nested-functions">Substituting for nested functions</h3>
+
+<p>Some InfluxQL functions
+<a href="../../troubleshooting/frequently-asked-questions/index.html#which-influxql-functions-support-nesting">support nesting</a>
+of other functions.
+Most do not.
+If your function does not support nesting, you can get the same functionality using a CQ to calculate
+the inner-most function.
+Then simply query the CQ results to calculate the outer-most function.</p>
+
+<blockquote>
+<p><strong>Note:</strong> InfluxQL supports <a href="../data_exploration/index.html#subqueries">subqueries</a> which also offer the same functionality as nested functions.
+See <a href="../data_exploration/index.html#subqueries">Data Exploration</a> for more information.</p>
+</blockquote>
+
+<h5 id="example-1">Example</h5>
+
+<p>InfluxDB does not accept the following query with a nested function.
+The query calculates the number of non-null values
+of <code>bees</code> at <code>30</code> minute intervals and the average of those counts:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="k">count</span><span class="p">(</span><span class="s2">&#34;bees&#34;</span><span class="p">))</span> <span class="k">FROM</span> <span class="s2">&#34;farm&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">)</span></code></pre></div>
+<p>To get the same results:</p>
+
+<p><strong>1. Create a CQ</strong></p>
+
+<p>This step performs the <code>count(&quot;bees&quot;)</code> part of the nested function above.
+Because this step creates a CQ you only need to execute it once.</p>
+
+<p>The following CQ automatically calculates the number of non-null values of <code>bees</code> at <code>30</code> minute intervals
+and writes those counts to the <code>count_bees</code> field in the <code>aggregate_bees</code> measurement.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;bee_cq&#34;</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span> <span class="k">BEGIN</span> <span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="s2">&#34;bees&#34;</span><span class="p">)</span> <span class="k">AS</span> <span class="s2">&#34;count_bees&#34;</span> <span class="k">INTO</span> <span class="s2">&#34;aggregate_bees&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;farm&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">30</span><span class="n">m</span><span class="p">)</span> <span class="k">END</span></code></pre></div>
+<p><strong>2. Query the CQ results</strong></p>
+
+<p>This step performs the <code>mean([...])</code> part of the nested function above.</p>
+
+<p>Query the data in the measurement <code>aggregate_bees</code> to calculate the average of the
+<code>count_bees</code> field:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;count_bees&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;aggregate_bees&#34;</span> <span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="o">&lt;</span><span class="n">start_time</span><span class="o">&gt;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="o">&lt;</span><span class="n">end_time</span><span class="o">&gt;</span></code></pre></div>
+<h2 id="further-information">Further information</h2>
+
+<p>To see how to combine two InfluxDB features, CQs, and retention policies,
+to periodically downsample data and automatically expire the dispensable high
+precision data, see <a href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a>.</p>
+
+<p>Kapacitor, InfluxData&rsquo;s data processing engine, can do the same work as
+continuous queries in InfluxDB databases.</p>
+
+<p>To learn when to use Kapacitor instead of InfluxDB and how to perform the same CQ
+functionality with a TICKscript, see <a href="https://docs.influxdata.com/kapacitor/latest/examples/continuous_queries/">examples of continuous queries in Kapacitor</a>.</p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/query_language/continuous_queries.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/query_language/continuous_queries/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

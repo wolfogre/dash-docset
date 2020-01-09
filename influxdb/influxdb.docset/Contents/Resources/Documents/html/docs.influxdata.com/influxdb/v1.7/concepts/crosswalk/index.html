@@ -1,0 +1,1070 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title> InfluxDB compared to SQL databases | InfluxData Documentation</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon"/>
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true"/>
+    
+    
+
+    
+    <meta name="robots" content="index, follow"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css"/>
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+
+    <meta name="application-name" content="InfluxData"/>
+    <meta name="msapplication-TileColor" content=""/>
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@influxdb"/>
+    <meta name="twitter:title" content=" InfluxDB compared to SQL databases | InfluxData Documentation"/>
+    <meta name="twitter:description" content=""/>
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta property="fb:app_id" content="222112578359661"/>
+    <meta property="og:title" content=" InfluxDB compared to SQL databases | InfluxData Documentation"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content="https://docs.influxdata.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg"/>
+    <meta property="og:image:width" content="555px"/>
+    <meta property="og:image:height" content="290px"/>
+
+    <meta name="Copyright" content="InfluxData Inc."/>
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body class="docs-theme--influxdb">
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/" target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..."/>
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle">InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>InfluxDB compared to SQL databases</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<h1 id="what-s-in-a-database">What&rsquo;s in a database?</h1>
+
+<p>This page gives SQL users an overview of how InfluxDB is like an SQL database and how it&rsquo;s not.
+It highlights some of the major distinctions between the two and provides a loose crosswalk between the different database terminologies and query languages.</p>
+
+<h2 id="in-general">In general&hellip;</h2>
+
+<p>InfluxDB is designed to work with time-series data.
+SQL databases can handle time-series but weren&rsquo;t created strictly for that purpose.
+In short, InfluxDB is made to store a large volume of time-series data and perform real-time analysis on those data, quickly.</p>
+
+<h3 id="timing-is-everything">Timing is everything</h3>
+
+<p>In InfluxDB, a timestamp identifies a single point in any given data series.
+This is like an SQL database table where the primary key is pre-set by the system and is always time.</p>
+
+<p>InfluxDB also recognizes that your <a href="../glossary/index.html#schema">schema</a> preferences may change over time.
+In InfluxDB you don&rsquo;t have to define schemas up front.
+Data points can have one of the fields on a measurement, all of the fields on a measurement, or any number in-between.
+You can add new fields to a measurement simply by writing a point for that new field.
+If you need an explanation of the terms measurements, tags, and fields check out the next section for an SQL database to InfluxDB terminology crosswalk.</p>
+
+<h2 id="terminology">Terminology</h2>
+
+<p>The table below is a (very) simple example of a table  called <code>foodships</code> in an SQL database
+with the unindexed column <code>#_foodships</code> and the indexed columns <code>park_id</code>, <code>planet</code>, and <code>time</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">+</span><span class="c1">---------+---------+---------------------+--------------+
+</span><span class="c1"></span><span class="o">|</span> <span class="n">park_id</span> <span class="o">|</span> <span class="n">planet</span>  <span class="o">|</span> <span class="n">time</span>                <span class="o">|</span> <span class="o">#</span><span class="n">_foodships</span>  <span class="o">|</span>
+<span class="o">+</span><span class="c1">---------+---------+---------------------+--------------+
+</span><span class="c1"></span><span class="o">|</span>       <span class="mi">1</span> <span class="o">|</span> <span class="n">Earth</span>   <span class="o">|</span> <span class="mi">1429185600000000000</span> <span class="o">|</span>            <span class="mi">0</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">1</span> <span class="o">|</span> <span class="n">Earth</span>   <span class="o">|</span> <span class="mi">1429185601000000000</span> <span class="o">|</span>            <span class="mi">3</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">1</span> <span class="o">|</span> <span class="n">Earth</span>   <span class="o">|</span> <span class="mi">1429185602000000000</span> <span class="o">|</span>           <span class="mi">15</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">1</span> <span class="o">|</span> <span class="n">Earth</span>   <span class="o">|</span> <span class="mi">1429185603000000000</span> <span class="o">|</span>           <span class="mi">15</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">2</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185600000000000</span> <span class="o">|</span>            <span class="mi">5</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">2</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185601000000000</span> <span class="o">|</span>            <span class="mi">9</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">2</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185602000000000</span> <span class="o">|</span>           <span class="mi">10</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">2</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185603000000000</span> <span class="o">|</span>           <span class="mi">14</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">3</span> <span class="o">|</span> <span class="n">Jupiter</span> <span class="o">|</span> <span class="mi">1429185600000000000</span> <span class="o">|</span>           <span class="mi">20</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">3</span> <span class="o">|</span> <span class="n">Jupiter</span> <span class="o">|</span> <span class="mi">1429185601000000000</span> <span class="o">|</span>           <span class="mi">21</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">3</span> <span class="o">|</span> <span class="n">Jupiter</span> <span class="o">|</span> <span class="mi">1429185602000000000</span> <span class="o">|</span>           <span class="mi">21</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">3</span> <span class="o">|</span> <span class="n">Jupiter</span> <span class="o">|</span> <span class="mi">1429185603000000000</span> <span class="o">|</span>           <span class="mi">20</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">4</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185600000000000</span> <span class="o">|</span>            <span class="mi">5</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">4</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185601000000000</span> <span class="o">|</span>            <span class="mi">5</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">4</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185602000000000</span> <span class="o">|</span>            <span class="mi">6</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="mi">4</span> <span class="o">|</span> <span class="n">Saturn</span>  <span class="o">|</span> <span class="mi">1429185603000000000</span> <span class="o">|</span>            <span class="mi">5</span> <span class="o">|</span>
+<span class="o">+</span><span class="c1">---------+---------+---------------------+--------------+</span></code></pre></div>
+<p>Those same data look like this in InfluxDB:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span><span class="p">:</span> <span class="n">foodships</span>
+<span class="n">tags</span><span class="p">:</span> <span class="n">park_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">planet</span><span class="o">=</span><span class="n">Earth</span>
+<span class="n">time</span>			               <span class="o">#</span><span class="n">_foodships</span>
+<span class="c1">----			               ------------
+</span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>	 <span class="mi">0</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">01</span><span class="n">Z</span>	 <span class="mi">3</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span><span class="n">Z</span>	 <span class="mi">15</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">03</span><span class="n">Z</span>	 <span class="mi">15</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">foodships</span>
+<span class="n">tags</span><span class="p">:</span> <span class="n">park_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">planet</span><span class="o">=</span><span class="n">Saturn</span>
+<span class="n">time</span>			               <span class="o">#</span><span class="n">_foodships</span>
+<span class="c1">----			               ------------
+</span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>	 <span class="mi">5</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">01</span><span class="n">Z</span>	 <span class="mi">9</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span><span class="n">Z</span>	 <span class="mi">10</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">03</span><span class="n">Z</span>	 <span class="mi">14</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">foodships</span>
+<span class="n">tags</span><span class="p">:</span> <span class="n">park_id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">planet</span><span class="o">=</span><span class="n">Jupiter</span>
+<span class="n">time</span>			               <span class="o">#</span><span class="n">_foodships</span>
+<span class="c1">----			               ------------
+</span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>	 <span class="mi">20</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">01</span><span class="n">Z</span>	 <span class="mi">21</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span><span class="n">Z</span>	 <span class="mi">21</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">03</span><span class="n">Z</span>	 <span class="mi">20</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">foodships</span>
+<span class="n">tags</span><span class="p">:</span> <span class="n">park_id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">planet</span><span class="o">=</span><span class="n">Saturn</span>
+<span class="n">time</span>			               <span class="o">#</span><span class="n">_foodships</span>
+<span class="c1">----			               ------------
+</span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>	 <span class="mi">5</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">01</span><span class="n">Z</span>	 <span class="mi">5</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">02</span><span class="n">Z</span>	 <span class="mi">6</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">16</span><span class="n">T12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">03</span><span class="n">Z</span>	 <span class="mi">5</span></code></pre></div>
+<p>Referencing the example above, in general:</p>
+
+<ul>
+<li>An InfluxDB measurement (<code>foodships</code>) is similar to an SQL database table.</li>
+<li>InfluxDB tags ( <code>park_id</code> and <code>planet</code>) are like indexed columns in an SQL database.</li>
+<li>InfluxDB fields (<code>#_foodships</code>) are like unindexed columns in an SQL database.</li>
+<li>InfluxDB points (for example, <code>2015-04-16T12:00:00Z   5</code>) are similar to SQL rows.</li>
+</ul>
+
+<p>Building on this comparison of database terminology,
+InfluxDB <a href="../glossary/index.html#continuous-query-cq">continuous queries</a>
+and <a href="../glossary/index.html#retention-policy-rp">retention policies</a> are
+similar to stored procedures in an SQL database.
+They&rsquo;re specified once and then performed regularly and automatically.</p>
+
+<p>Of course, there are some major disparities between SQL databases and InfluxDB.
+SQL <code>JOIN</code>s aren&rsquo;t available for InfluxDB measurements; your schema design should reflect that difference.
+And, as we mentioned above, a measurement is like an SQL table where the primary index is always pre-set to time.
+InfluxDB timestamps must be in UNIX epoch (GMT) or formatted as a date-time string valid under RFC3339.</p>
+
+<p>For more detailed descriptions of the InfluxDB terms mentioned in this section see our <a href="../glossary/index.html">Glossary of Terms</a>.</p>
+
+<h2 id="influxql-and-sql">InfluxQL and SQL</h2>
+
+<p>InfluxQL is an SQL-like query language for interacting with InfluxDB.
+It has been lovingly crafted to feel familiar to those coming from other
+SQL or SQL-like environments while also providing features specific
+to storing and analyzing time series data.</p>
+
+<p>InfluxQL&rsquo;s <code>SELECT</code> statement follows the form of an SQL <code>SELECT</code> statement:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">&lt;</span><span class="n">stuff</span><span class="o">&gt;</span> <span class="k">FROM</span> <span class="o">&lt;</span><span class="n">measurement_name</span><span class="o">&gt;</span> <span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">some_conditions</span><span class="o">&gt;</span></code></pre></div>
+<p>where <code>WHERE</code> is optional.</p>
+
+<p>To get the InfluxDB output in the section above, you&rsquo;d enter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;foodships&#34;</span></code></pre></div>
+<p>If you only wanted to see data for the planet <code>Saturn</code>, you&rsquo;d enter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;foodships&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;planet&#34;</span> <span class="o">=</span> <span class="s1">&#39;Saturn&#39;</span></code></pre></div>
+<p>If you wanted to see data for the planet <code>Saturn</code> after 12:00:01 UTC on April 16, 2015, you&rsquo;d enter:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;foodships&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;planet&#34;</span> <span class="o">=</span> <span class="s1">&#39;Saturn&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&gt;</span> <span class="s1">&#39;2015-04-16 12:00:01&#39;</span></code></pre></div>
+<p>As shown in the example above, InfluxQL allows you to specify the time range of your query in the <code>WHERE</code> clause.
+You can use date-time strings wrapped in single quotes that have the
+format <code>YYYY-MM-DD HH:MM:SS.mmm</code>
+(<code>mmm</code> is milliseconds and is optional, and you can also specify microseconds or nanoseconds).
+You can also use relative time with <code>now()</code> which refers to the server&rsquo;s current timestamp:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;foodships&#34;</span> <span class="k">WHERE</span> <span class="n">time</span> <span class="o">&gt;</span> <span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="n">h</span></code></pre></div>
+<p>That query outputs the data in the <code>foodships</code> measure where the timestamp is newer than the server&rsquo;s current time minus one hour.
+The options for specifying time durations with <code>now()</code> are:</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Letter</th>
+<th align="center">Meaning</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">ns</td>
+<td align="center">nanoseconds</td>
+</tr>
+
+<tr>
+<td align="center">u or &micro;</td>
+<td align="center">microseconds</td>
+</tr>
+
+<tr>
+<td align="center">ms</td>
+<td align="center">milliseconds</td>
+</tr>
+
+<tr>
+<td align="center">s</td>
+<td align="center">seconds</td>
+</tr>
+
+<tr>
+<td align="center">m</td>
+<td align="center">minutes</td>
+</tr>
+
+<tr>
+<td align="center">h</td>
+<td align="center">hours</td>
+</tr>
+
+<tr>
+<td align="center">d</td>
+<td align="center">days</td>
+</tr>
+
+<tr>
+<td align="center">w</td>
+<td align="center">weeks</td>
+</tr>
+</tbody>
+</table>
+
+<p>InfluxQL also supports regular expressions, arithmetic in expressions, <code>SHOW</code> statements, and <code>GROUP BY</code> statements.
+See our <a href="../../query_language/data_exploration/index.html">data exploration</a> page for an in-depth discussion of those topics.
+InfluxQL functions include <code>COUNT</code>, <code>MIN</code>, <code>MAX</code>, <code>MEDIAN</code>, <code>DERIVATIVE</code> and more.
+For a full list check out the <a href="../../query_language/functions/index.html">functions</a> page.</p>
+
+<p>Now that you have the general idea, check out our <a href="../../introduction/getting-started/index.html">Getting Started Guide</a>.</p>
+
+<h2 id="a-note-on-why-influxdb-isn-t-crud">A note on why InfluxDB isn&rsquo;t CRUD</h2>
+
+<p>InfluxDB is a database that has been optimized for time series data.
+This data commonly comes from sources like distributed sensor groups, click data from large websites, or lists of financial transactions.</p>
+
+<p>One thing this data has in common is that it is more useful in the aggregate.
+One reading saying that your computer&rsquo;s CPU is at 12% utilization at 12:38:35 UTC on a Tuesday is hard to draw conclusions from.
+It becomes more useful when combined with the rest of the series and visualized.
+This is where trends over time begin to show, and actionable insight can be drawn from the data.
+In addition, time series data is generally written once and rarely updated.</p>
+
+<p>The result is that InfluxDB is not a full CRUD database but more like a CR-ud, prioritizing the performance of creating and reading data over update and destroy, and <a href="../insights_tradeoffs/index.html">preventing some update and destroy behaviors</a> to make create and read more performant:</p>
+
+<ul>
+<li>To update a point, insert one with <a href="../../troubleshooting/frequently-asked-questions/index.html#how-does-influxdb-handle-duplicate-points">the same measurement, tag set, and timestamp</a>.</li>
+<li>You can <a href="../../query_language/database_management/index.html#drop-series-from-the-index-with-drop-series">drop or delete a series</a>, but not individual points based on field values. As a workaround, you can search for the field value, retrieve the time, then <a href="../../query_language/database_management/index.html#delete-series-with-delete">DELETE based on the <code>time</code> field</a>.</li>
+<li>You can&rsquo;t update or rename tags yet - see GitHub issue <a href="https://github.com/influxdata/influxdb/issues/4157">#4157</a> for more information. To modify the tag of a series of points, find the points with the offending tag value, change the value to the desired one, write the points back, then drop the series with the old tag value.</li>
+<li>You can&rsquo;t delete tags by tag key (as opposed to value) - see GitHub issue <a href="https://github.com/influxdata/influxdb/issues/8604">#8604</a>.</li>
+</ul>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/concepts/crosswalk.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/concepts/crosswalk/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+
+
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+
+</body></html>

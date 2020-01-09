@@ -1,0 +1,2385 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> InfluxDB 1.7 release notes | InfluxData Documentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" InfluxDB 1.7 release notes | InfluxData Documentation">
+    <meta name="twitter:description" content="">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" InfluxDB 1.7 release notes | InfluxData Documentation" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>InfluxDB 1.7 release notes</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<h2 id="v1-7-9-2019-10-27">v1.7.9 [2019-10-27]</h2>
+
+<h3 id="release-notes">Release notes</h3>
+
+<ul>
+<li>This release is built using Go 1.12.10 which eliminates the
+<a href="https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn">HTTP desync vulnerability</a>.</li>
+</ul>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+<li>Guard against compaction burst throughput limit.</li>
+<li>Replace TSI compaction wait group with counter.</li>
+<li>Update InfluxQL dependency.</li>
+<li>Add option to authenticate debug/pprof and ping endpoints.</li>
+<li>Honor <code>insecure-skip-verify</code> even if custom TLS config is specified.</li>
+</ul>
+
+<h3 id="features">Features</h3>
+
+<ul>
+<li>Update Go version to 1.12.10.</li>
+<li>Remove Godeps file.</li>
+<li>Update Flux version to v0.50.2.</li>
+</ul>
+
+<h2 id="v1-7-8-2019-08-20">v1.7.8 [2019-08-20]</h2>
+
+
+<div class="warn">
+  <p>InfluxDB now rejects all non-UTF-8 characters.
+To successfully write data to InfluxDB, use only UTF-8 characters in
+database names, measurement names, tag sets, and field sets.</p>
+
+</div>
+
+
+<h3 id="bugfixes-1">Bugfixes</h3>
+
+<ul>
+<li>Fix Prometheus read panic.</li>
+<li>Remove stray <code>fmt.Println</code> in <code>tsm1.StringArrayEncodeAll</code>.</li>
+<li>Fix issue where fields re-appear after <code>DROP MEASUREMENT</code>.</li>
+<li>Remove a dubugging <code>println</code> call.</li>
+<li>Subquery ordering with aggregates in descending mode was wrong.</li>
+<li>Fix the http handler to not mislabel series as partial.</li>
+<li>Make <code>SHOW SERIES EXACT CARDINALITY</code> count only distinct series.</li>
+<li>Fix time range exceeding min/max bounds.</li>
+</ul>
+
+<h3 id="features-1">Features</h3>
+
+<ul>
+<li>Update Flux version to v0.36.2</li>
+</ul>
+
+<h2 id="1-7-7-2019-06-26">1.7.7 [2019-06-26]</h2>
+
+<h3 id="known-issues">Known issues</h3>
+
+<ul>
+<li>The Flux Technical Preview was not advanced and remains at version 0.24.0. Next month&rsquo;s maintenance release will update the preview.</li>
+<li>After upgrading, customers have experienced an excessively large output additional lines due to a <code>Println</code> statement introduced in this release. For a possible workaround, see <a href="https://github.com/influxdata/influxdb/issues/14265#issuecomment-508875853">https://github.com/influxdata/influxdb/issues/14265#issuecomment-508875853</a>. Next month&rsquo;s maintenance release will address this.</li>
+</ul>
+
+<h3 id="bug-fixes">Bug fixes</h3>
+
+<ul>
+<li>Fix the sort order for aggregates so that they are sorted by tag and then time.</li>
+<li>Use the timezone when evaluating time literals in subqueries.</li>
+<li>Fix CSV decoder bug where empty tag values cause an array index panic.</li>
+<li>Fix open/close race in <code>SeriesFile</code>.</li>
+<li>Sync series segment after truncate.</li>
+<li>Fix the ordering for selectors within a subquery with different outer tags.</li>
+</ul>
+
+<h2 id="1-7-6-2019-04-16">1.7.6 [2019-04-16]</h2>
+
+
+<div class="warn">
+  <p>If your InfluxDB OSS server is using the default in-memory index (<code>[data].index-version = &quot;inmem&quot;</code>),
+this release includes the fix for InfluxDB 1.7.5 servers that stopped responding without warning.</p>
+
+</div>
+
+
+<h3 id="features-2">Features</h3>
+
+<ul>
+<li>Upgrade Flux to <code>0.24.0</code> and remove the platform dependency.
+
+<ul>
+<li>If Flux is enabled, use Chronograf 1.7.11 or later.</li>
+<li>When using Flux, there is a known issue that using <code>now</code> will cause a panic.  The proper syntax is <code>now()</code>.</li>
+</ul></li>
+<li>Track remote read requests to Prometheus remote read handler.</li>
+</ul>
+
+<h3 id="bug-fixes-1">Bug fixes</h3>
+
+<ul>
+<li>Ensure credentials are correctly passed when executing Flux HTTP requests in the <code>influx</code> CLI with the <code>-type=flux</code> option.</li>
+<li>Back port of data generation improvements: renamed files for consistency between versions, added <code>time-interval</code> schema option, and updated schema example documentation.</li>
+<li>Fix security vulnerability when <code>[http]shared-secret</code> configuration setting is blank.</li>
+<li>Add nil check for <code>tagKeyValueEntry.setIDs()</code>.</li>
+<li>Extend the Prometheus remote write endpoint to drop unsupported Prometheus values (<code>NaN</code>,<code>-Inf</code>, and <code>+Inf</code>) rather than reject the entire batch.
+
+<ul>
+<li>If write trace logging enabled (<code>[http] write-tracing = true</code>), then summaries of dropped values are logged.</li>
+<li>If a batch of values contains values that are subsequently dropped, HTTP status code <code>204</code> is returned.</li>
+</ul></li>
+<li>Update predicate key mapping to match InfluxDB <code>2.x</code> behavior.</li>
+<li>Fix panic in Prometheus read API.</li>
+<li>Add a version constraint for influxql.</li>
+</ul>
+
+<h2 id="1-7-5-2019-03-26">1.7.5 [2019-03-26]</h2>
+
+
+<div class="warn">
+  <p><strong>Update (2019-04-01):</strong> If your InfluxDB OSS server is using the default in-memory index (<code>[data].index-version = &quot;inmem&quot;</code>), then do not upgrade to this release. Customers have reported that InfluxDB 1.7.5 stops responding without warning. For details, see <a href="https://github.com/influxdata/influxdb/issues/13010">GitHub issue #13010</a>. The <a href="https://github.com/influxdata/influxdb/issues/13053">planned fix</a> will be available soon.</p>
+
+</div>
+
+
+<h3 id="bug-fixes-2">Bug fixes</h3>
+
+<ul>
+<li>Update <code>tagKeyValue</code> mutex to write lock.</li>
+<li>Fix some more shard epoch races.</li>
+</ul>
+
+<h2 id="1-7-4-2019-02-13">1.7.4 [2019-02-13]</h2>
+
+<h3 id="features-3">Features</h3>
+
+<ul>
+<li>Allow TSI bitset cache to be configured. See: <a href="../../administration/config/index.html#tsi-tsi1-index-settings">InfluxDB Configuration <code>[data]</code></a></li>
+</ul>
+
+<h3 id="bug-fixes-3">Bug fixes</h3>
+
+<ul>
+<li>Remove copy-on-write when caching bitmaps in TSI.</li>
+<li>Use <code>systemd</code> for Amazon Linux 2.</li>
+<li>Revert &ldquo;Limit force-full and cold compaction size.&rdquo;</li>
+<li>Convert <code>TagValueSeriesIDCache</code> to use string fields.</li>
+<li>Ensure that cached series id sets are Go heap backed.</li>
+</ul>
+
+<h2 id="1-7-3-2019-01-11">1.7.3 [2019-01-11]</h2>
+
+<h3 id="important-update-2019-02-13">Important update [2019-02-13]</h3>
+
+<p>If you have not installed this release, then install the 1.7.4 release.</p>
+
+<p><strong>If you are currently running this release, then upgrade to the 1.7.4 release as soon as possible.</strong></p>
+
+<ul>
+<li>A critical defect in the InfluxDB 1.7.3 release was discovered and our engineering team fixed the issue in the 1.7.4 release. Out of high concern for your data and projects, upgrade to the 1.7.4 release as soon as possible.
+
+<ul>
+<li><strong>Critical defect:</strong> Shards larger than 16GB are at high risk for data loss during full compaction. The full compaction process runs when a shard go &ldquo;cold&rdquo; – no new data is being written into the database during the time range specified by the shard.</li>
+<li><strong>Post-mortem analysis:</strong> InfluxData engineering is performing a post-mortem analysis to determine how this defect was introduced. Their discoveries will be shared in a blog post.</li>
+</ul></li>
+</ul>
+
+<h3 id="breaking-changes">Breaking changes</h3>
+
+<ul>
+<li>Fix invalid UTF-8 bytes preventing shard opening. Treat fields and measurements as raw bytes.</li>
+</ul>
+
+<h3 id="features-4">Features</h3>
+
+<ul>
+<li>Update Flux to <code>0.12.0</code></li>
+</ul>
+
+<h3 id="bug-fixes-4">Bug fixes</h3>
+
+<ul>
+<li>Limit force-full and cold compaction size.</li>
+<li>Add user authentication and authorization support for Flux HTTP requests.</li>
+<li>Call <code>storage.Group</code> API to correctly map group mode.</li>
+<li>Marked functions that always return floats as always returning floats.</li>
+<li>Add support for optionally logging Flux queries.</li>
+<li>Fix cardinality estimation error.</li>
+</ul>
+
+<h2 id="1-7-2-2018-12-11">1.7.2 [2018-12-11]</h2>
+
+<h3 id="bug-fixes-5">Bug fixes</h3>
+
+<ul>
+<li>Update to Flux 0.7.1.</li>
+<li>Conflict-based concurrency resolution adds guards and an epoch-based system to
+coordinate modifications when deletes happen against writes to the same points
+at the same time.</li>
+<li>Skip and warn that series file should not be in a retention policy directory.</li>
+<li>Checks if measurement was removed from index, and if it was, then cleans up out
+of fields index. Also fix cleanup issue where only prefix was checked when
+matching measurements like &ldquo;m1&rdquo; and &ldquo;m10&rdquo;.</li>
+<li>Error message to user that databases must be run in non-mixed index mode
+to allow deletes.</li>
+<li>Update platform dependency to simplify Flux support in Enterprise.</li>
+<li>Verify series file in presence of tombstones.</li>
+<li>Fix <code>ApplyEnvOverrides</code> when a type that implements Unmarshaler is in a slice to
+not call <code>UnMarshaltext</code> when the environment variable is set to empty.</li>
+<li>Drop NaN values when writing back points and fix the point writer to report the
+number of points actually written and omits the ones that were dropped.</li>
+<li>Query authorizer was not properly passed to subqueries so rejections did not
+happen when a subquery was the one reading the value. Max series limit was not propagated downward.</li>
+</ul>
+
+<h2 id="1-7-1-2018-11-14">1.7.1 [2018-11-14]</h2>
+
+<h3 id="bug-fixes-6">Bug fixes</h3>
+
+<ul>
+<li>Simple8B <code>EncodeAll</code> incorrectly encodes entries: For a run of <code>1s</code>, if the 120th or 240th entry is not a <code>1</code>, the run will be incorrectly encoded as selector <code>0</code> (<code>240 1s</code>) or selector <code>1</code> (<code>120 1s</code>), resulting in a loss of data for the 120th or 240th value. Manifests itself as consuming significant CPU resources and as compactions running indefinitely.</li>
+</ul>
+
+<h2 id="1-7-0-2018-11-06">1.7.0 [2018-11-06]</h2>
+
+<h3 id="breaking-changes-1">Breaking changes</h3>
+
+<p>Chunked query was added into the Go client v2 interface. If you compiled against the Go client v2 previously, you need to recompile using the updated interface.</p>
+
+<h3 id="features-5">Features</h3>
+
+<h4 id="flux-v0-7-technical-preview">Flux v0.7 technical preview</h4>
+
+<p>Support for the Flux language and queries has been added in this release. To begin exploring Flux 0.7 (technical preview):</p>
+
+<ul>
+<li>Enable Flux using the new configuration setting <a href="../../administration/config/index.html#flux-enabled-false"><code>[http] flux-enabled = true</code></a>.</li>
+<li>Use the new <a href="../../tools/shell/index.html#type"><code>influx -type=flux</code></a> option to enable the Flux REPL shell for creating Flux queries.</li>
+<li>Read about Flux and the Flux language, enabling Flux, or jump into the getting started and other guides in the <a href="https://docs.influxdata.com/flux/v0.7/">Flux v0.7 (technical preview) documentation</a>.</li>
+</ul>
+
+<h4 id="time-series-index-tsi-query-performance-and-throughputs-improvements">Time Series Index (TSI) query performance and throughputs improvements</h4>
+
+<ul>
+<li>Faster index planning for queries against indexes with many series that share tag pairs.</li>
+<li>Reduced index planning for queries that include previously queried tag pairs — the TSI
+index now caches partial index results for later reuse.</li>
+<li>Performance improvements required a change in on-disk TSI format to be used.</li>
+<li><strong>To take advantage of these improvements</strong>:
+
+<ul>
+<li>Rebuild your indexes or wait for a TSI compaction of your indexes,
+at which point the new TSI format will be applied.</li>
+<li>Hot shards and new shards immediately use the new TSI format.</li>
+</ul></li>
+</ul>
+
+<h4 id="other-features">Other features</h4>
+
+<ul>
+<li>Enable the storage service by default.</li>
+<li>Ensure read service regular expressions get optimized.</li>
+<li>Add chunked query into the Go client v2.</li>
+<li>Add <code>access-log-status-filters</code> config setting to create an access log filter.</li>
+<li>Compaction performance improvements for Time Series Index (TSI).</li>
+<li>Add roaring bitmaps to TSI index files.</li>
+</ul>
+
+<h3 id="bug-fixes-7">Bug fixes</h3>
+
+<ul>
+<li>Missing <code>hardwareAddr</code> in <code>uuid</code> v1 generation.</li>
+<li>Fix the inherited interval for derivative and others.</li>
+<li>Fix subquery functionality when a function references a tag from the subquery.</li>
+<li>Strip tags from a subquery when the outer query does not group by that tag.</li>
+</ul>
+
+<h2 id="1-6-6-2019-02-28">1.6.6 [2019-02-28]</h2>
+
+<h3 id="bug-fixes-8">Bug fixes</h3>
+
+<ul>
+<li>Marked functions that always return floats as always returning floats.</li>
+<li>Fix cardinality estimation error.</li>
+<li>Update <code>tagKeyValue</code> mutex to write lock.</li>
+</ul>
+
+<h2 id="1-6-5-2019-01-10">1.6.5 [2019-01-10]</h2>
+
+<h3 id="features-6">Features</h3>
+
+<ul>
+<li>Reduce allocations in TSI <code>TagSets</code> implementation.</li>
+</ul>
+
+<h3 id="bug-fixes-9">Bug fixes</h3>
+
+<ul>
+<li>Fix panic in <code>IndexSet</code>.</li>
+<li>Pass the query authorizer to subqueries.</li>
+<li>Fix TSM1 panic on reader error.</li>
+<li>Limit database and retention policy names to 255 characters.</li>
+<li>Update Go runtime to 1.10.6.</li>
+</ul>
+
+<h2 id="1-6-4-2018-10-16">1.6.4 [2018-10-16]</h2>
+
+<h3 id="features-7">Features</h3>
+
+<ul>
+<li>Set maximum cache size using <code>-max-cache-size</code> in <code>buildtsi</code> when building TSI index.</li>
+</ul>
+
+<h3 id="bug-fixes-10">Bug fixes</h3>
+
+<ul>
+<li>Fix <code>tsi1</code> sketch locking.</li>
+<li>Fix subquery functionality when a function references a tag from the subquery.</li>
+<li>Strip tags from a subquery when the outer query does not group by that tag.</li>
+<li>Add <code>-series-file</code> flag to <code>dumptsi</code> command help.</li>
+<li>Cleanup failed TSM snapshots.</li>
+<li>Fix TSM1 panic on reader error.</li>
+<li>Fix series file tombstoning.</li>
+<li>Fixing the stream iterator to not ignore the error.</li>
+<li>Do not panic when a series ID iterator is nil.</li>
+<li>Fix append of possible nil iterator.</li>
+</ul>
+
+<h2 id="1-6-3-2018-09-14">1.6.3 [2018-09-14]</h2>
+
+<h3 id="features-8">Features</h3>
+
+<ul>
+<li>Remove TSI1 HLL sketches from heap.</li>
+</ul>
+
+<h3 id="bug-fixes-11">Bug fixes</h3>
+
+<ul>
+<li>Fix the inherited interval for derivative and others.  The inherited interval from an outer query should not have caused
+an inner query to fail because inherited intervals are only implicitly passed to inner queries that support group
+by time functionality. Since an inner query with a derivative doesn&rsquo;t support grouping by time and the inner query itself
+doesn&rsquo;t specify a time, the outer query shouldn&rsquo;t have invalidated the inner query.</li>
+<li>Fix the derivative and others time ranges for aggregate data. The derivative function and others similar to it would
+preload themselves with data so that the first interval would be the start of the time range. That meant reading data outside
+of the time range. One change to the shard mapper made in v1.4.0 caused the shard mapper to constrict queries to the
+intervals given to the shard mapper. This was correct because the shard mapper can only deal with times it has mapped,
+but this broke the functionality of looking back into the past for the derivative and other functions that used that
+functionality. The query compiler has been updated with an additional attribute that records how many intervals in the past
+will need to be read so that the shard mapper can include extra times that it may not necessarily read from,
+but may be queried because of the above described functionality.</li>
+</ul>
+
+<h2 id="1-6-2-2018-08-27">1.6.2 [2018-08-27]</h2>
+
+<h3 id="features-9">Features</h3>
+
+<ul>
+<li>Reduce allocations in TSI TagSets implementation.</li>
+</ul>
+
+<h3 id="bug-fixes-12">Bug fixes</h3>
+
+<ul>
+<li>Ensure orphaned series cleaned up with shard drop.</li>
+</ul>
+
+<h2 id="1-6-1-2018-08-03">1.6.1 [2018-08-03]</h2>
+
+<h3 id="features-10">Features</h3>
+
+<ul>
+<li>Improve LogFile performance with bitset iterator.</li>
+<li>Add TSI index cardinality report to <code>influx_inspect</code>.</li>
+<li>Update to Go 1.10.</li>
+<li>Improve performance of <code>buildtsi</code> and TSI planning.</li>
+<li>Improve performance of read service for single measurements.</li>
+<li>Remove max concurrent compaction limit.</li>
+<li>Provide configurable TLS options.</li>
+<li>Add option to hint MADV_WILLNEED to kernel.</li>
+</ul>
+
+<h3 id="bug-fixes-13">Bug fixes</h3>
+
+<ul>
+<li>Improve series segment recovery.</li>
+<li>Fix windows mmap on zero length file.</li>
+<li>Ensure Filter iterators executed as late as possible.</li>
+<li>Document UDP precision setting in config.</li>
+<li>Allow tag keys to contain underscores.</li>
+<li>Fix a panic when matching on a specific type of regular expression.</li>
+</ul>
+
+<h2 id="1-6-0-2018-07-05">1.6.0 [2018-07-05]</h2>
+
+<h3 id="breaking-changes-2">Breaking changes</h3>
+
+<ul>
+<li>If math is used with the same selector multiple times, it will now act as a selector
+rather than an aggregate. See <a href="https://github.com/influxdata/influxdb/pull/9563">#9563</a> for details.</li>
+<li>For data received from Prometheus endpoints, every Prometheus measurement is now
+stored in its own InfluxDB measurement rather than storing everything in the <code>_</code> measurement
+using the Prometheus measurement name as the <code>__name__</code> label.</li>
+</ul>
+
+<h3 id="features-11">Features</h3>
+
+<ul>
+<li>Support proxy environment variables in the <code>influx</code> client.</li>
+<li>Implement basic trigonometry functions.</li>
+<li>Add ability to delete many series with predicate.</li>
+<li>Implement <code>floor</code>, <code>ceil</code>, and <code>round</code> functions.</li>
+<li>Add more math functions to InfluxQL.</li>
+<li>Allow customizing the unix socket group and permissions created by the server.</li>
+<li>Add <code>suppress-write-log</code> option to disable the write log when the log is enabled.</li>
+<li>Add additional technical analysis algorithms.</li>
+<li>Validate points on input.</li>
+<li>Log information about index version during startup.</li>
+<li>Add key sanitization to <code>deletetsm</code> command in <code>influx_inspect</code> utility.</li>
+<li>Optimize the <code>spread</code> function to process points iteratively instead of in batch.</li>
+<li>Allow math functions to be used in the condition.</li>
+<li>Add HTTP write throttle settings: <code>max-concurrent-write-limit</code>, <code>max-enqueued-write-limit</code>, and <code>enqueued-write-timeout</code>.</li>
+<li>Implement <code>SHOW STATS FOR indexes</code>.</li>
+<li>Add <code>dumptsmwal</code> command to <code>influx_inspect</code> utility.</li>
+<li>Improve the number of regex patterns that are optimized to static OR conditions.</li>
+</ul>
+
+<h3 id="bug-fixes-14">Bug fixes</h3>
+
+<ul>
+<li>Support setting the log level through the environment variable.</li>
+<li>Fix panic when checking fieldsets.</li>
+<li>Ensure correct number of tags parsed when commas used.</li>
+<li>Fix data race in WAL.</li>
+<li>Allow <code>SHOW SERIES</code> kill.</li>
+<li>Revert &ldquo;Use MADV_WILLNEED when loading TSM files&rdquo;.</li>
+<li>Fix regression to allow now() to be used as the group by offset again.</li>
+<li>Delete deleted shards in retention service.</li>
+<li>Ignore index size in <code>Engine.DiskSize()</code>.</li>
+<li>Enable casting values from a subquery.</li>
+<li>Avoid a panic when using show diagnostics with text/csv.</li>
+<li>Properly track the response bytes written for queries in all format types.</li>
+<li>Remove error for series file when no shards exist.</li>
+<li>Fix the validation for multiple nested distinct calls.</li>
+<li>TSM: <code>TSMReader.Close</code> blocks until reads complete.</li>
+<li>Return the correct auxiliary values for <code>top</code> and <code>bottom</code>.</li>
+<li>Close TSMReaders from <code>FileStore.Close</code> after releasing FileStore mutex.</li>
+</ul>
+
+<h2 id="1-5-5-2018-12-19">1.5.5 [2018-12-19]</h2>
+
+<h3 id="features-12">Features</h3>
+
+<ul>
+<li>Reduce allocations in TSI <code>TagSets</code> implementation.</li>
+</ul>
+
+<h3 id="bug-fixes-15">Bug fixes</h3>
+
+<ul>
+<li>Copy return value of <code>IndexSet.MeasurementNamesByExpr</code>.</li>
+<li>Ensure orphaned series cleaned up with shard drop.</li>
+<li>Fix the derivative and others time ranges for aggregate data.</li>
+<li>Fix the stream iterator to not ignore errors.</li>
+<li>Do not panic when a series ID iterator is <code>nil</code>.</li>
+<li>Fix panic in <code>IndexSet</code>.</li>
+<li>Pass the query authorizer to subqueries.</li>
+<li>Fix TSM1 panic on reader error.</li>
+</ul>
+
+<h2 id="1-5-4-2018-06-21">1.5.4 [2018-06-21]</h2>
+
+<h3 id="features-13">Features</h3>
+
+<ul>
+<li>Add <code>influx_inspect deletetsm</code> command for bulk deletes of measurements in raw TSM files.</li>
+</ul>
+
+<h3 id="bug-fixes-16">Bug fixes</h3>
+
+<ul>
+<li>Fix panic in readTombstoneV4.</li>
+<li>buildtsi: Do not escape measurement names.</li>
+</ul>
+
+<h2 id="1-5-3-2018-05-25">1.5.3 [2018-05-25]</h2>
+
+<h3 id="features-14">Features</h3>
+
+<ul>
+<li>Add <code>[http] debug-pprof-enabled</code> configuration setting immediately on startup. Useful for debugging startup performance issues.</li>
+</ul>
+
+<h3 id="bug-fixes-17">Bug fixes</h3>
+
+<ul>
+<li>Fix the validation for multiple nested <code>DISTINCT</code> calls.</li>
+<li>Return the correct auxiliary values for <code>TOP</code> and <code>BOTTOM</code>.</li>
+</ul>
+
+<h2 id="1-5-2-2018-04-12">1.5.2 [2018-04-12]</h2>
+
+<h3 id="features-15">Features</h3>
+
+<ul>
+<li>Check for root user when running <code>buildtsi</code>.</li>
+<li>Adjustable TSI Compaction Threshold.</li>
+</ul>
+
+<h3 id="bug-fixes-18">Bug fixes</h3>
+
+<ul>
+<li>backport: check for failure case where backup directory has no manifest files.</li>
+<li>Fix regression to allow <code>now()</code> to be used as the group by offset again.</li>
+<li>Revert <code>Use MADV_WILLNEED when loading TSM files</code>.</li>
+<li>Ignore index size in <code>Engine.DiskSize()</code>.</li>
+<li>Fix <code>buildtsi</code> partition key.</li>
+<li>Ensure that conditions are encoded correctly even if the AST is not properly formed.</li>
+</ul>
+
+<h2 id="1-5-1-2018-03-20">1.5.1 [2018-03-20]</h2>
+
+<h3 id="bug-fixes-19">Bug fixes</h3>
+
+<ul>
+<li>Allow time variable to be case insensitive again.</li>
+<li>Support setting the log level through the environment variable.</li>
+<li>Ensure correct number of tags parsed.</li>
+<li>Fix panic when checking fieldsets.</li>
+<li>Fix data race in WAL.</li>
+</ul>
+
+<h2 id="1-5-0-2018-03-06">1.5.0 [2018-03-06]</h2>
+
+<h3 id="breaking-changes-3">Breaking changes</h3>
+
+<p>The default logging format has been changed. See <a href="../../administration/logs.html">Logging and tracing in InfluxDB</a> for details.</p>
+
+<h3 id="features-16">Features</h3>
+
+<ul>
+<li>Improve CLI connection warnings.</li>
+<li>Backup utility prints a list of backup files.</li>
+<li>Backup and restore for OSS produces and consumes data in the Enterprise-compatible backup format.</li>
+<li>Restore runs in online mode and does not delete existing databases.</li>
+<li>Export functionality using <code>start</code> and <code>end</code> to filter exported data by <code>timestamp</code>.</li>
+<li>Handle high cardinality deletes in TSM engine.</li>
+<li>Improve in-memory index startup performance for high cardinality.</li>
+<li>Add further TSI support for streaming and copying shards.</li>
+<li>Schedule a full compaction after a successful import.</li>
+<li>Add Prometheus <code>/metrics</code> endpoint.</li>
+<li>Add ability to generate shard digests.</li>
+<li>Allow setting the node ID in the InfluxDB CLI program.</li>
+</ul>
+
+<h3 id="bug-fixes-20">Bug fixes</h3>
+
+<ul>
+<li>Refuse extra arguments to influx CLI.</li>
+<li>Fix space required after regex operator. Thanks @stop-start!</li>
+<li>Fix <code>panic: sync: WaitGroup is reused before previous Wait has returned</code>.</li>
+<li>Fix race condition in the merge iterator close method.</li>
+<li>Fix query compilation so multiple nested distinct calls is allowable</li>
+<li>Fix CLI to allow quoted database names in use statement.</li>
+<li>Updated client <code>4xx</code> error message when response body length is zero.</li>
+<li>Remove extraneous newlines from the log.</li>
+<li>Allow lone Boolean literals in a condition expression.</li>
+<li>Improve performance when writes exceed <code>max-values-per-tag</code> or <code>max-series</code>.</li>
+<li>Prevent a panic when a query simultaneously finishes and is killed at the same time.</li>
+<li>Fix missing sorting of blocks by time when compacting.</li>
+<li>WAL: update <code>lastWriteTime</code> behavior</li>
+</ul>
+
+<h2 id="1-4-3-unreleased">1.4.3 [unreleased]</h2>
+
+<h3 id="configuration-changes">Configuration Changes</h3>
+
+<h4 id="data-section"><code>[data]</code> Section</h4>
+
+<p><code>cache-snapshot-memory-size</code>: default value changed from <code>25m</code> to <code>256m</code>.</p>
+
+<h3 id="bug-fixes-21">Bug fixes</h3>
+
+<ul>
+<li>Fix higher disk I/O utilization</li>
+</ul>
+
+<h2 id="1-4-2-2017-11-15">1.4.2 [2017-11-15]</h2>
+
+<p>Refer to the 1.4.0 breaking changes section if <code>influxd</code> fails to start with an <code>incompatible tsi1 index MANIFEST</code> error.</p>
+
+<h3 id="bug-fixes-22">Bug fixes</h3>
+
+<ul>
+<li>Fix <code>panic: runtime error: slice bounds out of range</code> when running <code>dep init</code></li>
+</ul>
+
+<h2 id="1-4-1-2017-11-13">1.4.1 [2017-11-13]</h2>
+
+<h3 id="bug-fixes-23">Bug fixes</h3>
+
+<ul>
+<li>Fix descending cursors and range queries via IFQL RPC API.</li>
+</ul>
+
+<h2 id="1-4-0-2017-11-13">1.4.0 [2017-11-13]</h2>
+
+<h3 id="tsi-index">TSI Index</h3>
+
+<p>This feature remains experimental in this release.
+However, a number of improvements have been made and new meta query changes will allow for this feature to be explored at more depth than previously possible.  It is not recommended for production use at this time.
+We appreciate all of the feedback we receive on this feature.  Please keep it coming!</p>
+
+<h3 id="breaking-changes-4">Breaking changes</h3>
+
+<p>You can no longer specify a different <code>ORDER BY</code> clause in a subquery than the one in the top level query.
+This functionality never worked properly,
+but was not explicitly forbidden.</p>
+
+<p>As part of the ongoing development of the <code>tsi1</code> index,
+the implementation of a Bloom Filter,
+used to efficiently determine if series are not present in the index,
+was altered.
+While this significantly increases the performance of the index and reduces its memory consumption,
+the existing <code>tsi1</code> indexes created while running previous versions of the database are not compatible with 1.4.0.</p>
+
+<p>Users with databases using the <code>tsi1</code> index must go through the following process to upgrade to 1.4.0:</p>
+
+<ol>
+<li>Stop <code>influxd</code>.</li>
+<li>Remove all <code>index</code> directories on databases using the <code>tsi1</code> index. With default configuration these can be found in
+<code>/var/lib/influxdb/data/DB_NAME/RP_NAME/SHARD_ID/index</code> or <code>~/.influxdb/data/DB_NAME/RP_NAME/SHARD_ID/index</code>.
+It&rsquo;s worth noting at this point how many different <code>shard_ids</code> you visit.</li>
+<li>Run the <code>influx_inspect inmem2tsi</code> tool using the shard&rsquo;s data and WAL directories for <code>-datadir</code> and <code>-waldir</code>, respectively.
+Given the example in step (2) that would be
+<code>influx_inspect inmem2tsi -datadir /var/lib/influxdb/data/DB_NAME/RP_NAME/SHARD_ID -waldir /path/to/influxdb/wal/DB_NAME/RP_NAME/SHARD_ID</code>.</li>
+<li>Repeat step (3) for each shard that needs to be converted.</li>
+<li>Start <code>influxd</code>.</li>
+</ol>
+
+<p>Users with existing <code>tsi1</code> shards,
+who attempt to start version 1.4.0 without following the steps above,
+will find the shards refuse to open and will most likely see the following error message: <code>incompatible tsi1 index MANIFEST</code>.</p>
+
+<h3 id="configuration-changes-1">Configuration Changes</h3>
+
+<h4 id="collectd-section"><code>[collectd]</code> Section</h4>
+
+<ul>
+<li><code>parse-multivalue-plugin</code> option was added with a default of <code>split</code>.  When set to <code>split</code>, multivalue plugin data (e.g. <code>df free:5000,used:1000</code>) will be split into separate measurements (e.g., <code>df_free, value=5000</code> and <code>df_used, value=1000</code>).  When set to <code>join</code>, multivalue plugin will be stored as a single multi-value measurement (e.g., <code>df, free=5000,used=1000</code>).</li>
+</ul>
+
+<h3 id="features-17">Features</h3>
+
+<ul>
+<li>Add <code>influx_inspect inmem2tsi</code> command to convert existing in-memory (TSM-based) shards to the TSI (Time Series Index) format.</li>
+<li>Add support for the Prometheus remote read and write APIs.</li>
+<li>Support estimated and exact SHOW CARDINALITY commands for measurements, series, tag keys, tag key values, and field keys.</li>
+<li>Improve <code>SHOW TAG KEYS</code> performance.</li>
+<li>Add <code>EXPLAIN ANALYZE</code> command, which produces a detailed execution plan of a <code>SELECT</code> statement.</li>
+<li>Improved compaction scheduling.</li>
+<li>Support Ctrl+C to cancel a running query in the Influx CLI.</li>
+<li>Allow human-readable byte sizes in configuation file.</li>
+<li>Respect X-Request-Id/Request-Id headers.</li>
+<li>Add &lsquo;X-Influxdb-Build&rsquo; to http response headers so users can identify if a response is from an OSS or Enterprise service.</li>
+<li>All errors from queries or writes are available via X-InfluxDB-Error header, and 5xx error messages will be written
+to server logs.</li>
+<li>Add <code>parse-multivalue-plugin</code> to allow users to choose how multivalue plugins should be handled by the collectd service.</li>
+<li>Make client errors more helpful on downstream errors.</li>
+<li>Allow panic recovery to be disabled when investigating server issues.</li>
+<li>Support http pipelining for <code>/query</code> endpoint.</li>
+<li>Reduce allocations when reading data.</li>
+<li>Mutex profiles are now available.</li>
+<li>Batch up writes for monitor service.</li>
+<li>Use system cursors for measurement, series, and tag key meta queries.</li>
+<li>Initial implementation of explain plan.</li>
+<li>Include the number of scanned cached values in the iterator cost.</li>
+<li>Improve performance of <code>Include</code> and <code>Exclude</code> functions.</li>
+<li>Report the task status for a query.</li>
+<li>Reduce allocations, improve <code>readEntries</code> performance by simplifying loop</li>
+<li>Separate importer log statements to stdout and stderr.</li>
+<li>Improve performance of Bloom Filter in TSI index.</li>
+<li>Add message pack format for query responses.</li>
+<li>Implicitly decide on a lower limit for fill queries when none is present.</li>
+<li>Streaming <code>inmem2tsi</code> conversion.</li>
+<li>Sort &amp; validate TSI key value insertion.</li>
+<li>Handle nil MeasurementIterator.</li>
+<li>Add long-line support to client importer.</li>
+<li>Update to go 1.9.2.</li>
+<li>InfluxDB now uses MIT licensed version of BurntSushi/toml.</li>
+</ul>
+
+<h3 id="bug-fixes-24">Bug fixes</h3>
+
+<ul>
+<li>Change the default stats interval to 1 second instead of 10 seconds.</li>
+<li>illumos build broken on <code>syscall.Mmap</code>.</li>
+<li>Prevent privileges on non-existent databases from being set.</li>
+<li><code>influxd backup</code> tool now separates out logging to <code>stdout</code> and <code>stderr</code>. Thanks @xginn8!</li>
+<li>Dropping measurement used several GB disk space.</li>
+<li>Fix the CQ start and end times to use Unix timestamps.</li>
+<li><code>influx</code> CLI case-sensitivity.</li>
+<li>Fixed time boundaries for continuous queries with time zones.</li>
+<li>Return query parsing errors in CSV formats.</li>
+<li>Fix time zone shifts when the shift happens on a time zone boundary.</li>
+<li>Parse time literals using the time zone in the <code>SELECT</code> statement.</li>
+<li>Reduce CPU usage when checking series cardinality</li>
+<li>Fix backups when snapshot is empty.</li>
+<li>Cursor leak, resulting in an accumulation of <code>.tsm.tmp</code> files after compactions.</li>
+<li>Improve condition parsing.</li>
+<li>Ensure inputs are closed on error. Add runtime GC finalizer as additional guard to close iterators.</li>
+<li>Fix merging bug on system iterators.</li>
+<li>Force subqueries to match the parent queries ordering.</li>
+<li>Fix race condition accessing <code>seriesByID</code> map.</li>
+<li>Fix deadlock when calling <code>SeriesIDsAllOrByExpr</code>.</li>
+<li>Fix <code>influx_inspect export</code> so it skips missing files.</li>
+<li>Reduce how long it takes to walk the varrefs in an expression.</li>
+<li>Address <code>panic: runtime error: invalid memory address or nil pointer dereference</code>.</li>
+<li>Drop Series Cause Write Fail/Write Timeouts/High Memory Usage.</li>
+<li>Fix increased memory usage in cache and wal readers.</li>
+<li>An OSS read-only user should be able to list measurements on a database.</li>
+<li>Ensure time and tag-based condition can be used with tsi1 index when deleting.</li>
+<li>Prevent deadlock when doing math on the result of a subquery.</li>
+<li>Fix a minor memory leak in batching points in TSDB.</li>
+<li>Don&rsquo;t assume <code>which</code> is present in package post-install script.</li>
+<li>Fix missing man pages in new packaging output.</li>
+<li>Fix use of <code>INFLUXD_OPTS</code> in service file.</li>
+<li>Fix WAL panic: runtime error: makeslice: cap out of range.</li>
+<li>Copy returned bytes from TSI meta functions.</li>
+<li>Fix data deleted outside of time range.</li>
+<li>Fix data dropped incorrectly during compaction.</li>
+<li>Prevent deadlock during Collectd, Graphite, openTSDB, and UDP shutdown.</li>
+<li>Remove the pidfile after the server has exited.</li>
+<li>Return <code>query.ErrQueryInterrupted</code> for successful read on <code>InterruptCh</code>.</li>
+<li>Fix race inside Measurement index.</li>
+<li>Ensure retention service always removes local shards.</li>
+<li>Handle utf16 files when reading the configuration file.</li>
+<li>Fix <code>panic: runtime error: slice bounds out of range</code>.</li>
+</ul>
+
+<h2 id="1-3-7-2017-10-26">1.3.7 [2017-10-26]</h2>
+
+<h3 id="release-notes-1">Release Notes</h3>
+
+<p>Bug fix identified via Community and InfluxCloud. The build artifacts are now consistent with v1.3.5.</p>
+
+<h3 id="bug-fixes-25">Bug fixes</h3>
+
+<ul>
+<li>Don&rsquo;t assume <code>which</code> is present in package post-install script.</li>
+<li>Fix use of <code>INFLUXD_OPTS</code> in service file.</li>
+<li>Fix missing man pages in new packaging output.</li>
+<li>Add RPM dependency on shadow-utils for <code>useradd</code>.</li>
+<li>Fix data deleted outside of specified time range when using <code>delete</code></li>
+<li>Fix data dropped incorrectly during compaction.</li>
+<li>Return <code>query.ErrQueryInterrupted</code> for a successful read on <code>InterruptCh</code>.</li>
+<li>Copy returned bytes from TSI meta functions.</li>
+</ul>
+
+<h2 id="v1-3-6-2017-09-28">v1.3.6 [2017-09-28]</h2>
+
+<h3 id="release-notes-2">Release Notes</h3>
+
+<p>Bug fix identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-26">Bug fixes</h3>
+
+<ul>
+<li>Reduce how long it takes to walk the varrefs in an expression.</li>
+<li>Address <code>panic: runtime error: invalid memory address or nil pointer dereference</code>.</li>
+<li>Fix increased memory usage in cache and WAL readers for clusters with a large number of shards.</li>
+<li>Prevent deadlock when doing math on the result of a subquery.</li>
+<li>Fix several race conditions present in the shard and storage engine.</li>
+<li>Fix race condition on cache entry.</li>
+</ul>
+
+<h3 id="release-notes-3">Release Notes</h3>
+
+<p>Bug fix identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-27">Bug fixes</h3>
+
+<ul>
+<li>Fix race condition accessing <code>seriesByID</code> map.</li>
+<li>Fix deadlock when calling <code>SeriesIDsAllOrByExpr</code>.</li>
+</ul>
+
+<h2 id="v1-3-5-2017-08-29">v1.3.5 [2017-08-29]</h2>
+
+<h3 id="release-notes-4">Release Notes</h3>
+
+<p>Bug fix identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-28">Bug fixes</h3>
+
+<ul>
+<li>Fix race condition accessing <code>seriesByID</code> map.</li>
+<li>Fix deadlock when calling <code>SeriesIDsAllOrByExpr</code>.</li>
+</ul>
+
+<h2 id="v1-3-4-2017-08-23">v1.3.4 [2017-08-23]</h2>
+
+<h3 id="release-notes-5">Release Notes</h3>
+
+<p>Bug fix identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-29">Bug fixes</h3>
+
+<ul>
+<li>Fixed time boundaries for continuous queries with time zones.</li>
+<li>Fix time zone shifts when the shift happens on a time zone boundary.</li>
+<li>Parse time literals using the time zone in the select statement.</li>
+<li>Fix drop measurement not dropping all data.</li>
+<li>Fix backups when snapshot is empty.</li>
+<li>Eliminated cursor leak, resulting in an accumulation of .tsm.tmp files after compactions.</li>
+<li>Fix Deadlock when dropping measurement and writing.</li>
+<li>Ensure inputs are closed on error. Add runtime GC finalizer as additional guard to close iterators.</li>
+<li>Fix leaking tmp file when large compaction aborted.</li>
+</ul>
+
+<h2 id="v1-3-3-2017-08-10">v1.3.3 [2017-08-10]</h2>
+
+<h3 id="release-notes-6">Release Notes</h3>
+
+<p>Bug fix identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-30">Bug fixes</h3>
+
+<ul>
+<li>Resolves a memory leak when NewReaderIterator creates a nilFloatIterator, the reader is not closed.</li>
+</ul>
+
+<h2 id="v1-3-2-2017-08-04">v1.3.2 [2017-08-04]</h2>
+
+<h3 id="release-notes-7">Release Notes</h3>
+
+<p>Minor bug fixes were identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-31">Bug fixes</h3>
+
+<ul>
+<li>Interrupt &ldquo;in-progress&rdquo; TSM compactions.</li>
+<li>Prevent excessive memory usage when dropping series.</li>
+<li>Significantly improve performance of SHOW TAG VALUES.</li>
+</ul>
+
+<h2 id="v1-3-1-2017-07-20">v1.3.1 [2017-07-20]</h2>
+
+<h3 id="release-notes-8">Release Notes</h3>
+
+<p>Minor bug fixes were identified via Community and InfluxCloud.</p>
+
+<h3 id="bug-fixes-32">Bug fixes</h3>
+
+<ul>
+<li>Ensure temporary TSM files get cleaned up when compaction aborted.</li>
+<li>Address deadlock issue causing 1.3.0 to become unresponsive.</li>
+<li>Duplicate points generated via INSERT after DELETE.</li>
+<li>Fix the CQ start and end times to use Unix timestamps.</li>
+</ul>
+
+<h2 id="v1-3-0-2017-06-21">v1.3.0 [2017-06-21]</h2>
+
+<h3 id="release-notes-9">Release Notes</h3>
+
+<h4 id="tsi">TSI</h4>
+
+<p>Version 1.3.0 marks the first official release of the new InfluxDB time series index (TSI) engine.</p>
+
+<p>The TSI engine is a significant technical advancement in InfluxDB.
+It offers a solution to the <a href="https://docs.influxdata.com/influxdb/v1.2/concepts/storage_engine/">time-structured merge tree</a> engine&rsquo;s <a href="https://docs.influxdata.com/influxdb/v1.3/troubleshooting/frequently-asked-questions/#why-does-series-cardinality-matter">high series cardinality issue</a>.
+With TSI, the number of series should be unbounded by the memory on the server hardware and the number of existing series will have a negligible impact on database startup time.
+See Paul Dix&rsquo;s blogpost <a href="https://www.influxdata.com/path-1-billion-time-series-influxdb-high-cardinality-indexing-ready-testing/">Path to 1 Billion Time Series: InfluxDB High Cardinality Indexing Ready for Testing</a> for additional information.</p>
+
+<p>TSI is disabled by default in version 1.3.
+To enable TSI, uncomment the <a href="https://docs.influxdata.com/influxdb/v1.3/administration/config#index-version-inmem"><code>index-version</code> setting</a> and set it to <code>tsi1</code>.
+The <code>index-version</code> setting is in the <code>[data]</code> section of the configuration file.
+Next, restart your InfluxDB instance.</p>
+
+<pre><code>[data]
+  dir = &quot;/var/lib/influxdb/data&quot;
+  index-version = &quot;tsi1&quot;
+</code></pre>
+
+<h4 id="continuous-query-statistics">Continuous Query Statistics</h4>
+
+<p>When enabled, each time a continuous query is completed, a number of details regarding the execution are written to the <code>cq_query</code> measurement of the internal monitor database (<code>_internal</code> by default). The tags and fields of interest are</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">tag / field</th>
+<th align="left">description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>db</code></td>
+<td align="left">name of database</td>
+</tr>
+
+<tr>
+<td align="left"><code>cq</code></td>
+<td align="left">name of continuous query</td>
+</tr>
+
+<tr>
+<td align="left"><code>durationNS</code></td>
+<td align="left">query execution time in nanoseconds</td>
+</tr>
+
+<tr>
+<td align="left"><code>startTime</code></td>
+<td align="left">lower bound of time range</td>
+</tr>
+
+<tr>
+<td align="left"><code>endTime</code></td>
+<td align="left">upper bound of time range</td>
+</tr>
+
+<tr>
+<td align="left"><code>pointsWrittenOK</code></td>
+<td align="left">number of points written to the target measurement</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><code>startTime</code> and <code>endTime</code> are UNIX timestamps, in nanoseconds.</li>
+<li>The number of points written is also included in CQ log messages.</li>
+</ul>
+
+<h3 id="removals">Removals</h3>
+
+<p>The admin UI is removed and unusable in this release. The <code>[admin]</code> configuration section will be ignored.</p>
+
+<h3 id="configuration-changes-2">Configuration Changes</h3>
+
+<ul>
+<li>The top-level config <code>bind-address</code> now defaults to <code>localhost:8088</code>.
+The previous default was just <code>:8088</code>, causing the backup and restore port to be bound on all available interfaces (i.e. including interfaces on the public internet).</li>
+</ul>
+
+<p>The following new configuration options are available.</p>
+
+<h4 id="http-section"><code>[http]</code> Section</h4>
+
+<ul>
+<li><code>max-body-size</code> was added with a default of 25,000,000, but can be disabled by setting it to 0.
+Specifies the maximum size (in bytes) of a client request body. When a client sends data that exceeds
+the configured maximum size, a <code>413 Request Entity Too Large</code> HTTP response is returned.</li>
+</ul>
+
+<h4 id="continuous-queries-section"><code>[continuous_queries]</code> Section</h4>
+
+<ul>
+<li><code>query-stats-enabled</code> was added with a default of <code>false</code>. When set to <code>true</code>, continuous query execution statistics are written to the default monitor store.</li>
+</ul>
+
+<h3 id="features-18">Features</h3>
+
+<ul>
+<li>Add WAL sync delay</li>
+<li>Add chunked request processing back into the Go client v2</li>
+<li>Allow non-admin users to execute SHOW DATABASES</li>
+<li>Reduce memory allocations by reusing gzip.Writers across requests</li>
+<li>Add system information to /debug/vars</li>
+<li>Add modulo operator to the query language.</li>
+<li>Failed points during an import now result in a non-zero exit code</li>
+<li>Expose some configuration settings via SHOW DIAGNOSTICS</li>
+<li>Support single and multiline comments in InfluxQL</li>
+<li>Support timezone offsets for queries</li>
+<li>Add &ldquo;integral&rdquo; function to InfluxQL</li>
+<li>Add &ldquo;non_negative_difference&rdquo; function to InfluxQL</li>
+<li>Add bitwise AND, OR and XOR operators to the query language</li>
+<li>Write throughput/concurrency improvements</li>
+<li>Remove the admin UI</li>
+<li>Update to go1.8.1</li>
+<li>Add max concurrent compaction limits</li>
+<li>Add TSI support tooling</li>
+<li>Track HTTP client requests for /write and /query with /debug/requests</li>
+<li>Write and compaction stability</li>
+<li>Add new profile endpoint for gathering all debug profiles and queries in single archive</li>
+<li>Add nanosecond duration literal support</li>
+<li>Optimize top() and bottom() using an incremental aggregator</li>
+<li>Maintain the tags of points selected by top() or bottom() when writing the results.</li>
+<li>Write CQ stats to the <code>_internal</code> database</li>
+</ul>
+
+<h3 id="bugfixes-2">Bugfixes</h3>
+
+<ul>
+<li>Several statements were missing the DefaultDatabase method</li>
+<li>Fix spelling mistake in HTTP section of config &ndash; shared-sercret</li>
+<li>History file should redact passwords before saving to history</li>
+<li>Suppress headers in output for influx cli when they are the same</li>
+<li>Add chunked/chunk size as setting/options in cli</li>
+<li>Do not increment the continuous query statistic if no query is run</li>
+<li>Forbid wildcards in binary expressions</li>
+<li>Fix fill(linear) when multiple series exist and there are null values</li>
+<li>Update liner dependency to handle docker exec</li>
+<li>Bind backup and restore port to localhost by default</li>
+<li>Kill query not killing query</li>
+<li>KILL QUERY should work during all phases of a query</li>
+<li>Simplify admin user check.</li>
+<li>Significantly improve DROP DATABASE speed</li>
+<li>Return an error when an invalid duration literal is parsed</li>
+<li>Fix the time range when an exact timestamp is selected</li>
+<li>Fix query parser when using addition and subtraction without spaces</li>
+<li>Fix a regression when math was used with selectors</li>
+<li>Ensure the input for certain functions in the query engine are ordered</li>
+<li>Significantly improve shutdown speed for high cardinality databases</li>
+<li>Fix racy integration test</li>
+<li>Prevent overflowing or underflowing during window computation</li>
+<li>Enabled golint for admin, httpd, subscriber, udp, thanks @karlding</li>
+<li>Implicitly cast null to false in binary expressions with a Boolean</li>
+<li>Restrict fill(none) and fill(linear) to be usable only with aggregate queries</li>
+<li>Restrict top() and bottom() selectors to be used with no other functions</li>
+<li>top() and bottom() now returns the time for every point</li>
+<li>Remove default upper time bound on DELETE queries</li>
+<li>Fix LIMIT and OFFSET for certain aggregate queries</li>
+<li>Refactor the subquery code and fix outer condition queries</li>
+<li>Fix compaction aborted log messages</li>
+<li>TSM compaction does not remove .tmp on error</li>
+<li>Set the CSV output to an empty string for null values</li>
+<li>Compaction exhausting disk resources in InfluxDB</li>
+<li>Small edits to the etc/config.sample.toml file</li>
+<li>Points beyond retention policy scope are dropped silently</li>
+<li>Fix TSM tmp file leaked on disk</li>
+<li>Fix large field keys preventing snapshot compactions</li>
+<li>URL query parameter credentials take priority over Authentication header</li>
+<li>TSI branch has duplicate tag values</li>
+<li>Out of memory when using HTTP API</li>
+<li>Check file count before attempting a TSI level compaction.</li>
+<li>index file fd leak in tsi branch</li>
+<li>Fix TSI non-contiguous compaction panic</li>
+</ul>
+
+<h2 id="v1-2-4-2017-05-08">v1.2.4 [2017-05-08]</h2>
+
+<h3 id="bugfixes-3">Bugfixes</h3>
+
+<ul>
+<li>Prefix partial write errors with <code>partial write:</code> to generalize identification in other subsystems.</li>
+</ul>
+
+<h2 id="v1-2-3-2017-04-17">v1.2.3 [2017-04-17]</h2>
+
+<h3 id="bugfixes-4">Bugfixes</h3>
+
+<ul>
+<li>Redact passwords before saving them to the history file.</li>
+<li>Add the missing DefaultDatabase method to several InfluxQL statements.</li>
+<li>Fix segment violation in models.Tags.Get.</li>
+<li>Simplify the admin user check.</li>
+<li>Fix a regression when math was used with selectors.</li>
+<li>Ensure the input for certain functions in the query engine are ordered.</li>
+<li>Fix issue where deleted <code>time</code> field keys created unparseable points.</li>
+</ul>
+
+<h2 id="v1-2-2-2017-03-14">v1.2.2 [2017-03-14]</h2>
+
+<h3 id="release-notes-10">Release Notes</h3>
+
+<h3 id="configuration-changes-3">Configuration Changes</h3>
+
+<h4 id="http-section-1"><code>[http]</code> Section</h4>
+
+<ul>
+<li><a href="https://docs.influxdata.com/influxdb/v1.3/administration/config#max-row-limit-0"><code>max-row-limit</code></a> now defaults to <code>0</code>.
+In versions 1.0 and 1.1, the default setting was <code>10000</code>, but due to a bug, the value in use in versions 1.0 and 1.1 was effectively <code>0</code>.
+In versions 1.2.0 through 1.2.1, we fixed that bug, but the fix caused a breaking change for Grafana and Kapacitor users; users who had not set <code>max-row-limit</code> to <code>0</code> experienced truncated/partial data due to the <code>10000</code> row limit.
+In version 1.2.2, we&rsquo;ve changed the default <code>max-row-limit</code> setting to <code>0</code> to match the behavior in versions 1.0 and 1.1.</li>
+</ul>
+
+<h3 id="bug-fixes-33">Bug fixes</h3>
+
+<ul>
+<li>Change the default <a href="https://docs.influxdata.com/influxdb/v1.3/administration/config#max-row-limit-0"><code>max-row-limit</code></a> setting from <code>10000</code> to <code>0</code> to prevent the absence of data in Grafana or Kapacitor.</li>
+</ul>
+
+<h2 id="v1-2-1-2017-03-08">v1.2.1 [2017-03-08]</h2>
+
+<h3 id="release-notes-11">Release Notes</h3>
+
+<h3 id="bugfixes-5">Bugfixes</h3>
+
+<ul>
+<li>Treat non-reserved measurement names with underscores as normal measurements.
+
+<ul>
+<li>Reduce the expression in a subquery to avoid a panic.</li>
+<li>Properly select a tag within a subquery.</li>
+<li>Prevent a panic when aggregates are used in an inner query with a raw query.</li>
+<li>Points missing after compaction.</li>
+<li>Point.UnmarshalBinary() bounds check.</li>
+<li>Interface conversion: tsm1.Value is tsm1.IntegerValue, not tsm1.FloatValue.</li>
+<li>Map types correctly when using a regex and one of the measurements is empty.</li>
+<li>Map types correctly when selecting a field with multiple measurements where one of the measurements is empty.</li>
+<li>Include IsRawQuery in the rewritten statement for meta queries.</li>
+<li>Fix race in WALEntry.Encode and Values.Deduplicate</li>
+<li>Fix panic in collectd when configured to read types DB from directory.</li>
+<li>Fix ORDER BY time DESC with ordering series keys.</li>
+<li>Fix mapping of types when the measurement uses a regular expression.</li>
+<li>Fix LIMIT and OFFSET when they are used in a subquery.</li>
+<li>Fix incorrect math when aggregates that emit different times are used.</li>
+<li>Fix EvalType when a parenthesis expression is used.</li>
+<li>Fix authentication when subqueries are present.</li>
+<li>Expand query dimensions from the subquery.</li>
+<li>Dividing aggregate functions with different outputs doesn&rsquo;t panic.</li>
+<li>Anchors not working as expected with case-insensitive regular expression.</li>
+</ul></li>
+</ul>
+
+<h2 id="v1-2-0-2017-01-24">v1.2.0 [2017-01-24]</h2>
+
+<h3 id="release-notes-12">Release Notes</h3>
+
+<p>This release introduces a major new querying capability in the form of sub-queries, and provides several performance improvements, including a 50% or better gain in write performance on larger numbers of cores. The release adds some stability and memory-related improvements, as well as several CLI-related bug fixes. If upgrading from a prior version, please read the configuration changes in the following section before upgrading.</p>
+
+<h3 id="configuration-changes-4">Configuration Changes</h3>
+
+<p>The following new configuration options are available, if upgrading to <code>1.2.0</code> from prior versions.</p>
+
+<h4 id="collectd-section-1"><code>[[collectd]]</code> Section</h4>
+
+<ul>
+<li><code>security-level</code> which defaults to <code>&quot;none&quot;</code>. This field also accepts <code>&quot;sign&quot;</code> and <code>&quot;encrypt&quot;</code> and enables different levels of transmission security for the collectd plugin.</li>
+<li><code>auth-file</code> which defaults to <code>&quot;/etc/collectd/auth_file&quot;</code>. Specifies where to locate the authentication file used to authenticate clients when using signed or encrypted mode.</li>
+</ul>
+
+<h3 id="deprecations">Deprecations</h3>
+
+<p>The stress tool <code>influx_stress</code> will be removed in a subsequent release. We recommend using <a href="https://github.com/influxdata/influx-stress"><code>influx-stress</code></a> as a replacement.</p>
+
+<h3 id="features-19">Features</h3>
+
+<ul>
+<li>Remove the override of GOMAXPROCS.</li>
+<li>Uncomment section headers from the default configuration file.</li>
+<li>Improve write performance significantly.</li>
+<li>Prune data in meta store for deleted shards.</li>
+<li>Update latest dependencies with Godeps.</li>
+<li>Introduce syntax for marking a partial response with chunking.</li>
+<li>Use X-Forwarded-For IP address in HTTP logger if present.</li>
+<li>Add support for secure transmission via collectd.</li>
+<li>Switch logging to use structured logging everywhere.</li>
+<li>[CLI feature request] USE retention policy for queries.</li>
+<li>Add clear command to CLI.</li>
+<li>Adding ability to use parameters in queries in the v2 client using the <code>Parameters</code> map in the <code>Query</code> struct.</li>
+<li>Allow add items to array config via ENV.</li>
+<li>Support subquery execution in the query language.</li>
+<li>Verbose output for SSL connection errors.</li>
+<li>Cache snapshotting performance improvements</li>
+</ul>
+
+<h3 id="bugfixes-6">Bugfixes</h3>
+
+<ul>
+<li>Fix potential race condition in correctness of tsm1_cache memBytes statistic.</li>
+<li>Fix broken error return on meta client&rsquo;s UpdateUser and DropContinuousQuery methods.</li>
+<li>Fix string quoting and significantly improve performance of <code>influx_inspect export</code>.</li>
+<li>CLI was caching db/rp for insert into statements.</li>
+<li>Fix CLI import bug when using self-signed SSL certificates.</li>
+<li>Fix cross-platform backup/restore.</li>
+<li>Ensures that all user privileges associated with a database are removed when the database is dropped.</li>
+<li>Return the time from a percentile call on an integer.</li>
+<li>Expand string and Boolean fields when using a wildcard with <code>sample()</code>.</li>
+<li>Fix chuid argument order in init script.</li>
+<li>Reject invalid subscription URLs.</li>
+<li>CLI should use spaces for alignment, not tabs.</li>
+<li>0.12.2 InfluxDB CLI client PRECISION returns &ldquo;Unknown precision&hellip;&rdquo;.</li>
+<li>Fix parse key panic when missing tag value.</li>
+<li>Rentention Policy should not allow <code>INF</code> or <code>0</code> as a shard duration.</li>
+<li>Return Error instead of panic when decoding point values.</li>
+<li>Fix slice out of bounds panic when pruning shard groups.</li>
+<li>Drop database will delete /influxdb/data directory.</li>
+<li>Ensure Subscriber service can be disabled.</li>
+<li>Fix race in storage engine.</li>
+<li>InfluxDB should do a partial write on mismatched type errors.</li>
+</ul>
+
+<h2 id="v1-1-5-2017-05-08">v1.1.5 [2017-05-08]</h2>
+
+<h3 id="bugfixes-7">Bugfixes</h3>
+
+<ul>
+<li>Redact passwords before saving them to the history file.</li>
+<li>Add the missing DefaultDatabase method to several InfluxQL statements.</li>
+</ul>
+
+<h2 id="v1-1-4-2017-02-27">v1.1.4 [2017-02-27]</h2>
+
+<h3 id="bugfixes-8">Bugfixes</h3>
+
+<ul>
+<li>Backport from 1.2.0: Reduce GC allocations.</li>
+</ul>
+
+<h2 id="v1-1-3-2017-02-17">v1.1.3 [2017-02-17]</h2>
+
+<h3 id="bugfixes-9">Bugfixes</h3>
+
+<ul>
+<li>Remove Tags.shouldCopy, replace with forceCopy on series creation.</li>
+</ul>
+
+<h2 id="v1-1-2-2017-02-16">v1.1.2 [2017-02-16]</h2>
+
+<h3 id="bugfixes-10">Bugfixes</h3>
+
+<ul>
+<li>Fix memory leak when writing new series over HTTP.</li>
+<li>Fix series tag iteration segfault.</li>
+<li>Fix tag dereferencing panic.</li>
+</ul>
+
+<h2 id="v1-1-1-2016-12-06">v1.1.1 [2016-12-06]</h2>
+
+<h3 id="features-20">Features</h3>
+
+<ul>
+<li>Update Go version to 1.7.4.</li>
+</ul>
+
+<h3 id="bugfixes-11">Bugfixes</h3>
+
+<ul>
+<li>Fix string fields w/ trailing slashes.</li>
+<li>Quote the empty string as an ident.</li>
+<li>Fix incorrect tag value in error message.</li>
+</ul>
+
+<h3 id="security">Security</h3>
+
+<p><a href="https://golang.org/doc/devel/release.html#go1.7.minor">Go 1.7.4</a> was released to address two security issues.  This release includes these security fixes.</p>
+
+<h2 id="v1-1-0-2016-11-14">v1.1.0 [2016-11-14]</h2>
+
+<h3 id="release-notes-13">Release Notes</h3>
+
+<p>This release is built with GoLang 1.7.3 and provides many performance optimizations, stability changes and a few new query capabilities.  If upgrading from a prior version, please read the configuration changes below section before upgrading.</p>
+
+<h3 id="deprecations-1">Deprecations</h3>
+
+<p>The admin interface is deprecated and will be removed in a subsequent release.
+The configuration setting to enable the admin UI is now disabled by default, but can be enabled if necessary.
+We recommend using <a href="https://github.com/influxdata/chronograf">Chronograf</a> or <a href="https://github.com/grafana/grafana">Grafana</a> as a replacement.</p>
+
+<h3 id="configuration-changes-5">Configuration Changes</h3>
+
+<p>The following configuration changes may need to changed before upgrading to <code>1.1.0</code> from prior versions.</p>
+
+<h4 id="admin-section"><code>[admin]</code> Section</h4>
+
+<ul>
+<li><code>enabled</code> now default to false.  If you are currently using the admin interaface, you will need to change this value to <code>true</code> to re-enable it.  The admin interface is currently deprecated and will be removed in a subsequent release.</li>
+</ul>
+
+<h4 id="data-section-1"><code>[data]</code> Section</h4>
+
+<ul>
+<li><code>max-values-per-tag</code> was added with a default of 100,000, but can be disabled by setting it to <code>0</code>.  Existing measurements with tags that exceed this limit will continue to load, but writes that would cause the tags cardinality to increase will be dropped and a <code>partial write</code> error will be returned to the caller.  This limit can be used to prevent high cardinality tag values from being written to a measurement.</li>
+<li><code>cache-max-memory-size</code> has been increased to from <code>524288000</code> to <code>1048576000</code>.  This setting is the maximum amount of RAM, in bytes, a shard cache can use before it rejects writes with an error.  Setting this value to <code>0</code> disables the limit.</li>
+<li><code>cache-snapshot-write-cold-duration</code> has been decreased from <code>1h</code> to <code>10m</code>.  This setting determines how long values will stay in the shard cache while the shard is cold for writes.</li>
+<li><code>compact-full-write-cold-duration</code> has been decreased from <code>24h</code> to <code>4h</code>.  The shorter duration allows cold shards to be compacted to an optimal state more quickly.</li>
+</ul>
+
+<h3 id="features-21">Features</h3>
+
+<p>The query language has been extended with a few new features:</p>
+
+<ul>
+<li>Support regular expressions on fields keys in select clause.</li>
+<li>New <code>linear</code> fill option.</li>
+<li>New <code>cumulative_sum</code> function.</li>
+<li>Support <code>ON</code> for <code>SHOW</code> commands.</li>
+</ul>
+
+<p>All Changes:</p>
+
+<ul>
+<li>Filter out series within shards that do not have data for that series.</li>
+<li>Rewrite regular expressions of the form host = /^server-a$/ to host = &lsquo;server-a&rsquo;, to take advantage of the tsdb index.</li>
+<li>Improve compaction planning performance by caching tsm file stats.</li>
+<li>Align binary math expression streams by time.</li>
+<li>Reduce map allocations when computing the TagSet of a measurement.</li>
+<li>Make input plugin services open/close idempotent.</li>
+<li>Speed up shutdown by closing shards concurrently.</li>
+<li>Add sample function to query language.</li>
+<li>Add <code>fill(linear)</code> to query language.</li>
+<li>Implement cumulative_sum() function.</li>
+<li>Update defaults in config for latest best practices.</li>
+<li>UDP Client: Split large points.</li>
+<li>Add stats for active compactions, compaction errors.</li>
+<li>More man pages for the other tools we package and compress man pages fully.</li>
+<li>Add max-values-per-tag to limit high tag cardinality data.</li>
+<li>Update jwt-go dependency to version 3.</li>
+<li>Support enable HTTP service over unix domain socket.</li>
+<li>Add additional statistics to query executor.</li>
+<li>Feature request: <code>influx inspect -export</code> should dump WAL files.</li>
+<li>Implement text/csv content encoding for the response writer.</li>
+<li>Support tools for running async queries.</li>
+<li>Support ON and use default database for SHOW commands.</li>
+<li>Correctly read in input from a non-interactive stream for the CLI.</li>
+<li>Support <code>INFLUX_USERNAME</code> and <code>INFLUX_PASSWORD</code> for setting username/password in the CLI.</li>
+<li>Optimize first/last when no group by interval is present.</li>
+<li>Make regular expressions work on field and dimension keys in SELECT clause.</li>
+<li>Change default time boundaries for raw queries.</li>
+<li>Support mixed duration units.</li>
+</ul>
+
+<h3 id="bugfixes-12">Bugfixes</h3>
+
+<ul>
+<li>Avoid deadlock when <code>max-row-limit</code> is hit.</li>
+<li>Fix incorrect grouping when multiple aggregates are used with sparse data.</li>
+<li>Fix output duration units for SHOW QUERIES.</li>
+<li>Truncate the version string when linking to the documentation.</li>
+<li>influx_inspect: export does not escape field keys.</li>
+<li>Fix issue where point would be written to wrong shard.</li>
+<li>Fix retention policy inconsistencies.</li>
+<li>Remove accidentally added string support for the stddev call.</li>
+<li>Remove /data/process_continuous_queries endpoint.</li>
+<li>Enable https subscriptions to work with custom CA certificates.</li>
+<li>Reduce query planning allocations.</li>
+<li>Shard stats include WAL path tag so disk bytes make more sense.</li>
+<li>Panic with unread show series iterators during drop database.</li>
+<li>Use consistent column output from the CLI for column formatted responses.</li>
+<li>Correctly use password-type field in Admin UI.</li>
+<li>Duplicate parsing bug in ALTER RETENTION POLICY.</li>
+<li>Fix database locked up when deleting shards.</li>
+<li>Fix mmap dereferencing.</li>
+<li>Fix base64 encoding issue with /debug/vars stats.</li>
+<li>Drop measurement causes cache max memory exceeded error.</li>
+<li>Decrement number of measurements only once when deleting the last series from a measurement.</li>
+<li>Delete statement returns an error when retention policy or database is specified.</li>
+<li>Fix the dollar sign so it properly handles reserved keywords.</li>
+<li>Exceeding max retention policy duration gives incorrect error message.</li>
+<li>Drop time when used as a tag or field key.</li>
+</ul>
+
+<h2 id="v1-0-2-2016-10-05">v1.0.2 [2016-10-05]</h2>
+
+<h3 id="bugfixes-13">Bugfixes</h3>
+
+<ul>
+<li>Fix RLE integer decoding producing negative numbers.</li>
+<li>Avoid stat syscall when planning compactions.</li>
+<li>Subscription data loss under high write load.</li>
+<li>Do not automatically reset the shard duration when using ALTER RETENTION POLICY.</li>
+<li>Ensure correct shard groups created when retention policy has been altered.</li>
+</ul>
+
+<h2 id="v1-0-1-2016-09-26">v1.0.1 [2016-09-26]</h2>
+
+<h3 id="bugfixes-14">Bugfixes</h3>
+
+<ul>
+<li>Prevent users from manually using system queries since incorrect use would result in a panic.</li>
+<li>Ensure fieldsCreated stat available in shard measurement.</li>
+<li>Report cmdline and memstats in /debug/vars.</li>
+<li>Fixing typo within example configuration file.</li>
+<li>Implement time math for lazy time literals.</li>
+<li>Fix database locked up when deleting shards.</li>
+<li>Skip past points at the same time in derivative call within a merged series.</li>
+<li>Read an invalid JSON response as an error in the Influx client.</li>
+</ul>
+
+<h2 id="v1-0-0-2016-09-08">v1.0.0 [2016-09-08]</h2>
+
+<h3 id="release-notes-14">Release Notes</h3>
+
+<p>Inital release of InfluxDB.</p>
+
+<h3 id="breaking-changes-5">Breaking changes</h3>
+
+<ul>
+<li><code>max-series-per-database</code> was added with a default of 1M but can be disabled by setting it to <code>0</code>. Existing databases with series that exceed this limit will continue to load but writes that would create new series will fail.</li>
+<li>Config option <code>[cluster]</code> has been replaced with <code>[coordinator]</code>.</li>
+<li>Support for config options <code>[collectd]</code> and <code>[opentsdb]</code> has been removed; use <code>[[collectd]]</code> and <code>[[opentsdb]]</code> instead.</li>
+<li>Config option <code>data-logging-enabled</code> within the <code>[data]</code> section, has been renamed to <code>trace-logging-enabled</code>, and defaults to <code>false</code>.</li>
+<li>The keywords <code>IF</code>, <code>EXISTS</code>, and <code>NOT</code> where removed for this release.  This means you no longer need to specify <code>IF NOT EXISTS</code> for <code>DROP DATABASE</code> or <code>IF EXISTS</code> for <code>CREATE DATABASE</code>.  If these are specified, a query parse error is returned.</li>
+<li>The Shard <code>writePointsFail</code> stat has been renamed to <code>writePointsErr</code> for consistency with other stats.</li>
+</ul>
+
+<p>With this release the systemd configuration files for InfluxDB will use the system configured default for logging and will no longer write files to <code>/var/log/influxdb</code> by default. On most systems, the logs will be directed to the systemd journal and can be accessed by <code>journalctl -u influxdb.service</code>. Consult the systemd journald documentation for configuring journald.</p>
+
+<h3 id="features-22">Features</h3>
+
+<ul>
+<li>Add mode function.</li>
+<li>Support negative timestamps for the query engine.</li>
+<li>Write path stats.</li>
+<li>Add MaxSeriesPerDatabase config setting.</li>
+<li>Remove IF EXISTS/IF NOT EXISTS from influxql language.</li>
+<li>Update go package library dependencies.</li>
+<li>Add tsm file export to influx_inspect tool.</li>
+<li>Create man pages for commands.</li>
+<li>Return 403 Forbidden when authentication succeeds but authorization fails.</li>
+<li>Added favicon.</li>
+<li>Run continuous query for multiple buckets rather than one per bucket.</li>
+<li>Log the CQ execution time when continuous query logging is enabled.</li>
+<li>Trim BOM from Windows Notepad-saved config files.</li>
+<li>Update help and remove unused config options from the configuration file.</li>
+<li>Add NodeID to execution options.</li>
+<li>Make httpd logger closer to Common (&amp; combined) Log Format.</li>
+<li>Allow any variant of the help option to trigger the help.</li>
+<li>Reduce allocations during query parsing.</li>
+<li>Optimize timestamp run-length decoding.</li>
+<li>Adds monitoring statistic for on-disk shard size.</li>
+<li>Add HTTP(s) based subscriptions.</li>
+<li>Add new HTTP statistics to monitoring.</li>
+<li>Speed up drop database.</li>
+<li>Add Holt-Winter forecasting function.</li>
+<li>Add support for JWT token authentication.</li>
+<li>Add ability to create snapshots of shards.</li>
+<li>Parallelize iterators.</li>
+<li>Teach the http service how to enforce connection limits.</li>
+<li>Support cast syntax for selecting a specific type.</li>
+<li>Refactor monitor service to avoid expvar and write monitor statistics on a truncated time interval.</li>
+<li>Dynamically update the documentation link in the admin UI.</li>
+<li>Support wildcards in aggregate functions.</li>
+<li>Support specifying a retention policy for the graphite service.</li>
+<li>Add extra trace logging to tsm engine.</li>
+<li>Add stats and diagnostics to the TSM engine.</li>
+<li>Support regex selection in SHOW TAG VALUES for the key.</li>
+<li>Modify the default retention policy name and make it configurable.</li>
+<li>Update SHOW FIELD KEYS to return the field type with the field key.</li>
+<li>Support bound parameters in the parser.</li>
+<li>Add https-private-key option to httpd config.</li>
+<li>Support loading a folder for collectd typesdb files.</li>
+</ul>
+
+<h3 id="bugfixes-15">Bugfixes</h3>
+
+<ul>
+<li>Optimize queries that compare a tag value to an empty string.</li>
+<li>Allow blank lines in the line protocol input.</li>
+<li>Runtime: goroutine stack exceeds 1000000000-byte limit.</li>
+<li>Fix alter retention policy when all options are used.</li>
+<li>Concurrent series limit.</li>
+<li>Ensure gzip writer is closed in influx_inspect export.</li>
+<li>Fix CREATE DATABASE when dealing with default values.</li>
+<li>Fix UDP pointsRx being incremented twice.</li>
+<li>Tombstone memory improvements.</li>
+<li>Hardcode auto generated RP names to autogen.</li>
+<li>Ensure IDs can&rsquo;t clash when managing Continuous Queries.</li>
+<li>Continuous full compactions.</li>
+<li>Remove limiter from walkShards.</li>
+<li>Copy tags in influx_stress to avoid a concurrent write panic on a map.</li>
+<li>Do not run continuous queries that have no time span.</li>
+<li>Move the CQ interval by the group by offset.</li>
+<li>Fix panic parsing empty key.</li>
+<li>Update connection settings when changing hosts in CLI.</li>
+<li>Always use the demo config when outputting a new config.</li>
+<li>Minor improvements to init script. Removes sysvinit-utils as package dependency.</li>
+<li>Fix compaction planning with large TSM files.</li>
+<li>Duplicate data for the same timestamp.</li>
+<li>Fix panic: truncate the slice when merging the caches.</li>
+<li>Fix regex binary encoding for a measurement.</li>
+<li>Fix fill(previous) when used with math operators.</li>
+<li>Rename dumptsmdev to dumptsm in influx_inspect.</li>
+<li>Remove a double lock in the tsm1 index writer.</li>
+<li>Remove FieldCodec from TSDB package.</li>
+<li>Allow a non-admin to call &ldquo;use&rdquo; for the influx CLI.</li>
+<li>Set the condition cursor instead of aux iterator when creating a nil condition cursor.</li>
+<li>Update <code>stress/v2</code> to work with clusters, ssl, and username/password auth. Code cleanup.</li>
+<li>Modify the max nanosecond time to be one nanosecond less.</li>
+<li>Include sysvinit-tools as an rpm dependency.</li>
+<li>Add port to all graphite log output to help with debugging multiple endpoints.</li>
+<li>Fix panic: runtime error: index out of range.</li>
+<li>Remove systemd output redirection.</li>
+<li>Database unresponsive after DROP MEASUREMENT.</li>
+<li>Address Out of Memory Error when Dropping Measurement.</li>
+<li>Fix the point validation parser to identify and sort tags correctly.</li>
+<li>Prevent panic in concurrent auth cache write.</li>
+<li>Set X-Influxdb-Version header on every request (even 404 requests).</li>
+<li>Prevent panic if there are no values.</li>
+<li>Time sorting broken with overwritten points.</li>
+<li>queries with strings that look like dates end up with date types, not string types.</li>
+<li>Concurrent map read write panic.</li>
+<li>Drop writes from before the retention policy time window.</li>
+<li>Fix SELECT statement required privileges.</li>
+<li>Filter out sources that do not match the shard database/retention policy.</li>
+<li>Truncate the shard group end time if it exceeds MaxNanoTime.</li>
+<li>Batch SELECT INTO / CQ writes.</li>
+<li>Fix compaction planning re-compacting large TSM files.</li>
+<li>Ensure client sends correct precision when inserting points.</li>
+<li>Accept points with trailing whitespace.</li>
+<li>Fix panic in SHOW FIELD KEYS.</li>
+<li>Disable limit optimization when using an aggregate.</li>
+<li>Fix panic: interface conversion: tsm1.Value is *tsm1.StringValue, not *tsm1.FloatValue.</li>
+<li>Data race when dropping a database immediately after writing to it.</li>
+<li>Make sure admin exists before authenticating query.</li>
+<li>Print the query executor&rsquo;s stack trace on a panic to the log.</li>
+<li>Fix read tombstones: EOF.</li>
+<li>Query-log-enabled in config not ignored anymore.</li>
+<li>Ensure clients requesting gzip encoded bodies don&rsquo;t receive empty body.</li>
+<li>Optimize shard loading.</li>
+<li>Queries slow down hundreds times after overwriting points.</li>
+<li>SHOW TAG VALUES accepts != and !~ in WHERE clause.</li>
+<li>Remove old cluster code.</li>
+<li>Ensure that future points considered in SHOW queries.</li>
+<li>Fix full compactions conflicting with level compactions.</li>
+<li>Overwriting points on large series can cause memory spikes during compactions.</li>
+<li>Fix parseFill to check for fill ident before attempting to parse an expression.</li>
+<li>Max index entries exceeded.</li>
+<li>Address slow startup time.</li>
+<li>Fix measurement field panic in tsm1 engine.</li>
+<li>Queries against files that have just been compacted need to point to new files.</li>
+<li>Check that retention policies exist before creating CQ.</li>
+</ul>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/about_the_project/releasenotes-changelog.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/about_the_project/releasenotes-changelog/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

@@ -1,0 +1,1308 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title> InfluxDB glossary | InfluxData Documentation</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon"/>
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true"/>
+    
+    
+
+    
+    <meta name="robots" content="index, follow"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css"/>
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+
+    <meta name="application-name" content="InfluxData"/>
+    <meta name="msapplication-TileColor" content=""/>
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@influxdb"/>
+    <meta name="twitter:title" content=" InfluxDB glossary | InfluxData Documentation"/>
+    <meta name="twitter:description" content=""/>
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta property="fb:app_id" content="222112578359661"/>
+    <meta property="og:title" content=" InfluxDB glossary | InfluxData Documentation"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content="https://docs.influxdata.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg"/>
+    <meta property="og:image:width" content="555px"/>
+    <meta property="og:image:height" content="290px"/>
+
+    <meta name="Copyright" content="InfluxData Inc."/>
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body class="docs-theme--influxdb">
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/" target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..."/>
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle">InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>InfluxDB glossary</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<h2 id="aggregation">aggregation</h2>
+
+<p>An InfluxQL function that returns an aggregated value across a set of points.
+For a complete list of the available and upcoming aggregations, see <a href="../../query_language/functions/index.html#aggregations">InfluxQL functions</a>.</p>
+
+<p>Related entries: <a href="index.html#function">function</a>, <a href="index.html#selector">selector</a>, <a href="index.html#transformation">transformation</a></p>
+
+<h2 id="batch">batch</h2>
+
+<p>A collection of data points in InfluxDB line protocol format, separated by newlines (<code>0x0A</code>).
+A batch of points may be submitted to the database using a single HTTP request to the write endpoint.
+This makes writes using the InfluxDB API much more performant by drastically reducing the HTTP overhead.
+InfluxData recommends batch sizes of 5,000-10,000 points, although different use cases may be better served by significantly smaller or larger batches.</p>
+
+<p>Related entries: <a href="index.html#influxdb-line-protocol">InfluxDB line protocol</a>, <a href="index.html#point">point</a></p>
+
+<h2 id="continuous-query-cq">continuous query (CQ)</h2>
+
+<p>An InfluxQL query that runs automatically and periodically within a database.
+Continuous queries require a function in the <code>SELECT</code> clause and must include a <code>GROUP BY time()</code> clause.
+See <a href="../../query_language/continuous_queries/index.html">Continuous Queries</a>.</p>
+
+<p>Related entries: <a href="index.html#function">function</a></p>
+
+<h2 id="database">database</h2>
+
+<p>A logical container for users, retention policies, continuous queries, and time series data.</p>
+
+<p>Related entries: <a href="index.html#continuous-query-cq">continuous query</a>, <a href="index.html#retention-policy-rp">retention policy</a>, <a href="index.html#user">user</a></p>
+
+<h2 id="duration">duration</h2>
+
+<p>The attribute of the retention policy that determines how long InfluxDB stores data.
+Data older than the duration are automatically dropped from the database.
+See <a href="../../query_language/database_management/index.html#create-retention-policies-with-create-retention-policy">Database Management</a> for how to set duration.</p>
+
+<p>Related entries: <a href="index.html#retention-policy-rp">retention policy</a></p>
+
+<h2 id="field">field</h2>
+
+<p>The key-value pair in an InfluxDB data structure that records metadata and the actual data value.
+Fields are required in InfluxDB data structures and they are not indexed - queries on field values scan all points that match the specified time range and, as a result, are not performant relative to tags.</p>
+
+<p><em>Query tip:</em> Compare fields to tags; tags are indexed.</p>
+
+<p>Related entries: <a href="index.html#field-key">field key</a>, <a href="index.html#field-set">field set</a>, <a href="index.html#field-value">field value</a>, <a href="index.html#tag">tag</a></p>
+
+<h2 id="field-key">field key</h2>
+
+<p>The key part of the key-value pair that makes up a field.
+Field keys are strings and they store metadata.</p>
+
+<p>Related entries: <a href="index.html#field">field</a>, <a href="index.html#field-set">field set</a>, <a href="index.html#field-value">field value</a>, <a href="index.html#tag-key">tag key</a></p>
+
+<h2 id="field-set">field set</h2>
+
+<p>The collection of field keys and field values on a point.</p>
+
+<p>Related entries: <a href="index.html#field">field</a>, <a href="index.html#field-key">field key</a>, <a href="index.html#field-value">field value</a>, <a href="index.html#point">point</a></p>
+
+<h2 id="field-value">field value</h2>
+
+<p>The value part of the key-value pair that makes up a field.
+Field values are the actual data; they can be strings, floats, integers, or booleans.
+A field value is always associated with a timestamp.</p>
+
+<p>Field values are not indexed - queries on field values scan all points that match the specified time range and, as a result, are not performant.</p>
+
+<p><em>Query tip:</em> Compare field values to tag values; tag values are indexed.</p>
+
+<p>Related entries: <a href="index.html#field">field</a>, <a href="index.html#field-key">field key</a>, <a href="index.html#field-set">field set</a>, <a href="index.html#tag-value">tag value</a>, <a href="index.html#timestamp">timestamp</a></p>
+
+<h2 id="function">function</h2>
+
+<p>InfluxQL aggregations, selectors, and transformations.
+See <a href="../../query_language/functions/index.html">InfluxQL Functions</a> for a complete list of InfluxQL functions.</p>
+
+<p>Related entries: <a href="index.html#aggregation">aggregation</a>, <a href="index.html#selector">selector</a>, <a href="index.html#transformation">transformation</a></p>
+
+<h2 id="identifier">identifier</h2>
+
+<p>Tokens that refer to continuous query names, database names, field keys,
+measurement names, retention policy names, subscription names, tag keys, and
+user names.
+See <a href="../../query_language/spec/index.html#identifiers">Query Language Specification</a>.</p>
+
+<p>Related entries:
+<a href="index.html#database">database</a>,
+<a href="index.html#field-key">field key</a>,
+<a href="index.html#measurement">measurement</a>,
+<a href="index.html#retention-policy-rp">retention policy</a>,
+<a href="index.html#tag-key">tag key</a>,
+<a href="index.html#user">user</a></p>
+
+<h2 id="influxdb-line-protocol">InfluxDB line protocol</h2>
+
+<p>The text based format for writing points to InfluxDB. See <a href="../../write_protocols/index.html">InfluxDB line protocol</a>.</p>
+
+<h2 id="measurement">measurement</h2>
+
+<p>The part of the InfluxDB data structure that describes the data stored in the associated fields.
+Measurements are strings.</p>
+
+<p>Related entries: <a href="index.html#field">field</a>, <a href="index.html#series">series</a></p>
+
+<h2 id="metastore">metastore</h2>
+
+<p>Contains internal information about the status of the system.
+The metastore contains the user information, databases, retention policies, shard metadata, continuous queries, and subscriptions.</p>
+
+<p>Related entries: <a href="index.html#database">database</a>, <a href="index.html#retention-policy-rp">retention policy</a>, <a href="index.html#user">user</a></p>
+
+<h2 id="node">node</h2>
+
+<p>An independent <code>influxd</code> process.</p>
+
+<p>Related entries: <a href="index.html#server">server</a></p>
+
+<h2 id="now">now()</h2>
+
+<p>The local server&rsquo;s nanosecond timestamp.</p>
+
+<h2 id="point">point</h2>
+
+<p>In InfluxDB, a point represents a single data record, similar to a row in a SQL database table. Each point:</p>
+
+<ul>
+<li>has a measurement, a tag set, a field key, a field value, and a timestamp;</li>
+<li>is uniquely identified by its series and timestamp.</li>
+</ul>
+
+<p>You cannot store more than one point with the same timestamp in a series.
+If you write a point to a series with a timestamp that matches an existing point, the field set becomes a union of the old and new field set, and any ties go to the new field set.
+For more information about duplicate points, see <a href="../../troubleshooting/frequently-asked-questions/index.html#how-does-influxdb-handle-duplicate-points">How does InfluxDB handle duplicate points?</a></p>
+
+<p>Related entries: <a href="index.html#field-set">field set</a>, <a href="index.html#series">series</a>, <a href="index.html#timestamp">timestamp</a></p>
+
+<h2 id="points-per-second">points per second</h2>
+
+<p>A deprecated measurement of the rate at which data are persisted to InfluxDB.
+The schema allows and even encourages the recording of multiple metric values per point, rendering points per second ambiguous.</p>
+
+<p>Write speeds are generally quoted in values per second, a more precise metric.</p>
+
+<p>Related entries: <a href="index.html#point">point</a>, <a href="index.html#schema">schema</a>, <a href="index.html#values-per-second">values per second</a></p>
+
+<h2 id="query">query</h2>
+
+<p>An operation that retrieves data from InfluxDB.
+See <a href="../../query_language/data_exploration/index.html">Data Exploration</a>, <a href="../../query_language/schema_exploration/index.html">Schema Exploration</a>, <a href="../../query_language/database_management/index.html">Database Management</a>.</p>
+
+<h2 id="replication-factor">replication factor</h2>
+
+<p>The attribute of the retention policy that determines how many copies of data to concurrently store (or retain) in the cluster. Replicating copies ensures that data is available when a data node (or more) is unavailable.</p>
+
+<p>For three nodes or less, the default replication factor equals the number of data nodes.
+For more than three nodes, the default replication factor is 3. To change the default replication factor, specify the replication factor <code>n</code> in the retention policy.</p>
+
+<p>Related entries: <a href="https://docs.influxdata.com/influxdb/v0.10/concepts/glossary/#cluster">cluster</a>, <a href="index.html#duration">duration</a>, <a href="index.html#node">node</a>,
+<a href="index.html#retention-policy-rp">retention policy</a></p>
+
+<h2 id="retention-policy-rp">retention policy (RP)</h2>
+
+<p>Describes how long InfluxDB keeps data (duration), how many copies of the data to store in the cluster (replication factor), and the time range covered by shard groups (shard group duration). RPs are unique per database and along with the measurement and tag set define a series.</p>
+
+<p>When you create a database, InfluxDB creates a retention policy called <code>autogen</code> with an infinite duration, a replication factor set to one, and a shard group duration set to seven days.
+For more information, see <a href="../../query_language/database_management/index.html#retention-policy-management">Retention policy management</a>.</p>
+
+<p>Related entries: <a href="index.html#duration">duration</a>, <a href="index.html#measurement">measurement</a>, <a href="index.html#replication-factor">replication factor</a>, <a href="index.html#series">series</a>, <a href="index.html#shard-duration">shard duration</a>, <a href="index.html#tag-set">tag set</a></p>
+
+<h2 id="schema">schema</h2>
+
+<p>How the data are organized in InfluxDB.
+The fundamentals of the InfluxDB schema are databases, retention policies, series, measurements, tag keys, tag values, and field keys.
+See <a href="../schema_and_data_layout/index.html">Schema Design</a> for more information.</p>
+
+<p>Related entries: <a href="index.html#database">database</a>, <a href="index.html#field-key">field key</a>, <a href="index.html#measurement">measurement</a>, <a href="index.html#retention-policy-rp">retention policy</a>, <a href="index.html#series">series</a>, <a href="index.html#tag-key">tag key</a>, <a href="index.html#tag-value">tag value</a></p>
+
+<h2 id="selector">selector</h2>
+
+<p>An InfluxQL function that returns a single point from the range of specified points.
+See <a href="../../query_language/functions/index.html#selectors">InfluxQL Functions</a> for a complete list of the available and upcoming selectors.</p>
+
+<p>Related entries: <a href="index.html#aggregation">aggregation</a>, <a href="index.html#function">function</a>, <a href="index.html#transformation">transformation</a></p>
+
+<h2 id="series">series</h2>
+
+<p>A logical grouping of data defined by shared measurement, tag set, and field key.</p>
+
+<p>Related entries: <a href="index.html#field-set">field set</a>, <a href="index.html#measurement">measurement</a>, <a href="index.html#tag-set">tag set</a></p>
+
+<h2 id="series-cardinality">series cardinality</h2>
+
+<p>The number of unique database, measurement, tag set, and field key combinations in an InfluxDB instance.</p>
+
+<p>For example, assume that an InfluxDB instance has a single database and one measurement.
+The single measurement has two tag keys: <code>email</code> and <code>status</code>.
+If there are three different <code>email</code>s, and each email address is associated with two
+different <code>status</code>es then the series cardinality for the measurement is 6
+(3 * 2 = 6):</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">email</th>
+<th align="left">status</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">lorr@influxdata.com</td>
+<td align="left">start</td>
+</tr>
+
+<tr>
+<td align="left">lorr@influxdata.com</td>
+<td align="left">finish</td>
+</tr>
+
+<tr>
+<td align="left">marv@influxdata.com</td>
+<td align="left">start</td>
+</tr>
+
+<tr>
+<td align="left">marv@influxdata.com</td>
+<td align="left">finish</td>
+</tr>
+
+<tr>
+<td align="left">cliff@influxdata.com</td>
+<td align="left">start</td>
+</tr>
+
+<tr>
+<td align="left">cliff@influxdata.com</td>
+<td align="left">finish</td>
+</tr>
+</tbody>
+</table>
+
+<p>Note that, in some cases, simply performing that multiplication may overestimate series cardinality because of the presence of dependent tags.
+Dependent tags are tags that are scoped by another tag and do not increase series
+cardinality.
+If we add the tag <code>firstname</code> to the example above, the series cardinality
+would not be 18 (3 * 2 * 3 = 18).
+It would remain unchanged at 6, as <code>firstname</code> is already scoped by the <code>email</code> tag:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">email</th>
+<th align="left">status</th>
+<th align="left">firstname</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">lorr@influxdata.com</td>
+<td align="left">start</td>
+<td align="left">lorraine</td>
+</tr>
+
+<tr>
+<td align="left">lorr@influxdata.com</td>
+<td align="left">finish</td>
+<td align="left">lorraine</td>
+</tr>
+
+<tr>
+<td align="left">marv@influxdata.com</td>
+<td align="left">start</td>
+<td align="left">marvin</td>
+</tr>
+
+<tr>
+<td align="left">marv@influxdata.com</td>
+<td align="left">finish</td>
+<td align="left">marvin</td>
+</tr>
+
+<tr>
+<td align="left">cliff@influxdata.com</td>
+<td align="left">start</td>
+<td align="left">clifford</td>
+</tr>
+
+<tr>
+<td align="left">cliff@influxdata.com</td>
+<td align="left">finish</td>
+<td align="left">clifford</td>
+</tr>
+</tbody>
+</table>
+
+<p>See <a href="../../query_language/spec/index.html#show-cardinality">SHOW CARDINALITY</a> to learn about the InfluxQL commands for series cardinality.</p>
+
+<p>Related entries: <a href="index.html#field-key">field key</a>,<a href="index.html#measurement">measurement</a>, <a href="index.html#tag-key">tag key</a>, <a href="index.html#tag-set">tag set</a></p>
+
+<h2 id="series-key">series key</h2>
+
+<p>A series key identifies a particular series by measurement, tag set, and field key.</p>
+
+<p>For example:</p>
+
+<pre><code># measurement, tag set, field key
+h2o_level, location=santa_monica, h2o_feet
+</code></pre>
+
+<p>Related entries: <a href="index.html#series">series</a></p>
+
+<h2 id="server">server</h2>
+
+<p>A machine, virtual or physical, that is running InfluxDB.
+There should only be one InfluxDB process per server.</p>
+
+<p>Related entries: <a href="index.html#node">node</a></p>
+
+<h2 id="shard">shard</h2>
+
+<p>A shard contains the actual encoded and compressed data, and is represented by a TSM file on disk.
+Every shard belongs to one and only one shard group.
+Multiple shards may exist in a single shard group.
+Each shard contains a specific set of series.
+All points falling on a given series in a given shard group will be stored in the same shard (TSM file) on disk.</p>
+
+<p>Related entries: <a href="index.html#series">series</a>, <a href="index.html#shard-duration">shard duration</a>, <a href="index.html#shard-group">shard group</a>, <a href="index.html#tsm-time-structured-merge-tree">tsm</a></p>
+
+<h2 id="shard-duration">shard duration</h2>
+
+<p>The shard duration determines how much time each shard group spans.
+The specific interval is determined by the <code>SHARD DURATION</code> of the retention policy.
+See <a href="../../query_language/database_management/index.html#retention-policy-management">Retention Policy management</a> for more information.</p>
+
+<p>For example, given a retention policy with <code>SHARD DURATION</code> set to <code>1w</code>, each shard group will span a single week and contain all points with timestamps in that week.</p>
+
+<p>Related entries: <a href="index.html#database">database</a>, <a href="index.html#retention-policy-rp">retention policy</a>, <a href="index.html#series">series</a>, <a href="index.html#shard">shard</a>, <a href="index.html#shard-group">shard group</a></p>
+
+<h2 id="shard-group">shard group</h2>
+
+<p>Shard groups are logical containers for shards.
+Shard groups are organized by time and retention policy.
+Every retention policy that contains data has at least one associated shard group.
+A given shard group contains all shards with data for the interval covered by the shard group.
+The interval spanned by each shard group is the shard duration.</p>
+
+<p>Related entries: <a href="index.html#database">database</a>, <a href="index.html#retention-policy-rp">retention policy</a>, <a href="index.html#series">series</a>, <a href="index.html#shard">shard</a>, <a href="index.html#shard-duration">shard duration</a></p>
+
+<h2 id="subscription">subscription</h2>
+
+<p>Subscriptions allow <a href="https://docs.influxdata.com/kapacitor/latest/">Kapacitor</a> to receive data from InfluxDB in a push model rather than the pull model based on querying data.
+When Kapacitor is configured to work with InfluxDB, the subscription will automatically push every write for the subscribed database from InfluxDB to Kapacitor.
+Subscriptions can use TCP or UDP for transmitting the writes.</p>
+
+<h2 id="tag">tag</h2>
+
+<p>The key-value pair in the InfluxDB data structure that records metadata.
+Tags are an optional part of the data structure, but they are useful for storing commonly-queried metadata; tags are indexed so queries on tags are performant.
+<em>Query tip:</em> Compare tags to fields; fields are not indexed.</p>
+
+<p>Related entries: <a href="index.html#field">field</a>, <a href="index.html#tag-key">tag key</a>, <a href="index.html#tag-set">tag set</a>, <a href="index.html#tag-value">tag value</a></p>
+
+<h2 id="tag-key">tag key</h2>
+
+<p>The key part of the key-value pair that makes up a tag.
+Tag keys are strings and they store metadata.
+Tag keys are indexed so queries on tag keys are performant.</p>
+
+<p><em>Query tip:</em> Compare tag keys to field keys; field keys are not indexed.</p>
+
+<p>Related entries: <a href="index.html#field-key">field key</a>, <a href="index.html#tag">tag</a>, <a href="index.html#tag-set">tag set</a>, <a href="index.html#tag-value">tag value</a></p>
+
+<h2 id="tag-set">tag set</h2>
+
+<p>The collection of tag keys and tag values on a point.</p>
+
+<p>Related entries: <a href="index.html#point">point</a>, <a href="index.html#series">series</a>, <a href="index.html#tag">tag</a>, <a href="index.html#tag-key">tag key</a>, <a href="index.html#tag-value">tag value</a></p>
+
+<h2 id="tag-value">tag value</h2>
+
+<p>The value part of the key-value pair that makes up a tag.
+Tag values are strings and they store metadata.
+Tag values are indexed so queries on tag values are performant.</p>
+
+<p>Related entries: <a href="index.html#tag">tag</a>, <a href="index.html#tag-key">tag key</a>, <a href="index.html#tag-set">tag set</a></p>
+
+<h2 id="timestamp">timestamp</h2>
+
+<p>The date and time associated with a point.
+All time in InfluxDB is UTC.</p>
+
+<p>For how to specify time when writing data, see <a href="../../write_protocols/write_syntax/index.html">Write Syntax</a>.
+For how to specify time when querying data, see <a href="../../query_language/data_exploration/index.html#time-syntax">Data Exploration</a>.</p>
+
+<p>Related entries: <a href="index.html#point">point</a></p>
+
+<h2 id="transformation">transformation</h2>
+
+<p>An InfluxQL function that returns a value or a set of values calculated from specified points, but does not return an aggregated value across those points.
+See <a href="../../query_language/functions/index.html#transformations">InfluxQL Functions</a> for a complete list of the available and upcoming aggregations.</p>
+
+<p>Related entries: <a href="index.html#aggregation">aggregation</a>, <a href="index.html#function">function</a>, <a href="index.html#selector">selector</a></p>
+
+<h2 id="tsm-time-structured-merge-tree">TSM (Time Structured Merge tree)</h2>
+
+<p>The purpose-built data storage format for InfluxDB. TSM allows for greater compaction and higher write and read throughput than existing B+ or LSM tree implementations. See <a href="../storage_engine/index.html">Storage Engine</a> for more.</p>
+
+<h2 id="user">user</h2>
+
+<p>There are two kinds of users in InfluxDB:</p>
+
+<ul>
+<li><em>Admin users</em> have <code>READ</code> and <code>WRITE</code> access to all databases and full access to administrative queries and user management commands.</li>
+<li><em>Non-admin users</em> have <code>READ</code>, <code>WRITE</code>, or <code>ALL</code> (both <code>READ</code> and <code>WRITE</code>) access per database.</li>
+</ul>
+
+<p>When authentication is enabled, InfluxDB only executes HTTP requests that are sent with a valid username and password.
+See <a href="../../administration/authentication_and_authorization/index.html">Authentication and Authorization</a>.</p>
+
+<h2 id="values-per-second">values per second</h2>
+
+<p>The preferred measurement of the rate at which data are persisted to InfluxDB. Write speeds are generally quoted in values per second.</p>
+
+<p>To calculate the values per second rate, multiply the number of points written per second by the number of values stored per point. For example, if the points have four fields each, and a batch of 5000 points is written 10 times per second, then the values per second rate is <code>4 field values per point * 5000 points per batch * 10 batches per second = 200,000 values per second</code>.</p>
+
+<p>Related entries: <a href="index.html#batch">batch</a>, <a href="index.html#field">field</a>, <a href="index.html#point">point</a>, <a href="index.html#points-per-second">points per second</a></p>
+
+<h2 id="wal-write-ahead-log">WAL (Write Ahead Log)</h2>
+
+<p>The temporary cache for recently written points. To reduce the frequency with which the permanent storage files are accessed, InfluxDB caches new points in the WAL until their total size or age triggers a flush to more permanent storage. This allows for efficient batching of the writes into the TSM.</p>
+
+<p>Points in the WAL can be queried, and they persist through a system reboot. On process start, all points in the WAL must be flushed before the system accepts new writes.</p>
+
+<p>Related entries: <a href="index.html#tsm-time-structured-merge-tree">tsm</a></p>
+
+<!--
+
+
+
+## shard
+
+## shard group
+-->
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/concepts/glossary.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/concepts/glossary/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+
+
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+
+</body></html>

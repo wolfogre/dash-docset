@@ -1,0 +1,1269 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title> Authentication and authorization in InfluxDB | InfluxData Documentation</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon"/>
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true"/>
+    
+    
+
+    
+    <meta name="robots" content="index, follow"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css"/>
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+
+    <meta name="application-name" content="InfluxData"/>
+    <meta name="msapplication-TileColor" content=""/>
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@influxdb"/>
+    <meta name="twitter:title" content=" Authentication and authorization in InfluxDB | InfluxData Documentation"/>
+    <meta name="twitter:description" content=""/>
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta property="fb:app_id" content="222112578359661"/>
+    <meta property="og:title" content=" Authentication and authorization in InfluxDB | InfluxData Documentation"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content="https://docs.influxdata.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg"/>
+    <meta property="og:image:width" content="555px"/>
+    <meta property="og:image:height" content="290px"/>
+
+    <meta name="Copyright" content="InfluxData Inc."/>
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body class="docs-theme--influxdb">
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/" target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..."/>
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle">InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Authentication and authorization in InfluxDB</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>This document covers setting up and managing authentication and authorization in InfluxDB.</p>
+
+<table style="width:100%">
+  <tbody><tr>
+    <td><a href="index.html#authentication">Authentication:</a></td>
+    <td><a href="index.html#authorization">Authorization:</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#set-up-authentication">Set up Authentication</a></td>
+    <td><a href="index.html#user-types-and-privileges">User Types and Privileges</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#authenticate-requests">Authenticate Requests</a></td>
+    <td><a href="index.html#user-management-commands">User Management Commands</a></td>
+  </tr>
+  <tr>
+      <td><a href="index.html#authentication-and-authorization-http-errors">HTTP Errors</a></td>
+      <td><a href="index.html#authentication-and-authorization-http-errors">HTTP Errors</a></td>
+  </tr>
+</tbody></table>
+
+<blockquote>
+<p><strong>Note:</strong> Authentication and authorization should not be relied upon to prevent access and protect data from malicious actors.
+If additional security or compliance features are desired, InfluxDB should be run behind a third-party service.</p>
+</blockquote>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>The InfluxDB API and the <a href="../../tools/shell/index.html">command line interface</a> (CLI), which connects to the database using the API, include simple, built-in authentication based on user credentials.
+When you enable authentication, InfluxDB only executes HTTP requests that are sent with valid credentials.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Authentication only occurs at the HTTP request scope.
+Plugins do not currently have the ability to authenticate requests and service endpoints (for example, Graphite, collectd, etc.) are not authenticated.</p>
+</blockquote>
+
+<h3 id="set-up-authentication">Set up authentication</h3>
+
+<h4 id="1-create-at-least-one-admin-user-admin-users">1. Create at least one <a href="index.html#admin-users">admin user</a>.</h4>
+
+<p>See the <a href="index.html#authorization">authorization section</a> for how to create an admin user.</p>
+
+<blockquote>
+<p><strong>Note:</strong> If you enable authentication and have no users, InfluxDB will <strong>not</strong> enforce authentication and will only accept the <a href="index.html#user-management-commands">query</a> that creates a new admin user.</p>
+</blockquote>
+
+<p>InfluxDB will enforce authentication once there is an admin user.</p>
+
+<h4 id="2-by-default-authentication-is-disabled-in-the-configuration-file">2. By default, authentication is disabled in the configuration file.</h4>
+
+<p>Enable authentication by setting the <code>auth-enabled</code> option to <code>true</code> in the <code>[http]</code> section of the configuration file:</p>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">http</span><span class="p">]</span>
+  <span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">bind</span><span class="err">-</span><span class="nx">address</span> <span class="p">=</span> <span class="s2">&#34;:8086&#34;</span>
+  <span class="nx">auth</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span> <span class="c"># ✨</span>
+  <span class="nx">log</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">write</span><span class="err">-</span><span class="nx">tracing</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">pprof</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">pprof</span><span class="err">-</span><span class="nx">auth</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">debug</span><span class="err">-</span><span class="nx">pprof</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">ping</span><span class="err">-</span><span class="nx">auth</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">https</span><span class="err">-</span><span class="nx">enabled</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">https</span><span class="err">-</span><span class="nx">certificate</span> <span class="p">=</span> <span class="s2">&#34;/etc/ssl/influxdb.pem&#34;</span></code></pre></div>
+
+<div class="note">
+  <p>If <code>pprof-enabled</code> is set to <code>true</code>, set <code>pprof-auth-enabled</code> and <code>ping-auth-enabled</code>
+to <code>true</code> to require authentication on profiling and ping endpoints.</p>
+
+</div>
+
+
+<h4 id="3-restart-the-process">3. Restart the process</h4>
+
+<p>Now InfluxDB will check user credentials on every request and will only process requests that have valid credentials for an existing user.</p>
+
+<h3 id="authenticate-requests">Authenticate requests</h3>
+
+<h4 id="authenticate-with-the-influxdb-api">Authenticate with the InfluxDB API</h4>
+
+<p>There are two options for authenticating with the <a href="../../tools/api/index.html">InfluxDB API</a>.</p>
+
+<p>If you authenticate with both Basic Authentication <strong>and</strong> the URL query parameters, the user credentials specified in the query parameters take precedence.
+The queries in the following examples assume that the user is an <a href="index.html#admin-users">admin user</a>.
+See the section on <a href="index.html#authorization">authorization</a> for the different user types, their privileges, and more on user management.</p>
+
+<blockquote>
+<p><strong>Note:</strong> InfluxDB redacts passwords when you enable authentication.</p>
+</blockquote>
+
+<h5 id="authenticate-with-basic-authentication-as-described-in-rfc-2617-section-2-http-tools-ietf-org-html-rfc2617">Authenticate with Basic Authentication as described in <a href="http://tools.ietf.org/html/rfc2617">RFC 2617, Section 2</a></h5>
+
+<p>This is the preferred method for providing user credentials.</p>
+
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -G http://localhost:8086/query -u todd:influxdb4ever --data-urlencode <span class="s2">&#34;q=SHOW DATABASES&#34;</span></code></pre></div>
+<h5 id="authenticate-by-providing-query-parameters-in-the-url-or-request-body">Authenticate by providing query parameters in the URL or request body</h5>
+
+<p>Set <code>u</code> as the username and <code>p</code> as the password.</p>
+
+<h6 id="example-using-query-parameters">Example using query parameters</h6>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -G <span class="s2">&#34;http://localhost:8086/query?u=todd&amp;p=influxdb4ever&#34;</span> --data-urlencode <span class="s2">&#34;q=SHOW DATABASES&#34;</span></code></pre></div>
+<h6 id="example-using-request-body">Example using request body</h6>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -G http://localhost:8086/query --data-urlencode <span class="s2">&#34;u=todd&#34;</span> --data-urlencode <span class="s2">&#34;p=influxdb4ever&#34;</span> --data-urlencode <span class="s2">&#34;q=SHOW DATABASES&#34;</span></code></pre></div>
+<h4 id="authenticate-with-the-cli">Authenticate with the CLI</h4>
+
+<p>There are three options for authenticating with the <a href="../../tools/shell/index.html">CLI</a>.</p>
+
+<h5 id="authenticate-with-the-influx-username-and-influx-password-environment-variables">Authenticate with the <code>INFLUX_USERNAME</code> and <code>INFLUX_PASSWORD</code> environment variables</h5>
+
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">INFLUX_USERNAME</span><span class="o">=</span>todd
+<span class="nb">export</span> <span class="nv">INFLUX_PASSWORD</span><span class="o">=</span>influxdb4ever
+<span class="nb">echo</span> <span class="nv">$INFLUX_USERNAME</span> <span class="nv">$INFLUX_PASSWORD</span>
+todd influxdb4ever
+
+influx
+Connected to http://localhost:8086 version <span class="m">1</span>.4.x
+InfluxDB shell <span class="m">1</span>.4.x</code></pre></div>
+<h5 id="authenticate-by-setting-the-username-and-password-flags-when-you-start-the-cli">Authenticate by setting the <code>username</code> and <code>password</code> flags when you start the CLI</h5>
+
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">influx -username todd -password influxdb4ever
+Connected to http://localhost:8086 version <span class="m">1</span>.4.x
+InfluxDB shell <span class="m">1</span>.4.x</code></pre></div>
+<h5 id="authenticate-with-auth-username-password-after-starting-the-cli">Authenticate with <code>auth &lt;username&gt; &lt;password&gt;</code> after starting the CLI</h5>
+
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">influx
+Connected to http://localhost:8086 version <span class="m">1</span>.4.x
+InfluxDB shell <span class="m">1</span>.4.x
+&gt; auth
+username: todd
+password:
+&gt;</code></pre></div>
+<h4 id="authenticate-using-jwt-tokens">Authenticate using JWT tokens</h4>
+
+<p>Passing JWT tokens in each request is a more secure alternative to using passwords.
+This is currently only possible through the <a href="../../tools/api/index.html">InfluxDB HTTP API</a>.</p>
+
+<h5 id="1-add-a-shared-secret-in-your-influxdb-configuration-file">1. Add a shared secret in your InfluxDB configuration file</h5>
+
+<p>InfluxDB uses the shared secret to encode the JWT signature.
+By default, <code>shared-secret</code> is set to an empty string, in which case no JWT authentication takes place.
+Add a custom shared secret in your <a href="../config/index.html#shared-secret">InfluxDB configuration file</a>.
+The longer the secret string, the more secure it is:</p>
+
+<pre><code>[http]
+  shared-secret = &#34;my super secret pass phrase&#34;
+</code></pre>
+
+<p>Alternatively, to avoid keeping your secret phrase as plain text in your InfluxDB configuration file, set the value with the <code>INFLUXDB_HTTP_SHARED_SECRET</code> environment variable.</p>
+
+<h5 id="2-generate-your-token">2. Generate your token</h5>
+
+<p>Use an authentication service to generate a secure token using your InfluxDB username, an expiration time, and your shared secret.
+There are online tools, such as <a href="https://jwt.io/">https://jwt.io/</a>, that will do this for you.</p>
+
+<p>The payload (or claims) of the token must be in the following format:</p>
+
+<pre><code>{
+  &#34;username&#34;: &#34;myUserName&#34;,
+  &#34;exp&#34;: 1516239022
+}
+</code></pre>
+
+<p>◦ <strong>username</strong> - The name of your InfluxDB user.<br/>
+◦ <strong>exp</strong> - The expiration time of the token in UNIX epoch time.
+For increased security, keep token expiration periods short.
+For testing, you can manually generate UNIX timestamps using <a href="https://www.unixtimestamp.com/index.php">https://www.unixtimestamp.com/index.php</a>.</p>
+
+<p>Encode the payload using your shared secret.
+You can do this with either a JWT library in your own authentication server or by hand at <a href="https://jwt.io/">https://jwt.io/</a>.
+The generated token should look similar to the following:</p>
+
+<pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.he0ErCNloe4J7Id0Ry2SEDg09lKkZkfsRiGsdX_vgEg
+</code></pre>
+
+<h5 id="3-include-the-token-in-http-requests">3. Include the token in HTTP requests</h5>
+
+<p>Include your generated token as part of the <code>Authorization</code> header in HTTP requests.
+Use the <code>Bearer</code> authorization scheme:</p>
+
+<pre><code>Authorization: Bearer &lt;myToken&gt;
+</code></pre>
+
+
+<div class="note">
+  <p>Only unexpired tokens will successfully authenticate.
+Be sure your token has not expired.</p>
+
+</div>
+
+
+<h6 id="example-query-request-with-jwt-authentication">Example query request with JWT authentication</h6>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -XGET <span class="s2">&#34;http://localhost:8086/query?db=demodb&#34;</span> <span class="se">\
+</span><span class="se"></span>  --data-urlencode <span class="s2">&#34;q=SHOW DATABASES&#34;</span> <span class="se">\
+</span><span class="se"></span>  --header <span class="s2">&#34;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.he0ErCNloe4J7Id0Ry2SEDg09lKkZkfsRiGsdX_vgEg&#34;</span></code></pre></div>
+<h2 id="authenticate-telegraf-requests-to-influxdb">Authenticate Telegraf requests to InfluxDB</h2>
+
+<p>Authenticating <a href="https://docs.influxdata.com/telegraf/latest/">Telegraf</a> requests to an InfluxDB instance with
+authentication enabled requires some additional steps.
+In the Telegraf configuration file (<code>/etc/telegraf/telegraf.conf</code>), uncomment
+and edit the <code>username</code> and <code>password</code> settings.</p>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="err">&gt;</span>
+    <span class="c">###############################################################################</span>
+    <span class="c">#                            OUTPUT PLUGINS                                   #</span>
+    <span class="c">###############################################################################</span>
+<span class="err">&gt;</span>
+    <span class="p">[...]</span>
+<span class="err">&gt;</span>
+    <span class="c">## Write timeout (for the InfluxDB client), formatted as a string.</span>
+    <span class="c">## If not provided, will default to 5s. 0s means no timeout (not recommended).</span>
+    <span class="nx">timeout</span> <span class="p">=</span> <span class="s2">&#34;5s&#34;</span>
+    <span class="nx">username</span> <span class="p">=</span> <span class="s2">&#34;telegraf&#34;</span> <span class="c">#💥</span>
+    <span class="nx">password</span> <span class="p">=</span> <span class="s2">&#34;metricsmetricsmetricsmetrics&#34;</span> <span class="c">#💥</span>
+<span class="err">&gt;</span>
+    <span class="p">[...]</span></code></pre></div>
+<p>Next, restart Telegraf and you&rsquo;re all set!</p>
+
+<h2 id="authorization">Authorization</h2>
+
+<p>Authorization is only enforced once you&rsquo;ve <a href="index.html#set-up-authentication">enabled authentication</a>.
+By default, authentication is disabled, all credentials are silently ignored, and all users have all privileges.</p>
+
+<h3 id="user-types-and-privileges">User types and privileges</h3>
+
+<h4 id="admin-users">Admin users</h4>
+
+<p>Admin users have <code>READ</code> and <code>WRITE</code> access to all databases and full access to the following administrative queries:</p>
+
+<p>Database management:<br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>CREATE DATABASE</code>, and <code>DROP DATABASE</code><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>DROP SERIES</code> and <code>DROP MEASUREMENT</code><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>CREATE RETENTION POLICY</code>, <code>ALTER RETENTION POLICY</code>, and <code>DROP RETENTION POLICY</code><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>CREATE CONTINUOUS QUERY</code> and <code>DROP CONTINUOUS QUERY</code></p>
+
+<p>See the <a href="../../query_language/database_management/index.html">database management</a> and <a href="../../query_language/continuous_queries/index.html">continuous queries</a> pages for a complete discussion of the commands listed above.</p>
+
+<p>User management:<br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;Admin user management:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.html#user-management-commands"><code>CREATE USER</code></a>, <a href="index.html#grant-administrative-privileges-to-an-existing-user"><code>GRANT ALL PRIVILEGES</code></a>, <a href="index.html#revoke-administrative-privileges-from-an-admin-user"><code>REVOKE ALL PRIVILEGES</code></a>, and <a href="index.html#show-all-existing-users-and-their-admin-status"><code>SHOW USERS</code></a><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;Non-admin user management:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.html#user-management-commands"><code>CREATE USER</code></a>, <a href="index.html#grant-read-write-or-all-database-privileges-to-an-existing-user"><code>GRANT [READ,WRITE,ALL]</code></a>, <a href="index.html#revoke-read-write-or-all-database-privileges-from-an-existing-user"><code>REVOKE [READ,WRITE,ALL]</code></a>, and <a href="index.html#show-a-user-s-database-privileges"><code>SHOW GRANTS</code></a><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;General user management:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.html#re-set-a-user-s-password"><code>SET PASSWORD</code></a> and <a href="index.html#drop-a-user"><code>DROP USER</code></a></p>
+
+<p>See <a href="index.html#user-management-commands">below</a> for a complete discussion of the user management commands.</p>
+
+<h4 id="non-admin-users">Non-admin users</h4>
+
+<p>Non-admin users can have one of the following three privileges per database:
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>READ</code><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>WRITE</code><br/>
+&nbsp;&nbsp;&nbsp;◦&nbsp;&nbsp;&nbsp;<code>ALL</code> (both <code>READ</code> and <code>WRITE</code> access)</p>
+
+<p><code>READ</code>, <code>WRITE</code>, and <code>ALL</code> privileges are controlled per user per database. A new non-admin user has no access to any database until they are specifically <a href="index.html#grant-read-write-or-all-database-privileges-to-an-existing-user">granted privileges to a database</a> by an admin user.
+Non-admin users can <a href="../../query_language/schema_exploration/index.html#show-databases"><code>SHOW</code></a> the databases on which they have <code>READ</code> and/or <code>WRITE</code> permissions.</p>
+
+<h3 id="user-management-commands">User management commands</h3>
+
+<h4 id="admin-user-management">Admin user management</h4>
+
+<p>When you enable HTTP authentication, InfluxDB requires you to create at least one admin user before you can interact with the system.</p>
+
+<p><code>CREATE USER admin WITH PASSWORD &#39;&lt;password&gt;&#39; WITH ALL PRIVILEGES</code></p>
+
+<h5 id="create-another-admin-user"><code>CREATE</code> another admin user</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">USER</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;&lt;password&gt;&#39;</span> <span class="k">WITH</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">USER</span> <span class="n">paul</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;timeseries4days&#39;</span> <span class="k">WITH</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span>
+<span class="o">&gt;</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> Repeating the exact <code>CREATE USER</code> statement is idempotent. If any values change the database will return a duplicate user error. See GitHub Issue <a href="https://github.com/influxdata/influxdb/pull/6890">#6890</a> for details.</p>
+
+<p>CLI example:</p>
+
+<pre><code>&gt; CREATE USER todd WITH PASSWORD &#39;123456&#39; WITH ALL PRIVILEGES
+&gt; CREATE USER todd WITH PASSWORD &#39;123456&#39; WITH ALL PRIVILEGES
+&gt; CREATE USER todd WITH PASSWORD &#39;123&#39; WITH ALL PRIVILEGES
+ERR: user already exists
+&gt; CREATE USER todd WITH PASSWORD &#39;123456&#39;
+ERR: user already exists
+&gt; CREATE USER todd WITH PASSWORD &#39;123456&#39; WITH ALL PRIVILEGES
+&gt;
+</code></pre>
+</blockquote>
+
+<h5 id="grant-administrative-privileges-to-an-existing-user"><code>GRANT</code> administrative privileges to an existing user</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">TO</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">TO</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<h5 id="revoke-administrative-privileges-from-an-admin-user"><code>REVOKE</code> administrative privileges from an admin user</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">FROM</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">FROM</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<h5 id="show-all-existing-users-and-their-admin-status"><code>SHOW</code> all existing users and their admin status</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">USERS</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">USERS</span>
+<span class="k">user</span> 	 <span class="k">admin</span>
+<span class="n">todd</span>     <span class="k">false</span>
+<span class="n">paul</span>     <span class="k">true</span>
+<span class="n">hermione</span> <span class="k">false</span>
+<span class="n">dobby</span>    <span class="k">false</span></code></pre></div>
+<h4 id="non-admin-user-management">Non-admin user management</h4>
+
+<h5 id="create-a-new-non-admin-user"><code>CREATE</code> a new non-admin user</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">USER</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;&lt;password&gt;&#39;</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">USER</span> <span class="n">todd</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;influxdb41yf3&#39;</span>
+<span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">USER</span> <span class="n">alice</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;wonder\&#39;</span><span class="n">land</span><span class="s1">&#39;
+</span><span class="s1">&gt; CREATE USER &#34;rachel_smith&#34; WITH PASSWORD &#39;</span><span class="n">asdf1234</span><span class="o">!</span><span class="s1">&#39;
+</span><span class="s1">&gt; CREATE USER &#34;monitoring-robot&#34; WITH PASSWORD &#39;</span><span class="n">XXXXX</span><span class="s1">&#39;
+</span><span class="s1">&gt; CREATE USER &#34;$savyadmin&#34; WITH PASSWORD &#39;</span><span class="n">m3tr1cL0v3r</span><span class="s1">&#39;
+</span><span class="s1">&gt;</span></code></pre></div>
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>The user value must be wrapped in double quotes if it starts with a digit, is an InfluxQL keyword, contains a hyphen and or includes any special characters, for example: <code>!@#$%^&amp;*()-</code></li>
+<li>The password <a href="../../query_language/spec/index.html#strings">string</a> must be wrapped in single quotes.</li>
+<li>Do not include the single quotes when authenticating requests.</li>
+</ul>
+
+<p>For passwords that include a single quote or a newline character, escape the single quote or newline character with a backslash both when creating the password and when submitting authentication requests.</p>
+
+<ul>
+<li>Repeating the exact <code>CREATE USER</code> statement is idempotent. If any values change the database will return a duplicate user error. See GitHub Issue <a href="https://github.com/influxdata/influxdb/pull/6890">#6890</a> for details.</li>
+</ul>
+
+<p>CLI example:</p>
+
+<pre><code>&gt; CREATE USER &#34;todd&#34; WITH PASSWORD &#39;123456&#39;
+&gt; CREATE USER &#34;todd&#34; WITH PASSWORD &#39;123456&#39;
+&gt; CREATE USER &#34;todd&#34; WITH PASSWORD &#39;123&#39;
+ERR: user already exists
+&gt; CREATE USER &#34;todd&#34; WITH PASSWORD &#39;123456&#39;
+&gt; CREATE USER &#34;todd&#34; WITH PASSWORD &#39;123456&#39; WITH ALL PRIVILEGES
+ERR: user already exists
+&gt; CREATE USER &#34;todd&#34; WITH PASSWORD &#39;123456&#39;
+&gt;
+</code></pre>
+</blockquote>
+
+<h5 id="grant-read-write-or-all-database-privileges-to-an-existing-user"><code>GRANT</code> <code>READ</code>, <code>WRITE</code> or <code>ALL</code> database privileges to an existing user</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">GRANT</span> <span class="p">[</span><span class="k">READ</span><span class="p">,</span><span class="k">WRITE</span><span class="p">,</span><span class="k">ALL</span><span class="p">]</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span> <span class="k">TO</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span></code></pre></div>
+<p>CLI examples:</p>
+
+<p><code>GRANT</code> <code>READ</code> access to <code>todd</code> on the <code>NOAA_water_database</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">GRANT</span> <span class="k">READ</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">TO</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<p><code>GRANT</code> <code>ALL</code> access to <code>todd</code> on the <code>NOAA_water_database</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">TO</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<h5 id="revoke-read-write-or-all-database-privileges-from-an-existing-user"><code>REVOKE</code> <code>READ</code>, <code>WRITE</code>, or <code>ALL</code> database privileges from an existing user</h5>
+
+<pre><code>REVOKE [READ,WRITE,ALL] ON &lt;database_name&gt; FROM &lt;username&gt;
+</code></pre>
+
+<p>CLI examples:</p>
+
+<p><code>REVOKE</code> <code>ALL</code> privileges from <code>todd</code> on the <code>NOAA_water_database</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">REVOKE</span> <span class="k">ALL</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<p><code>REVOKE</code> <code>WRITE</code> privileges from <code>todd</code> on the <code>NOAA_water_database</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">REVOKE</span> <span class="k">WRITE</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> If a user with <code>ALL</code> privileges has <code>WRITE</code> privileges revoked, they are left with <code>READ</code> privileges, and vice versa.</p>
+</blockquote>
+
+<h5 id="show-a-user-s-database-privileges"><code>SHOW</code> a user&rsquo;s database privileges</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">GRANTS</span> <span class="k">FOR</span> <span class="o">&lt;</span><span class="n">user_name</span><span class="o">&gt;</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span> <span class="k">FOR</span> <span class="s2">&#34;todd&#34;</span>
+<span class="k">database</span>		            <span class="n">privilege</span>
+<span class="n">NOAA_water_database</span>	        <span class="k">WRITE</span>
+<span class="n">another_database_name</span>	      <span class="k">READ</span>
+<span class="n">yet_another_database_name</span>   <span class="k">ALL</span> <span class="k">PRIVILEGES</span>
+<span class="n">one_more_database_name</span>      <span class="k">NO</span> <span class="k">PRIVILEGES</span></code></pre></div>
+<h4 id="general-admin-and-non-admin-user-management">General admin and non-admin user management</h4>
+
+<h5 id="re-set-a-user-s-password">Re<code>SET</code> a user&rsquo;s password</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span> <span class="n">PASSWORD</span> <span class="k">FOR</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span> <span class="o">=</span> <span class="s1">&#39;&lt;password&gt;&#39;</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SET</span> <span class="n">PASSWORD</span> <span class="k">FOR</span> <span class="s2">&#34;todd&#34;</span> <span class="o">=</span> <span class="s1">&#39;influxdb4ever&#39;</span>
+<span class="o">&gt;</span></code></pre></div>
+
+<div class="note">
+  <p><strong>Note:</strong> The password <a href="../../query_language/spec/index.html#strings">string</a> must be wrapped in single quotes. Do not include the single quotes when authenticating requests. For passwords that include a single quote or a newline character, escape the single quote or newline character with a backslash both when creating the password and when submitting authentication requests.</p>
+
+</div>
+
+
+<h5 id="drop-a-user"><code>DROP</code> a user</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">USER</span> <span class="o">&lt;</span><span class="n">username</span><span class="o">&gt;</span></code></pre></div>
+<p>CLI example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">DROP</span> <span class="k">USER</span> <span class="s2">&#34;todd&#34;</span>
+<span class="o">&gt;</span></code></pre></div>
+<h2 id="authentication-and-authorization-http-errors">Authentication and authorization HTTP errors</h2>
+
+<p>Requests with no authentication credentials or incorrect credentials yield the <code>HTTP 401 Unauthorized</code> response.</p>
+
+<p>Requests by unauthorized users yield the <code>HTTP 403 Forbidden</code> response.</p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/administration/authentication_and_authorization.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/administration/authentication_and_authorization/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+
+
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+
+</body></html>

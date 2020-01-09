@@ -1,0 +1,1218 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title> Database management using InfluxQL | InfluxData Documentation</title>
+    <meta name="description" content="Use InfluxQL to administer your InfluxDB server and work with InfluxDB databases, retention policies, series, measurements, and shards.. "/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon"/>
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true"/>
+    
+    
+
+    
+    <meta name="robots" content="index, follow"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css"/>
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+
+    <meta name="application-name" content="InfluxData"/>
+    <meta name="msapplication-TileColor" content=""/>
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@influxdb"/>
+    <meta name="twitter:title" content=" Database management using InfluxQL | InfluxData Documentation"/>
+    <meta name="twitter:description" content="Use InfluxQL to administer your InfluxDB server and work with InfluxDB databases, retention policies, series, measurements, and shards.. "/>
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta property="fb:app_id" content="222112578359661"/>
+    <meta property="og:title" content=" Database management using InfluxQL | InfluxData Documentation"/>
+    <meta property="og:description" content="Use InfluxQL to administer your InfluxDB server and work with InfluxDB databases, retention policies, series, measurements, and shards.. "/>
+    <meta property="og:url" content="https://docs.influxdata.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg"/>
+    <meta property="og:image:width" content="555px"/>
+    <meta property="og:image:height" content="290px"/>
+
+    <meta name="Copyright" content="InfluxData Inc."/>
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body class="docs-theme--influxdb">
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/" target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..."/>
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle">InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Database management using InfluxQL</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>InfluxQL offers a full suite of administrative commands.</p>
+
+<table style="width:100%">
+  <tbody><tr>
+    <td><b>Data Management:</b></td>
+    <td><b>Retention Policy Management:<br/></b></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#create-database">CREATE DATABASE</a></td>
+    <td><a href="index.html#create-retention-policies-with-create-retention-policy">CREATE RETENTION POLICY</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#delete-a-database-with-drop-database">DROP DATABASE</a></td>
+    <td><a href="index.html#modify-retention-policies-with-alter-retention-policy">ALTER RETENTION POLICY</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#drop-series-from-the-index-with-drop-series">DROP SERIES</a></td>
+    <td><a href="index.html#delete-retention-policies-with-drop-retention-policy">DROP RETENTION POLICY</a></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#delete-series-with-delete">DELETE</a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#delete-measurements-with-drop-measurement">DROP MEASUREMENT</a></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><a href="index.html#delete-a-shard-with-drop-shard">DROP SHARD</a></td>
+    <td></td>
+  </tr>
+</tbody></table>
+
+<p>If you&rsquo;re looking for <code>SHOW</code> queries (for example, <code>SHOW DATABASES</code> or <code>SHOW RETENTION POLICIES</code>), see <a href="../schema_exploration.html">Schema Exploration</a>.</p>
+
+<p>The examples in the sections below use the InfluxDB <a href="../../introduction/getting-started/index.html">Command Line Interface (CLI)</a>.
+You can also execute the commands using the InfluxDB API; simply  send a <code>GET</code> request to the <code>/query</code> endpoint and include the command in the URL parameter <code>q</code>.
+For more on using the InfluxDB API, see <a href="../../guides/querying_data/index.html">Querying data</a>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> When authentication is enabled, only admin users can execute most of the commands listed on this page.
+See the documentation on <a href="../../administration/authentication_and_authorization/index.html">authentication and authorization</a> for more information.</p>
+</blockquote>
+
+<h2 id="data-management">Data management</h2>
+
+<h3 id="create-database">CREATE DATABASE</h3>
+
+<p>Creates a new database.</p>
+
+<h4 id="syntax">Syntax</h4>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span> <span class="p">[</span><span class="k">WITH</span> <span class="p">[</span><span class="n">DURATION</span> <span class="o">&lt;</span><span class="n">duration</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="n">REPLICATION</span> <span class="o">&lt;</span><span class="n">n</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="n">SHARD</span> <span class="n">DURATION</span> <span class="o">&lt;</span><span class="n">duration</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">[</span><span class="n">NAME</span> <span class="o">&lt;</span><span class="n">retention</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="p">]]</span></code></pre></div>
+<h4 id="description-of-syntax">Description of syntax</h4>
+
+<p><code>CREATE DATABASE</code> requires a database <a href="../../troubleshooting/frequently-asked-questions/index.html#what-words-and-characters-should-i-avoid-when-writing-data-to-influxdb">name</a>.</p>
+
+<p>The <code>WITH</code>, <code>DURATION</code>, <code>REPLICATION</code>, <code>SHARD DURATION</code>, and <code>NAME</code> clauses are optional and create a single <a href="../../concepts/glossary/index.html#retention-policy-rp">retention policy</a> associated with the created database.
+If you do not specify one of the clauses after <code>WITH</code>, the relevant behavior defaults to the <code>autogen</code> retention policy settings.
+The created retention policy automatically serves as the database&rsquo;s default retention policy.
+For more information about those clauses, see <a href="index.html#retention-policy-management">Retention Policy Management</a>.</p>
+
+<p>A successful <code>CREATE DATABASE</code> query returns an empty result.
+If you attempt to create a database that already exists, InfluxDB does nothing and does not return an error.</p>
+
+<h4 id="examples">Examples</h4>
+
+<h5 id="create-a-database">Create a database</h5>
+
+<pre><code>&gt; CREATE DATABASE &#34;NOAA_water_database&#34;
+&gt;
+</code></pre>
+
+<p>The query creates a database called <code>NOAA_water_database</code>.
+<a href="../../administration/config/index.html#retention-autocreate-true">By default</a>, InfluxDB also creates the <code>autogen</code> retention policy and associates it with the <code>NOAA_water_database</code>.</p>
+
+<h5 id="create-a-database-with-a-specific-retention-policy">Create a database with a specific retention policy</h5>
+
+<pre><code>&gt; CREATE DATABASE &#34;NOAA_water_database&#34; WITH DURATION 3d REPLICATION 1 SHARD DURATION 1h NAME &#34;liquid&#34;
+&gt;
+</code></pre>
+
+<p>The query creates a database called <code>NOAA_water_database</code>.
+It also creates a default retention policy for <code>NOAA_water_database</code> with a <code>DURATION</code> of three days, a <a href="../../concepts/glossary/index.html#replication-factor">replication factor</a> of one, a <a href="../../concepts/glossary/index.html#shard-group">shard group</a> duration of one hour, and with the name <code>liquid</code>.</p>
+
+<h3 id="delete-a-database-with-drop-database">Delete a database with DROP DATABASE</h3>
+
+<p>The <code>DROP DATABASE</code> query deletes all of the data, measurements, series, continuous queries, and retention policies from the specified database.
+The query takes the following form:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">DATABASE</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span></code></pre></div>
+<p>Drop the database NOAA_water_database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; DROP DATABASE <span class="s2">&#34;NOAA_water_database&#34;</span>
+&gt;</code></pre></div>
+<p>A successful <code>DROP DATABASE</code> query returns an empty result.
+If you attempt to drop a database that does not exist, InfluxDB does not return an error.</p>
+
+<h3 id="drop-series-from-the-index-with-drop-series">Drop series from the index with DROP SERIES</h3>
+
+<p>The <code>DROP SERIES</code> query deletes all points from a <a href="../../concepts/glossary/index.html#series">series</a> in a database,
+and it drops the series from the index.</p>
+
+<blockquote>
+<p><strong>Note:</strong> <code>DROP SERIES</code> does not support time intervals in the <code>WHERE</code> clause.
+See
+<a href="index.html#delete-series-with-delete"><code>DELETE</code></a>
+for that functionality.</p>
+</blockquote>
+
+<p>The query takes the following form, where you must specify either the <code>FROM</code> clause or the <code>WHERE</code> clause:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">SERIES</span> <span class="k">FROM</span> <span class="o">&lt;</span><span class="n">measurement_name</span><span class="p">[,</span><span class="n">measurement_name</span><span class="p">]</span><span class="o">&gt;</span> <span class="k">WHERE</span> <span class="o">&lt;</span><span class="n">tag_key</span><span class="o">&gt;=</span><span class="s1">&#39;&lt;tag_value&gt;&#39;</span></code></pre></div>
+<p>Drop all series from a single measurement:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">DROP</span> <span class="n">SERIES</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_feet&#34;</span></code></pre></div>
+<p>Drop series with a specific tag pair from a single measurement:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">DROP</span> <span class="n">SERIES</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_feet&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;location&#34;</span> <span class="o">=</span> <span class="s1">&#39;santa_monica&#39;</span></code></pre></div>
+<p>Drop all points in the series that have a specific tag pair from all measurements in the database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">DROP</span> <span class="n">SERIES</span> <span class="k">WHERE</span> <span class="s2">&#34;location&#34;</span> <span class="o">=</span> <span class="s1">&#39;santa_monica&#39;</span></code></pre></div>
+<p>A successful <code>DROP SERIES</code> query returns an empty result.</p>
+
+<h3 id="delete-series-with-delete">Delete series with DELETE</h3>
+
+<p>The <code>DELETE</code> query deletes all points from a
+<a href="../../concepts/glossary/index.html#series">series</a> in a database.
+Unlike
+<a href="index.html#drop-series-from-the-index-with-drop-series"><code>DROP SERIES</code></a>, it does not drop the series from the index and it supports time intervals
+in the <code>WHERE</code> clause.</p>
+
+<p>The query takes the following form where you must include either the <code>FROM</code>
+clause or the <code>WHERE</code> clause, or both:</p>
+
+<pre><code>DELETE FROM &lt;measurement_name&gt; WHERE [&lt;tag_key&gt;=&#39;&lt;tag_value&gt;&#39;] | [&lt;time interval&gt;]
+</code></pre>
+
+<p>Delete all data associated with the measurement <code>h2o_feet</code>:</p>
+
+<pre><code>&gt; DELETE FROM &#34;h2o_feet&#34;
+</code></pre>
+
+<p>Delete all data associated with the measurement <code>h2o_quality</code> and where the tag <code>randtag</code> equals <code>3</code>:</p>
+
+<pre><code>&gt; DELETE FROM &#34;h2o_quality&#34; WHERE &#34;randtag&#34; = &#39;3&#39;
+</code></pre>
+
+<p>Delete all data in the database that occur before January 01, 2016:</p>
+
+<pre><code>&gt; DELETE WHERE time &lt; &#39;2016-01-01&#39;
+</code></pre>
+
+<p>A successful <code>DELETE</code> query returns an empty result.</p>
+
+<p>Things to note about <code>DELETE</code>:</p>
+
+<ul>
+<li><code>DELETE</code> supports
+<a href="../data_exploration/index.html#regular-expressions">regular expressions</a>
+in the <code>FROM</code> clause when specifying measurement names and in the <code>WHERE</code> clause
+when specifying tag values.</li>
+<li><code>DELETE</code> does not support <a href="../../concepts/glossary/index.html#field">fields</a> in the <code>WHERE</code> clause.</li>
+<li>If you need to delete points in the future, you must specify that time period as <code>DELETE SERIES</code> runs for <code>time &lt; now()</code> by default. <a href="https://github.com/influxdata/influxdb/issues/8007">Syntax</a></li>
+</ul>
+
+<h3 id="delete-measurements-with-drop-measurement">Delete measurements with DROP MEASUREMENT</h3>
+
+<p>The <code>DROP MEASUREMENT</code> query deletes all data and series from the specified <a href="../../concepts/glossary/index.html#measurement">measurement</a> and deletes the
+measurement from the index.</p>
+
+<p>The query takes the following form:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">MEASUREMENT</span> <span class="o">&lt;</span><span class="n">measurement_name</span><span class="o">&gt;</span></code></pre></div>
+<p>Delete the measurement <code>h2o_feet</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">DROP</span> <span class="n">MEASUREMENT</span> <span class="s2">&#34;h2o_feet&#34;</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>DROP MEASUREMENT</code> drops all data and series in the measurement.
+It does not drop the associated continuous queries.</p>
+</blockquote>
+
+<p>A successful <code>DROP MEASUREMENT</code> query returns an empty result.</p>
+
+
+<div class="warn">
+  <p>Currently, InfluxDB does not support regular expressions with <code>DROP MEASUREMENTS</code>.
+See GitHub Issue <a href="https://github.com/influxdb/influxdb/issues/4275">#4275</a> for more information.</p>
+
+</div>
+
+
+<h3 id="delete-a-shard-with-drop-shard">Delete a shard with DROP SHARD</h3>
+
+<p>The <code>DROP SHARD</code> query deletes a shard. It also drops the shard from the
+<a href="../../concepts/glossary/index.html#metastore">metastore</a>.
+The query takes the following form:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">SHARD</span> <span class="o">&lt;</span><span class="n">shard_id_number</span><span class="o">&gt;</span></code></pre></div>
+<p>Delete the shard with the id <code>1</code>:</p>
+
+<pre><code>&gt; DROP SHARD 1
+&gt;
+</code></pre>
+
+<p>A successful <code>DROP SHARD</code> query returns an empty result.
+InfluxDB does not return an error if you attempt to drop a shard that does not
+exist.</p>
+
+<h2 id="retention-policy-management">Retention policy management</h2>
+
+<p>The following sections cover how to create, alter, and delete retention policies.
+Note that when you create a database, InfluxDB automatically creates a retention policy named <code>autogen</code> which has infinite retention.
+You may disable its auto-creation in the <a href="../../administration/config/index.html#metastore-settings">configuration file</a>.</p>
+
+<h3 id="create-retention-policies-with-create-retention-policy">Create retention policies with CREATE RETENTION POLICY</h3>
+
+<h4 id="syntax-1">Syntax</h4>
+
+<pre><code>CREATE RETENTION POLICY &lt;retention_policy_name&gt; ON &lt;database_name&gt; DURATION &lt;duration&gt; REPLICATION &lt;n&gt; [SHARD DURATION &lt;duration&gt;] [DEFAULT]
+</code></pre>
+
+<h4 id="description-of-syntax-1">Description of syntax</h4>
+
+<h5 id="duration"><code>DURATION</code></h5>
+
+<ul>
+<li>The <code>DURATION</code> clause determines how long InfluxDB keeps the data.
+The <code>&lt;duration&gt;</code> is a <a href="../spec/index.html#durations">duration literal</a>
+or <code>INF</code> (infinite).
+The minimum duration for a retention policy is one hour and the maximum
+duration is <code>INF</code>.</li>
+</ul>
+
+<h5 id="replication"><code>REPLICATION</code></h5>
+
+<ul>
+<li><p>The <code>REPLICATION</code> clause determines how many independent copies of each point
+are stored in the <a href="../../high_availability/clusters/index.html">cluster</a>.</p></li>
+
+<li><p>By default, the replication factor <code>n</code> usually equals the number of data nodes. However, if you have four or more data nodes, the default replication factor <code>n</code> is 3.</p></li>
+
+<li><p>To ensure data is immediately available for queries, set the replication factor <code>n</code> to less than or equal to the number of data nodes in the cluster.</p></li>
+</ul>
+
+<blockquote>
+<p><strong>Important:</strong> If you have four or more data nodes, verify that the database replication factor is correct.</p>
+</blockquote>
+
+<ul>
+<li>Replication factors do not serve a purpose with single node instances.</li>
+</ul>
+
+<h5 id="shard-duration"><code>SHARD DURATION</code></h5>
+
+<ul>
+<li>Optional. The <code>SHARD DURATION</code> clause determines the time range covered by a <a href="../../concepts/glossary/index.html#shard-group">shard group</a>.</li>
+<li>The <code>&lt;duration&gt;</code> is a <a href="../spec/index.html#durations">duration literal</a>
+and does not support an <code>INF</code> (infinite) duration.</li>
+<li>By default, the shard group duration is determined by the retention policy&rsquo;s
+<code>DURATION</code>:</li>
+</ul>
+
+<table>
+<thead>
+<tr>
+<th>Retention Policy&rsquo;s DURATION</th>
+<th>Shard Group Duration</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>&lt; 2 days</td>
+<td>1 hour</td>
+</tr>
+
+<tr>
+<td>&gt;= 2 days and &lt;= 6 months</td>
+<td>1 day</td>
+</tr>
+
+<tr>
+<td>&gt; 6 months</td>
+<td>7 days</td>
+</tr>
+</tbody>
+</table>
+
+<p>The minimum allowable <code>SHARD GROUP DURATION</code> is <code>1h</code>.
+If the <code>CREATE RETENTION POLICY</code> query attempts to set the <code>SHARD GROUP DURATION</code> to less than <code>1h</code> and greater than <code>0s</code>, InfluxDB automatically sets the <code>SHARD GROUP DURATION</code> to <code>1h</code>.
+If the <code>CREATE RETENTION POLICY</code> query attempts to set the <code>SHARD GROUP DURATION</code> to <code>0s</code>, InfluxDB automatically sets the <code>SHARD GROUP DURATION</code> according to the default settings listed above.</p>
+
+<p>See
+<a href="../../concepts/schema_and_data_layout/index.html#shard-group-duration-management">Shard group duration management</a>
+for recommended configurations.</p>
+
+<h5 id="default"><code>DEFAULT</code></h5>
+
+<p>Sets the new retention policy as the default retention policy for the database.
+This setting is optional.</p>
+
+<h4 id="examples-1">Examples</h4>
+
+<h5 id="create-a-retention-policy">Create a retention policy</h5>
+
+<pre><code>&gt; CREATE RETENTION POLICY &#34;one_day_only&#34; ON &#34;NOAA_water_database&#34; DURATION 1d REPLICATION 1
+&gt;
+</code></pre>
+
+<p>The query creates a retention policy called <code>one_day_only</code> for the database
+<code>NOAA_water_database</code> with a one day duration and a replication factor of one.</p>
+
+<h5 id="create-a-default-retention-policy">Create a DEFAULT retention policy</h5>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;one_day_only&#34;</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="n">DURATION</span> <span class="mi">23</span><span class="n">h60m</span> <span class="n">REPLICATION</span> <span class="mi">1</span> <span class="k">DEFAULT</span>
+<span class="o">&gt;</span></code></pre></div>
+<p>The query creates the same retention policy as the one in the example above, but
+sets it as the default retention policy for the database.</p>
+
+<p>A successful <code>CREATE RETENTION POLICY</code> query returns an empty response.
+If you attempt to create a retention policy identical to one that already exists, InfluxDB does not return an error.
+If you attempt to create a retention policy with the same name as an existing retention policy but with differing attributes, InfluxDB returns an error.</p>
+
+<blockquote>
+<p><strong>Note:</strong> You can also specify a new retention policy in the <code>CREATE DATABASE</code> query.
+See <a href="index.html#create-database">Create a database with CREATE DATABASE</a>.</p>
+</blockquote>
+
+<h3 id="modify-retention-policies-with-alter-retention-policy">Modify retention policies with ALTER RETENTION POLICY</h3>
+
+<p>The <code>ALTER RETENTION POLICY</code> query takes the following form, where you must declare at least one of the retention policy attributes <code>DURATION</code>, <code>REPLICATION</code>, <code>SHARD DURATION</code>, or <code>DEFAULT</code>:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="o">&lt;</span><span class="n">retention_policy_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span> <span class="n">DURATION</span> <span class="o">&lt;</span><span class="n">duration</span><span class="o">&gt;</span> <span class="n">REPLICATION</span> <span class="o">&lt;</span><span class="n">n</span><span class="o">&gt;</span> <span class="n">SHARD</span> <span class="n">DURATION</span> <span class="o">&lt;</span><span class="n">duration</span><span class="o">&gt;</span> <span class="k">DEFAULT</span></code></pre></div>
+
+<div class="warn">
+  <p>Replication factors do not serve a purpose with single node instances.</p>
+
+</div>
+
+
+<p>First, create the retention policy <code>what_is_time</code> with a <code>DURATION</code> of two days:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;what_is_time&#34;</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="n">DURATION</span> <span class="mi">2</span><span class="n">d</span> <span class="n">REPLICATION</span> <span class="mi">1</span>
+<span class="o">&gt;</span></code></pre></div>
+<p>Modify <code>what_is_time</code> to have a three week <code>DURATION</code>, a two hour shard group duration, and make it the <code>DEFAULT</code> retention policy for <code>NOAA_water_database</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">ALTER</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;what_is_time&#34;</span> <span class="k">ON</span> <span class="s2">&#34;NOAA_water_database&#34;</span> <span class="n">DURATION</span> <span class="mi">3</span><span class="n">w</span> <span class="n">SHARD</span> <span class="n">DURATION</span> <span class="mi">2</span><span class="n">h</span> <span class="k">DEFAULT</span>
+<span class="o">&gt;</span></code></pre></div>
+<p>In the last example, <code>what_is_time</code> retains its original replication factor of 1.</p>
+
+<p>A successful <code>ALTER RETENTION POLICY</code> query returns an empty result.</p>
+
+<h3 id="delete-retention-policies-with-drop-retention-policy">Delete retention policies with DROP RETENTION POLICY</h3>
+
+<p>Delete all measurements and data in a specific retention policy:</p>
+
+
+<div class="warn">
+  <p>Dropping a retention policy will permanently delete all measurements and data stored in the retention policy.</p>
+
+</div>
+
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="o">&lt;</span><span class="n">retention_policy_name</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="n">database_name</span><span class="o">&gt;</span></code></pre></div>
+<p>Delete the retention policy <code>what_is_time</code> in the <code>NOAA_water_database</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">&gt; DROP RETENTION POLICY <span class="s2">&#34;what_is_time&#34;</span> ON <span class="s2">&#34;NOAA_water_database&#34;</span>
+&gt;</code></pre></div>
+<p>A successful <code>DROP RETENTION POLICY</code> query returns an empty result.
+If you attempt to drop a retention policy that does not exist, InfluxDB does not return an error.</p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/query_language/database_management.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/query_language/database_management/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+
+
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+
+</body></html>

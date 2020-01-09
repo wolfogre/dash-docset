@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> Writing data with the InfluxDB API | InfluxData Documentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" Writing data with the InfluxDB API | InfluxData Documentation">
+    <meta name="twitter:description" content="">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" Writing data with the InfluxDB API | InfluxData Documentation" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Writing data with the InfluxDB API</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>Write data into InfluxDB using the <a href="../../tools/shell/index.html">command line interface</a>, <a href="../../clients/api/index.html">client libraries</a>, and plugins for common data formats such as <a href="../../write_protocols/graphite/index.html">Graphite</a>.</p>
+
+<blockquote>
+<p><strong>Note</strong>: The following examples use <code>curl</code>, a command line tool that transfers data using URLs. Learn the basics of <code>curl</code> with the <a href="https://curl.haxx.se/docs/httpscripting.html">HTTP Scripting Guide</a>.</p>
+</blockquote>
+
+<h3 id="create-a-database-using-the-influxdb-api">Create a database using the InfluxDB API</h3>
+
+<p>To create a database send a <code>POST</code> request to the <code>/query</code> endpoint and set the URL parameter <code>q</code> to <code>CREATE DATABASE &lt;new_database_name&gt;</code>.
+The example below sends a request to InfluxDB running on <code>localhost</code> and creates the <code>mydb</code> database:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -i -XPOST http://localhost:8086/query --data-urlencode <span class="s2">&#34;q=CREATE DATABASE mydb&#34;</span></code></pre></div>
+<h3 id="write-data-using-the-influxdb-api">Write data using the InfluxDB API</h3>
+
+<p>The InfluxDB API is the primary means of writing data into InfluxDB, by sending <code>POST</code> requests to the <code>/write</code> endpoint.</p>
+
+<p>The example below writes a single point to the <code>mydb</code> database.
+The data consist of the <a href="../../concepts/glossary/index.html#measurement">measurement</a> <code>cpu_load_short</code>, the <a href="../../concepts/glossary/index.html#tag-key">tag keys</a> <code>host</code> and <code>region</code> with the <a href="../../concepts/glossary/index.html#tag-value">tag values</a> <code>server01</code> and <code>us-west</code>, the <a href="../../concepts/glossary/index.html#field-key">field key</a> <code>value</code> with a <a href="../../concepts/glossary/index.html#field-value">field value</a> of <code>0.64</code>, and the <a href="../../concepts/glossary/index.html#timestamp">timestamp</a> <code>1434055562000000000</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -i -XPOST <span class="s1">&#39;http://localhost:8086/write?db=mydb&#39;</span> --data-binary <span class="s1">&#39;cpu_load_short,host=server01,region=us-west value=0.64 1434055562000000000&#39;</span></code></pre></div>
+<p>When writing points, you must specify an existing database in the <code>db</code> query parameter.
+Points will be written to <code>db</code>&rsquo;s default retention policy if you do not supply a retention policy via the <code>rp</code> query parameter.
+See the <a href="../../tools/api/index.html#write-http-endpoint">InfluxDB API Reference</a> documentation for a complete list of the available query parameters.</p>
+
+<p>The body of the POST - we call this the <a href="../../concepts/glossary/index.html#influxdb-line-protocol">InfluxDB line protocol</a> - contains the time-series data that you wish to store.
+They consist of a measurement, tags, fields, and a timestamp.
+InfluxDB requires a measurement name.
+Strictly speaking, tags are optional but most series include tags to differentiate data sources and to make querying both easy and efficient.
+Both tag keys and tag values are strings.
+Field keys are required and are always strings, and, <a href="../../write_protocols/line_protocol_reference/index.html#data-types">by default</a>, field values are floats.
+The timestamp - supplied at the end of the line in Unix time in nanoseconds since January 1, 1970 UTC - is optional.
+If you do not specify a timestamp InfluxDB uses the server&rsquo;s local nanosecond timestamp in Unix epoch.
+Anything that has to do with time in InfluxDB is always UTC.</p>
+
+<h3 id="configure-gzip-compression">Configure gzip compression</h3>
+
+<p>InfluxDB supports gzip compression. To reduce network traffic, consider the following options:</p>
+
+<ul>
+<li><p>To accept compressed data from InfluxDB, add the <code>Accept-Encoding: gzip</code> header to InfluxDB API requests.</p></li>
+
+<li><p>To compress data before sending it to InfluxDB, add the <code>Content-Encoding: gzip</code> header to InfluxDB API requests.</p></li>
+</ul>
+
+<p>For details about enabling gzip for client libraries, see your client library documentation.</p>
+
+<h4 id="enable-gzip-compression-in-the-telegraf-influxdb-output-plugin">Enable gzip compression in the Telegraf InfluxDB output plugin</h4>
+
+<ul>
+<li>In the Telegraf configuration file (telegraf.conf), under [[outputs.influxdb]], change
+<code>content_encoding = &quot;identity&quot;</code> (default) to <code>content_encoding = &quot;gzip&quot;</code></li>
+</ul>
+
+<blockquote>
+<p><strong>Note</strong>
+Writes to InfluxDB 2.x [[outputs.influxdb_v2]] are configured to compress content in gzip format by default.</p>
+</blockquote>
+
+<h3 id="writing-multiple-points">Writing multiple points</h3>
+
+<p>Post multiple points to multiple series at the same time by separating each point with a new line.
+Batching points in this manner results in much higher performance.</p>
+
+<p>The following example writes three points to the database <code>mydb</code>.
+The first point belongs to the series with the measurement <code>cpu_load_short</code> and tag set <code>host=server02</code> and has the server&rsquo;s local timestamp.
+The second point belongs to the series with the measurement <code>cpu_load_short</code> and tag set <code>host=server02,region=us-west</code> and has the specified timestamp <code>1422568543702900257</code>.
+The third point has the same specified timestamp as the second point, but it is written to the series with the measurement <code>cpu_load_short</code> and tag set <code>direction=in,host=server01,region=us-west</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -i -XPOST <span class="s1">&#39;http://localhost:8086/write?db=mydb&#39;</span> --data-binary <span class="s1">&#39;cpu_load_short,host=server02 value=0.67
+</span><span class="s1">cpu_load_short,host=server02,region=us-west value=0.55 1422568543702900257
+</span><span class="s1">cpu_load_short,direction=in,host=server01,region=us-west value=2.0 1422568543702900257&#39;</span></code></pre></div>
+<h3 id="writing-points-from-a-file">Writing points from a file</h3>
+
+<p>Write points from a file by passing <code>@filename</code> to <code>curl</code>.
+The data in the file should follow the <a href="../../write_protocols/write_syntax/index.html">InfluxDB line protocol syntax</a>.</p>
+
+<p>Example of a properly-formatted file (<code>cpu_data.txt</code>):</p>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">cpu_load_short<span class="p">,</span>host<span class="o">=</span>server02 value<span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">67</span>
+cpu_load_short<span class="p">,</span>host<span class="o">=</span>server02<span class="p">,</span>region<span class="o">=</span>us-west value<span class="o">=</span><span class="mi">0</span><span class="p">.</span><span class="mi">55</span> <span class="mi">1422568543702900257</span>
+cpu_load_short<span class="p">,</span>direction<span class="o">=</span>in<span class="p">,</span>host<span class="o">=</span>server01<span class="p">,</span>region<span class="o">=</span>us-west value<span class="o">=</span><span class="mi">2</span><span class="p">.</span><span class="mi">0</span> <span class="mi">1422568543702900257</span></code></pre></div>
+<p>Write the data in <code>cpu_data.txt</code> to the <code>mydb</code> database with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -i -XPOST <span class="s1">&#39;http://localhost:8086/write?db=mydb&#39;</span> --data-binary @cpu_data.txt<span class="sb">`</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> If your data file has more than 5,000 points, it may be necessary to split that file into several files in order to write your data in batches to InfluxDB.
+By default, the HTTP request times out after five seconds.
+InfluxDB will still attempt to write the points after that time out but there will be no confirmation that they were successfully written.</p>
+</blockquote>
+
+<h3 id="schemaless-design">Schemaless Design</h3>
+
+<p>InfluxDB is a schemaless database.
+You can add new measurements, tags, and fields at any time.
+Note that if you attempt to write data with a different type than previously used (for example, writing a string to a field that previously accepted integers), InfluxDB will reject those data.</p>
+
+<h3 id="a-note-on-rest">A note on REST</h3>
+
+<p>InfluxDB uses HTTP solely as a convenient and widely supported data transfer protocol.</p>
+
+<p>Modern web APIs have settled on REST because it addresses a common need.
+As the number of endpoints grows the need for an organizing system becomes pressing.
+REST is the industry agreed style for organizing large numbers of endpoints.
+This consistency is good for those developing and consuming the API: everyone involved knows what to expect.</p>
+
+<p>REST, however, is a convention.
+InfluxDB makes do with three API endpoints.
+This simple, easy to understand system uses HTTP as a transfer method for <a href="../../query_language/spec/index.html">InfluxQL</a>.
+The InfluxDB API makes no attempt to be RESTful.</p>
+
+<h3 id="http-response-summary">HTTP response summary</h3>
+
+<ul>
+<li>2xx: If your write request received <code>HTTP 204 No Content</code>, it was a success!</li>
+<li>4xx: InfluxDB could not understand the request.</li>
+<li>5xx: The system is overloaded or significantly impaired.</li>
+</ul>
+
+<h4 id="examples">Examples</h4>
+
+<h5 id="writing-a-float-to-a-field-that-previously-accepted-booleans">Writing a float to a field that previously accepted booleans</h5>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -i -XPOST <span class="s1">&#39;http://localhost:8086/write?db=hamlet&#39;</span> --data-binary <span class="s1">&#39;tobeornottobe booleanonly=true&#39;</span>
+
+curl -i -XPOST <span class="s1">&#39;http://localhost:8086/write?db=hamlet&#39;</span> --data-binary <span class="s1">&#39;tobeornottobe booleanonly=5&#39;</span></code></pre></div>
+<p>returns:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">HTTP/1.1 <span class="m">400</span> Bad Request
+Content-Type: application/json
+Request-Id: <span class="o">[</span>...<span class="o">]</span>
+X-Influxdb-Version: <span class="m">1</span>.4.x
+Date: Wed, <span class="m">01</span> Mar <span class="m">2017</span> <span class="m">19</span>:38:01 GMT
+Content-Length: <span class="m">150</span>
+
+<span class="o">{</span><span class="s2">&#34;error&#34;</span>:<span class="s2">&#34;field type conflict: input field \&#34;booleanonly\&#34; on measurement \&#34;tobeornottobe\&#34; is type float, already exists as type boolean dropped=1&#34;</span><span class="o">}</span></code></pre></div>
+<h5 id="writing-a-point-to-a-database-that-doesn-t-exist">Writing a point to a database that doesn&rsquo;t exist</h5>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">curl -i -XPOST <span class="s1">&#39;http://localhost:8086/write?db=atlantis&#39;</span> --data-binary <span class="s1">&#39;liters value=10&#39;</span></code></pre></div>
+<p>returns:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">HTTP/1.1 <span class="m">404</span> Not Found
+Content-Type: application/json
+Request-Id: <span class="o">[</span>...<span class="o">]</span>
+X-Influxdb-Version: <span class="m">1</span>.4.x
+Date: Wed, <span class="m">01</span> Mar <span class="m">2017</span> <span class="m">19</span>:38:35 GMT
+Content-Length: <span class="m">45</span>
+
+<span class="o">{</span><span class="s2">&#34;error&#34;</span>:<span class="s2">&#34;database not found: \&#34;atlantis\&#34;&#34;</span><span class="o">}</span></code></pre></div>
+<h3 id="next-steps">Next steps</h3>
+
+<p>Now that you know how to write data with the InfluxDB API, discover how to query them with the <a href="../querying_data/index.html">Querying data</a> guide!
+For more information about writing data with the InfluxDB API, please see the <a href="../../tools/api/index.html#write-http-endpoint">InfluxDB API reference</a>.</p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/guides/writing_data.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/guides/writing_data/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

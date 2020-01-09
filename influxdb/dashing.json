@@ -1,0 +1,20 @@
+{
+  "allowJS": false,
+  "domains": "docs.influxdata.com",
+  "externalURL": "",
+  "icon32x32": "logo/logo.png",
+  "ignore": [],
+  "index": "html/docs.influxdata.com/influxdb/v1.7/index.html",
+  "logo": "html/docs.influxdata.com/img/favicon.ico",
+  "name": "InfluxDB",
+  "package": "influxdb",
+  "selectors": {
+    "h3": {
+      "matchpath": "query_language/functions/.*\\.html",
+      "regexp": "",
+      "replacement": "",
+      "type": "Function"
+    }
+  },
+  "url": "https://docs.influxdata.com/influxdb/v1.7/"
+}

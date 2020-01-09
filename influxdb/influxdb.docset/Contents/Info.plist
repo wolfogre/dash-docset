@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>influxdb</string>
+	<key>CFBundleName</key>
+	<string>InfluxDB</string>
+	<key>DocSetPlatformFamily</key>
+	<string>influxdb</string>
+	<key>isDashDocset</key>
+	<true/>
+	<key>DashDocSetFamily</key>
+	<string>dashtoc</string>
+	<key>dashIndexFilePath</key>
+	<string>html/docs.influxdata.com/influxdb/v1.7/index.html</string>
+	<key>isJavaScriptEnabled</key><false/>
+</dict>
+</plist>

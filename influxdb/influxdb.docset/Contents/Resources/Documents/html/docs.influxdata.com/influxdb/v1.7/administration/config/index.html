@@ -1,0 +1,2139 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title> Configuring InfluxDB OSS | InfluxData Documentation</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon"/>
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true"/>
+    
+    
+
+    
+    <meta name="robots" content="index, follow"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css"/>
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+
+    <meta name="application-name" content="InfluxData"/>
+    <meta name="msapplication-TileColor" content=""/>
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@influxdb"/>
+    <meta name="twitter:title" content=" Configuring InfluxDB OSS | InfluxData Documentation"/>
+    <meta name="twitter:description" content=""/>
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta property="fb:app_id" content="222112578359661"/>
+    <meta property="og:title" content=" Configuring InfluxDB OSS | InfluxData Documentation"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content="https://docs.influxdata.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg"/>
+    <meta property="og:image:width" content="555px"/>
+    <meta property="og:image:height" content="290px"/>
+
+    <meta name="Copyright" content="InfluxData Inc."/>
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body class="docs-theme--influxdb">
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/" target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..."/>
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle">InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Configuring InfluxDB OSS</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>The InfluxDB open source (OSS) configuration file contains configuration settings specific to a local node.</p>
+
+<h4 id="content">Content</h4>
+
+<ul>
+<li><a href="index.html#configuration-overview">Configuration overview</a></li>
+<li><a href="index.html#environment-variables">Environment variables</a>
+
+<ul>
+<li><a href="index.html#influxdb-environment-variables-influxdb">InfluxDB environment variables (<code>INFLUXDB_*</code>)</a></li>
+<li><a href="index.html#gomaxprocs-environment-variable"><code>GOMAXPROCS</code> environment variable</a></li>
+</ul></li>
+<li><a href="index.html#using-the-configuration-file">Using the configuration file</a></li>
+<li><a href="index.html#configuration-settings">Configuration settings</a>
+
+<ul>
+<li><a href="index.html#global-settings">Global settings</a></li>
+<li><a href="index.html#metastore-settings">Metastore <code>[meta]</code></a></li>
+<li><a href="index.html#data-settings">Data <code>[data]</code></a></li>
+<li><a href="index.html#query-management-settings">Query management <code>[coordinator]</code></a></li>
+<li><a href="index.html#retention-policy-settings">Retention policies <code>[retention]</code></a></li>
+<li><a href="index.html#shard-precreation-settings">Shard precreation <code>[shard-precreation]</code></a></li>
+<li><a href="index.html#monitoring-settings">Monitoring <code>[monitor]</code></a></li>
+<li><a href="index.html#http-endpoints-settings">HTTP endpoints <code>[http]</code></a></li>
+<li><a href="index.html#subscription-settings">Subscriptions <code>[subscriber]</code></a></li>
+<li><a href="index.html#graphite-settings">Graphite <code>[[graphite]]</code></a></li>
+<li><a href="index.html#collectd-settings">CollectD <code>[[collectd]]</code></a></li>
+<li><a href="index.html#opentsdb-settings">OpenTSB <code>[[opentsdb]]</code></a></li>
+<li><a href="index.html#udp-settings">UDP <code>[[udp]]</code></a></li>
+<li><a href="index.html#continuous-queries-settings">Continuous queries <code>[continuous_queries]</code></a></li>
+<li><a href="index.html#transport-layer-security-tls-settings">TLS <code>[tls]</code></a></li>
+</ul></li>
+</ul>
+
+<h2 id="configuration-overview">Configuration overview</h2>
+
+<p>InfluxDB is configured using the configuration file (<code>influxdb.conf</code>) and environment variables.
+If you do not uncomment a configuration option, the system uses its default setting.
+The configuration settings in this document are set to their default settings.</p>
+
+<p>Configuration settings that specify a duration support the following duration units:</p>
+
+<ul>
+<li><code>ns</code> <em>(nanoseconds)</em></li>
+<li><code>us</code> or <code>&micro;s</code> <em>(microseconds)</em></li>
+<li><code>ms</code> <em>(milliseconds)</em></li>
+<li><code>s</code> <em>(seconds)</em></li>
+<li><code>m</code> <em>(minutes)</em></li>
+<li><code>h</code> <em>(hours)</em></li>
+<li><code>d</code> <em>(days)</em></li>
+<li><code>w</code> <em>(weeks)</em></li>
+</ul>
+
+<blockquote>
+<p><strong>Note:</strong> Configuration file settings are documented here for the latest official release - the <a href="https://github.com/influxdb/influxdb/blob/1.7/etc/config.sample.toml">sample configuration file on GitHub</a> might be slightly newer.</p>
+</blockquote>
+
+<h2 id="environment-variables">Environment variables</h2>
+
+<p>All of the configuration settings in the configuration file can be specified either in the configuration file or in an environment variable.
+The environment variable overrides the equivalent option in the configuration
+file.
+If a configuration option is not specified in either the configuration file or in an environment variable, InfluxDB uses its internal default configuration.</p>
+
+<blockquote>
+<p><strong><em>Note:</em></strong> If an environment variable has already been set, the equivalent configuration setting in the configuration file is ignored.</p>
+</blockquote>
+
+<h3 id="influxdb-environment-variables-influxdb">InfluxDB environment variables (<code>INFLUXDB_*</code>)</h3>
+
+<p>The InfluxDB environment variables are documented below with the corresponding configuration file settings. All of the InfluxDB-specific environment variables are prefixed with <code>INFLUXDB_</code>.</p>
+
+<h3 id="gomaxprocs-environment-variable"><code>GOMAXPROCS</code> environment variable</h3>
+
+<blockquote>
+<p><strong><em>Note:</em></strong> The GOMAXPROCS environment variable cannot be set using the InfluxDB configuration file settings, like other environment variables.</p>
+</blockquote>
+
+<p>The <code>GOMAXPROCS</code> <a href="https://golang.org/pkg/runtime/#hdr-Environment_Variables">Go language environment variable</a> can be used to set the maximum number of CPUs that can execute simultaneously.</p>
+
+<p>The default value of <code>GOMAXPROCS</code> is the number of CPUs (whatever your operating system considers to be a CPU) that are visible to the program <em>on startup.</em> For a 32-core machine, the <code>GOMAXPROCS</code> value would be <code>32</code>.
+You can override this value to be less than the maximum value, which can be useful in cases where you are running the InfluxDB along with other processes on the same machine and want to ensure that the database doesn&rsquo;t completely starve those processes.</p>
+
+<blockquote>
+<p><strong><em>Note:</em></strong>
+Setting <code>GOMAXPROCS=1</code> will eliminate all parallelization.</p>
+</blockquote>
+
+<h2 id="using-the-configuration-file">Using the configuration file</h2>
+
+<p>The InfluxDB system has internal defaults for all of the settings in the configuration file. To view the default configuration settings, use the <code>influxd config</code> command.</p>
+
+<p>The local InfluxDB configuration file is located here:</p>
+
+<ul>
+<li>Linux: <code>/etc/influxdb/influxdb.conf</code></li>
+<li>macOS: <code>/usr/local/etc/influxdb.conf</code></li>
+</ul>
+
+<p>Settings that are commented out are set to the internal system defaults. Uncommented settings override the internal defaults.
+Note that the local configuration file does not need to include every configuration setting.</p>
+
+<p>There are two ways to launch InfluxDB with your configuration file:</p>
+
+<ul>
+<li><p>Point the process to the configuration file by using the <code>-config</code>
+option. For example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">influxd -config /etc/influxdb/influxdb.conf</code></pre></div></li>
+
+<li><p>Set the environment variable <code>INFLUXDB_CONFIG_PATH</code> to the path of your
+configuration file and start the process.
+For example:</p>
+
+<pre><code>echo $INFLUXDB_CONFIG_PATH
+/etc/influxdb/influxdb.conf
+
+influxd
+</code></pre></li>
+</ul>
+
+<p>InfluxDB first checks for the <code>-config</code> option and then for the environment
+variable.</p>
+
+<h2 id="configuration-settings">Configuration settings</h2>
+
+<blockquote>
+<p><strong>Note:</strong>
+To set or override settings in a config section that allows multiple
+configurations (any section with <code>[[double_brackets]]</code> in the header supports
+multiple configurations), the desired configuration must be specified by ordinal
+number.
+For example, for the first set of <code>[[graphite]]</code> environment variables,
+prefix the configuration setting name in the environment variable with the
+relevant position number (in this case: <code>0</code>):</p>
+
+<pre><code>INFLUXDB_GRAPHITE_0_BATCH_PENDING
+INFLUXDB_GRAPHITE_0_BATCH_SIZE
+INFLUXDB_GRAPHITE_0_BATCH_TIMEOUT
+INFLUXDB_GRAPHITE_0_BIND_ADDRESS
+INFLUXDB_GRAPHITE_0_CONSISTENCY_LEVEL
+INFLUXDB_GRAPHITE_0_DATABASE
+INFLUXDB_GRAPHITE_0_ENABLED
+INFLUXDB_GRAPHITE_0_PROTOCOL
+INFLUXDB_GRAPHITE_0_RETENTION_POLICY
+INFLUXDB_GRAPHITE_0_SEPARATOR
+INFLUXDB_GRAPHITE_0_TAGS
+INFLUXDB_GRAPHITE_0_TEMPLATES
+INFLUXDB_GRAPHITE_0_UDP_READ_BUFFER
+</code></pre>
+
+<p>For the Nth Graphite configuration in the configuration file, the relevant
+environment variables would be of the form <code>INFLUXDB_GRAPHITE_(N-1)_BATCH_PENDING</code>.
+For each section of the configuration file the numbering restarts at zero.</p>
+</blockquote>
+
+<h2 id="global-settings">Global settings</h2>
+
+<h3 id="reporting-disabled-false"><code>reporting-disabled = false</code></h3>
+
+<p>InfluxData uses voluntarily reported data from running InfluxDB nodes
+primarily to track the adoption rates of different InfluxDB versions.
+This data helps InfluxData support the continuing development of
+InfluxDB.</p>
+
+<p>The <code>reporting-disabled</code> option toggles
+the reporting of data every 24 hours to <code>usage.influxdata.com</code>.
+Each report includes a randomly-generated identifier, OS, architecture,
+InfluxDB version, and the
+number of <a href="../../concepts/glossary/index.html#database">databases</a>,
+<a href="../../concepts/glossary/index.html#measurement">measurements</a>, and
+unique <a href="../../concepts/glossary/index.html#series">series</a>.  Setting
+this option to <code>true</code> will disable reporting.</p>
+
+<blockquote>
+<p><strong>Note:</strong> No data from user databases is ever transmitted.</p>
+</blockquote>
+
+<p>Environment variable: <code>INFLUXDB_REPORTING_DISABLED</code></p>
+
+<h3 id="bind-address-127-0-0-1-8088"><code>bind-address = &#34;127.0.0.1:8088&#34;</code></h3>
+
+<p>The bind address to use for the RPC service for <a href="../backup_and_restore/index.html">backup and restore</a>.</p>
+
+<p>Environment variable: <code>INFLUXDB_BIND_ADDRESS</code></p>
+
+<h2 id="metastore-settings">Metastore settings</h2>
+
+<h3 id="meta"><code>[meta]</code></h3>
+
+<p>This section controls parameters for the InfluxDB metastore,
+which stores information on users, databases, retention policies, shards, and continuous queries.</p>
+
+<h3 id="dir-var-lib-influxdb-meta"><code>dir = &#34;/var/lib/influxdb/meta&#34;</code></h3>
+
+<p>The directory where the metadata/raft database is stored.
+Files in the <code>meta</code> directory include <code>meta.db</code>, the InfluxDB metastore file.</p>
+
+<blockquote>
+<p><strong>Note:</strong> The default directory for macOS installations is <code>/Users/&lt;username&gt;/.influxdb/meta</code></p>
+</blockquote>
+
+<p>Environment variable: <code>INFLUXDB_META_DIR</code></p>
+
+<h3 id="retention-autocreate-true"><code>retention-autocreate = true</code></h3>
+
+<p>Enables the automatic creation of the <a href="../../concepts/glossary/index.html#retention-policy-rp"><code>DEFAULT</code> retention policy</a> <code>autogen</code> when a database is created.
+The retention policy <code>autogen</code> has an infinite duration and is also set as the
+database&rsquo;s <code>DEFAULT</code> retention policy, which is used when a write or query does
+not specify a retention policy.
+Disable this setting to prevent the creation of this retention policy when creating databases.</p>
+
+<p>Environment variable: <code>INFLUXDB_META_RETENTION_AUTOCREATE</code></p>
+
+<h3 id="logging-enabled-true"><code>logging-enabled = true</code></h3>
+
+<p>Enables the logging of messages from the meta service.</p>
+
+<p>Environment variable: <code>INFLUXDB_META_LOGGING_ENABLED</code></p>
+
+<h2 id="data-settings">Data settings</h2>
+
+<h3 id="data"><code>[data]</code></h3>
+
+<p>The <code>[data]</code> settings control where the actual shard data for InfluxDB lives and how it is flushed from the Write-Ahead Log (WAL).
+<code>dir</code> may need to be changed to a suitable place for your system, but the WAL settings are an advanced configuration.
+The defaults should work for most systems.</p>
+
+<h4 id="dir-var-lib-influxdb-data"><code>dir = &#34;/var/lib/influxdb/data&#34;</code></h4>
+
+<p>The InfluxDB directory where the TSM engine stores TSM files.
+This directory may be changed.</p>
+
+<blockquote>
+<p><strong>Note:</strong> The default directory for macOS installations is <code>/Users/&lt;username&gt;/.influxdb/data</code>.</p>
+</blockquote>
+
+<p>Environment variable: <code>INFLUXDB_DATA_DIR</code></p>
+
+<h4 id="wal-dir-var-lib-influxdb-wal"><code>wal-dir = &#34;/var/lib/influxdb/wal&#34;</code></h4>
+
+<p>The location of the directory for <a href="../../concepts/glossary/index.html#wal-write-ahead-log">write ahead log (WAL)</a> files.</p>
+
+<blockquote>
+<p><strong>Note:</strong> For macOS installations, the default WAL directory is <code>/Users/&lt;username&gt;/.influxdb/wal</code>.</p>
+</blockquote>
+
+<p>Environment variable: <code>INFLUXDB_DATA_WAL_DIR</code></p>
+
+<h4 id="wal-fsync-delay-0s"><code>wal-fsync-delay = &#34;0s&#34;</code></h4>
+
+<p>The amount of time that a write waits before fsyncing. Use a duration greater than <code>0</code> to batch up multiple fsync calls.
+This is useful for slower disks or when experiencing <a href="../../concepts/glossary/index.html#wal-write-ahead-log">WAL</a> write contention.
+The default value of <code>0s</code> fsyncs every write to the WAL.</p>
+
+<blockquote>
+<p><strong>Note:</strong> For non-SSD disks, InfluxData recommends values in the range of <code>0ms</code>-<code>100ms</code>.</p>
+</blockquote>
+
+<p>Environment variable: <code>INFLUXDB_DATA_WAL_FSYNC_DELAY</code></p>
+
+<h4 id="index-version-inmem"><code>index-version = &#34;inmem&#34;</code></h4>
+
+<p>The type of shard index to use for new shards.
+The default (<code>inmem</code>) index is an in-memory index that is recreated at startup.
+To enable the Time Series Index (TSI) disk-based index, set the value to <code>tsi1</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_INDEX_VERSION</code></p>
+
+<h4 id="trace-logging-enabled-false"><code>trace-logging-enabled = false</code></h4>
+
+<p>Enables verbose logging of additional debug information within the TSM engine and WAL.
+The trace logging provide more useful output for debugging TSM engine issues.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_TRACE_LOGGING_ENABLED</code></p>
+
+<h4 id="query-log-enabled-true"><code>query-log-enabled = true</code></h4>
+
+<p>Enables the logging of parsed queries before execution.
+The query log can be useful for troubleshooting, but logs any sensitive data contained within a query.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_QUERY_LOG_ENABLED</code></p>
+
+<h4 id="validate-keys-false"><code>validate-keys = false</code></h4>
+
+<p>Validates incoming writes to ensure keys only have valid Unicode characters.
+This setting will incur a small overhead because every key must be checked.</p>
+
+<h3 id="settings-for-the-tsm-engine">Settings for the TSM engine</h3>
+
+<h4 id="cache-max-memory-size-1g"><code>cache-max-memory-size = &#34;1g&#34;</code></h4>
+
+<p>The maximum size that a shard cache can reach before it starts rejecting writes.</p>
+
+<p>Valid memory size suffixes are: <code>k</code>, <code>m</code>, or <code>g</code> (case-insensitive, 1024 = 1k).
+Values without a size suffix are in bytes.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_CACHE_MAX_MEMORY_SIZE</code></p>
+
+<h4 id="cache-snapshot-memory-size-25m"><code>cache-snapshot-memory-size = &#34;25m&#34;</code></h4>
+
+<p>The size at which the engine will snapshot the cache and write it to a TSM file, freeing up memory.</p>
+
+<p>Valid memory size suffixes are: <code>k</code>, <code>m</code>, or <code>g</code> (case-insensitive, 1024 = 1k).
+Values without a size suffix are in bytes.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_CACHE_SNAPSHOT_MEMORY_SIZE</code></p>
+
+<h4 id="cache-snapshot-write-cold-duration-10m"><code>cache-snapshot-write-cold-duration = &#34;10m&#34;</code></h4>
+
+<p>The time interval at which the engine will snapshot the cache and write it to a new TSM file if the shard hasn&rsquo;t received writes or deletes.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_CACHE_SNAPSHOT_WRITE_COLD_DURATION</code></p>
+
+<h4 id="compact-full-write-cold-duration-4h"><code>compact-full-write-cold-duration = &#34;4h&#34;</code></h4>
+
+<p>The time interval at which the TSM engine will compact all TSM files in a shard if it hasn&rsquo;t received a write or delete.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_COMPACT_FULL_WRITE_COLD_DURATION</code></p>
+
+<h4 id="max-concurrent-compactions-0"><code>max-concurrent-compactions = 0</code></h4>
+
+<p>The maximum number of concurrent full and level <a href="../../concepts/storage_engine/index.html#compactions">compactions</a> that can run at one time.
+The default value of <code>0</code> results in 50% of the CPU cores being used at runtime for compactions.
+If explicitly set, the number of cores used for compaction is limited to the specified value.
+This setting does not apply to cache snapshotting.
+For more information on <code>GOMAXPROCS</code> environment variable, see <a href="index.html#gomaxprocs-environment-variable"><code>GOMAXPROCS</code> environment variable</a> on this page.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_MAX_CONCURRENT_COMPACTIONS</code></p>
+
+<h4 id="compact-throughput-48m"><code>compact-throughput = &#34;48m&#34;</code></h4>
+
+<p>The rate limit, in bytes per second, that we will allow TSM compactions to write to disk.
+Note that short bursts are allowed to happen at a possibly larger value, set by <code>compact-throughput-burst</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_COMPACT_THROUGHPUT</code></p>
+
+<h4 id="compact-throughput-burst-48m"><code>compact-throughput-burst = &#34;48m&#34;</code></h4>
+
+<p>The rate limit, in bytes per second, that we allow TSM compactions to write to disk.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_COMPACT_THROUGHPUT_BURST</code></p>
+
+<h4 id="tsm-use-madv-willneed-false"><code>tsm-use-madv-willneed = false</code></h4>
+
+<p>If <code>true</code>, then the MMap Advise value <code>MADV_WILLNEED</code> advises the kernel about how to handle the mapped
+memory region in terms of input/output paging and to expect access to the mapped memory region in the near future, with respect to TSM files.
+Because this setting has been problematic on some kernels (including CentOS and RHEL ), the default is <code>false</code>.
+Changing the value to <code>true</code> might help users who have slow disks in some cases.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_TSM_USE_MADV_WILLNEED</code></p>
+
+<h3 id="in-memory-inmem-index-settings">In-memory (<code>inmem</code>) index settings</h3>
+
+<h4 id="max-series-per-database-1000000"><code>max-series-per-database = 1000000</code></h4>
+
+<p>The maximum number of <a href="../../concepts/glossary/index.html#series">series</a> allowed per database before writes are dropped.
+The default setting is <code>1000000</code> (one million).
+Change the setting to <code>0</code> to allow an unlimited number of series per database.</p>
+
+<p>If a point causes the number of series in a database to exceed
+<code>max-series-per-database</code>, InfluxDB will not write the point, and it returns a
+<code>500</code> with the following error:</p>
+
+<pre><code>{&#34;error&#34;:&#34;max series per database exceeded: &lt;series&gt;&#34;}
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> Any existing databases with a series count that exceeds <code>max-series-per-database</code>
+will continue to accept writes to existing series, but writes that create a
+new series will fail.</p>
+</blockquote>
+
+<p>Environment variable: <code>INFLUXDB_DATA_MAX_SERIES_PER_DATABASE</code></p>
+
+<h4 id="max-values-per-tag-100000"><code>max-values-per-tag = 100000</code></h4>
+
+<p>The maximum number of <a href="../../concepts/glossary/index.html#tag-value">tag values</a> allowed per <a href="../../concepts/glossary/index.html#tag-key">tag key</a>.
+The default value is <code>100000</code> (one hundred thousand).
+Change the setting to <code>0</code> to allow an unlimited number of tag values per tag
+key.
+If a tag value causes the number of tag values of a tag key to exceed
+<code>max-values-per-tag</code>, then InfluxDB will not write the point, and it returns
+a <code>partial write</code> error.</p>
+
+<p>Any existing tag keys with tag values that exceed <code>max-values-per-tag</code>
+will continue to accept writes, but writes that create a new tag value
+will fail.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_MAX_VALUES_PER_TAG</code></p>
+
+<h3 id="tsi-tsi1-index-settings">TSI (<code>tsi1</code>) index settings</h3>
+
+<h4 id="max-index-log-file-size-1m"><code>max-index-log-file-size = &#34;1m&#34;</code></h4>
+
+<p>The threshold, in bytes, when an index write-ahead log (WAL) file will compact
+into an index file. Lower sizes will cause log files to be compacted more
+quickly and result in lower heap usage at the expense of write throughput.
+Higher sizes will be compacted less frequently, store more series in-memory,
+and provide higher write throughput.
+Valid size suffixes are <code>k</code>, <code>m</code>, or <code>g</code> (case-insensitive, 1024 = 1k).
+Values without a size suffix are in bytes.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_MAX_INDEX_LOG_FILE_SIZE</code></p>
+
+<h4 id="series-id-set-cache-size-100"><code>series-id-set-cache-size = 100</code></h4>
+
+<p>The size of the internal cache used in the TSI index to store previously
+calculated series results. Cached results will be returned quickly from the cache rather
+than needing to be recalculated when a subsequent query with a matching tag key-value
+predicate is executed.
+Setting this value to <code>0</code> will disable the cache, which may lead to query performance issues.
+This value should only be increased if it is known that the set of regularly used
+tag key-value predicates across all measurements for a database is larger than 100. An
+increase in cache size may lead to an increase in heap usage.</p>
+
+<p>Environment variable: <code>INFLUXDB_DATA_SERIES_ID_SET_CACHE_SIZE</code></p>
+
+<h2 id="query-management-settings">Query management settings</h2>
+
+<h3 id="coordinator"><code>[coordinator]</code></h3>
+
+<p>This section contains configuration settings for query management.
+For more on managing queries, see <a href="../../troubleshooting/query_management/index.html">Query Management</a>.</p>
+
+<h4 id="write-timeout-10s"><code>write-timeout = &#34;10s&#34;</code></h4>
+
+<p>The duration a write request waits until a &ldquo;timeout&rdquo; error is returned to the caller. The default value is 10 seconds.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_WRITE_TIMEOUT</code></p>
+
+<h4 id="max-concurrent-queries-0"><code>max-concurrent-queries = 0</code></h4>
+
+<p>The maximum number of running queries allowed on your instance.
+The default setting (<code>0</code>) allows for an unlimited number of queries.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_MAX_CONCURRENT_QUERIES</code></p>
+
+<h4 id="query-timeout-0s"><code>query-timeout = &#34;0s&#34;</code></h4>
+
+<p>The maximum duration that a query is allowed to execute before InfluxDB
+kills the query.
+The default setting (<code>0</code>) allows queries to run with no time restrictions.
+This setting is a <a href="index.html#configuration-overview">duration</a>.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_QUERY_TIMEOUT</code></p>
+
+<h4 id="log-queries-after-0s"><code>log-queries-after = &#34;0s&#34;</code></h4>
+
+<p>The maximum duration that a query can until InfluxDB logs the query with a
+<code>Detected slow query</code> message.
+The default setting (<code>&#34;0&#34;</code>) will never tell InfluxDB to log the query.
+This setting is a <a href="index.html#configuration-overview">duration</a>.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_LOG_QUERIES_AFTER</code></p>
+
+<h4 id="max-select-point-0"><code>max-select-point = 0</code></h4>
+
+<p>The maximum number of <a href="../../concepts/glossary/index.html#point">points</a> that a
+<code>SELECT</code> statement can process.
+The default setting (<code>0</code>) allows the <code>SELECT</code> statement to process an unlimited
+number of points.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_MAX_SELECT_POINT</code></p>
+
+<h4 id="max-select-series-0"><code>max-select-series = 0</code></h4>
+
+<p>The maximum number of <a href="../../concepts/glossary/index.html#series">series</a> that a
+<code>SELECT</code> statement can process.
+The default setting (<code>0</code>) allows the <code>SELECT</code> statement to process an unlimited
+number of series.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_MAX_SELECT_SERIES</code></p>
+
+<h4 id="max-select-buckets-0"><code>max-select-buckets = 0</code></h4>
+
+<p>The maximum number of <code>GROUP BY time()</code> buckets that a query can process.
+The default setting (<code>0</code>) allows a query to process an unlimited number of
+buckets.</p>
+
+<p>Environment variable: <code>INFLUXDB_COORDINATOR_MAX_SELECT_BUCKETS</code></p>
+
+<hr/>
+
+<h2 id="retention-policy-settings">Retention policy settings</h2>
+
+<h3 id="retention"><code>[retention]</code></h3>
+
+<p>The <code>[retention]</code> settings control the enforcement of retention policies for evicting old data.</p>
+
+<h4 id="enabled-true"><code>enabled = true</code></h4>
+
+<p>Set to <code>false</code> to prevent InfluxDB from enforcing retention policies.</p>
+
+<p>Environment variable: <code>INFLUXDB_RETENTION_ENABLED</code></p>
+
+<h4 id="check-interval-30m0s"><code>check-interval = &#34;30m0s&#34;</code></h4>
+
+<p>The time interval at which InfluxDB checks to enforce a retention policy.</p>
+
+<p>Environment variable: <code>INFLUXDB_RETENTION_CHECK_INTERVAL</code></p>
+
+<hr/>
+
+<h2 id="shard-precreation-settings">Shard precreation settings</h2>
+
+<h3 id="shard-precreation"><code>[shard-precreation]</code></h3>
+
+<p>The <code>[shard-precreation]</code> settings control the precreation of shards so that shards are available before data arrive.
+Only shards that, after creation, will have both a start- and end-time in the future are ever created.
+Shards that would be wholly or partially in the past are never precreated.</p>
+
+<h4 id="enabled-true-1"><code>enabled = true</code></h4>
+
+<p>Determines whether the shard precreation service is enabled.</p>
+
+<p>Environment variable: <code>INFLUXDB_SHARD_PRECREATION_ENABLED</code></p>
+
+<h4 id="check-interval-10m"><code>check-interval = &#34;10m&#34;</code></h4>
+
+<p>The time interval when the check to precreate new shards runs.</p>
+
+<p>Environment variable: <code>INFLUXDB_SHARD_PRECREATION_CHECK_INTERVAL</code></p>
+
+<h4 id="advance-period-30m"><code>advance-period = &#34;30m&#34;</code></h4>
+
+<p>The maximum period in the future for which InfluxDB precreates shards.
+The <code>30m</code> default should work for most systems.
+Increasing this setting too far in the future can cause inefficiencies.</p>
+
+<p>Environment variable: <code>INFLUXDB_SHARD_PRECREATION_ADVANCE_PERIOD</code></p>
+
+<h2 id="monitoring-settings">Monitoring settings</h2>
+
+<h3 id="monitor"><code>[monitor]</code></h3>
+
+<p>The <code>[monitor]</code> section settings control the InfluxDB <a href="https://github.com/influxdata/influxdb/blob/1.7/monitor/README.md">system self-monitoring</a>.</p>
+
+<p>By default, InfluxDB writes the data to the <code>_internal</code> database.
+If that database does not exist, InfluxDB creates it automatically.
+The <code>DEFAULT</code> retention policy on the <code>_internal</code> database is seven days.
+If you want to use a retention policy other than the seven-day retention policy, you must <a href="../../query_language/database_management/index.html#retention-policy-management">create</a> it.</p>
+
+<h4 id="store-enabled-true"><code>store-enabled = true</code></h4>
+
+<p>Set to <code>false</code> to disable recording statistics internally.
+If set to <code>false</code> it will make it substantially more difficult to diagnose issues with your installation.</p>
+
+<p>Environment variable: <code>INFLUXDB_MONITOR_STORE_ENABLED</code></p>
+
+<h4 id="store-database-internal"><code>store-database = &#34;_internal&#34;</code></h4>
+
+<p>The destination database for recorded statistics.</p>
+
+<p>Environment variable: <code>INFLUXDB_MONITOR_STORE_DATABASE</code></p>
+
+<h4 id="store-interval-10s"><code>store-interval = &#34;10s&#34;</code></h4>
+
+<p>The time interval at which InfluxDB records statistics.
+The default value is every ten seconds (<code>10s</code>).</p>
+
+<p>Environment variable: <code>INFLUXDB_MONITOR_STORE_INTERVAL</code></p>
+
+<h2 id="http-endpoints-settings">HTTP endpoints settings</h2>
+
+<h3 id="http"><code>[http]</code></h3>
+
+<p>The <code>[http]</code> section settings control how InfluxDB configures the HTTP endpoints.
+These are the primary mechanisms for getting data into and out of InfluxDB.
+Edit the settings in this section to enable HTTPS and authentication.</p>
+
+<p>For details on enabling HTTPS and authentication, see <a href="../authentication_and_authorization/index.html">Authentication and Authorization</a>.</p>
+
+<h4 id="enabled-true-2"><code>enabled = true</code></h4>
+
+<p>Determines whether the HTTP endpoints are enabled.
+To disable access to the HTTP endpoints, set the value to <code>false</code>.
+Note that the InfluxDB <a href="../../tools/shell/index.html">command line interface (CLI)</a> connects to the database using the InfluxDB API.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_ENABLED</code></p>
+
+<h4 id="flux-enabled-false"><code>flux-enabled = false</code></h4>
+
+<p>Determines whether the Flux query endpoint is enabled. To enable the use of Flux queries, set the value to <code>true</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_FLUX_ENABLED</code></p>
+
+<h4 id="bind-address-8086"><code>bind-address = &#34;:8086&#34;</code></h4>
+
+<p>The bind address (port) used by the HTTP service.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_BIND_ADDRESS</code></p>
+
+<h4 id="auth-enabled-false"><code>auth-enabled = false</code></h4>
+
+<p>Determines whether user authentication is enabled over HTTP and HTTPS.
+To require authentication, set the value to <code>true</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_AUTH_ENABLED</code></p>
+
+<h4 id="realm-influxdb"><code>realm = &#34;InfluxDB&#34;</code></h4>
+
+<p>The default realm sent back when issuing a basic authentication challenge.
+The realm is the JWT realm used by the HTTP endpoints.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_REALM</code></p>
+
+<h4 id="log-enabled-true"><code>log-enabled = true</code></h4>
+
+<p>Determines whether HTTP request logging is enabled.
+To disable logging, set the value to <code>false</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_LOG_ENABLED</code></p>
+
+<h4 id="suppress-write-log-false"><code>suppress-write-log = false</code></h4>
+
+<p>Determines whether the HTTP write request logs should be suppressed when the log is enabled.</p>
+
+<h4 id="access-log-path"><code>access-log-path = &#34;&#34;</code></h4>
+
+<p>The path to the access log, which determines whether detailed write logging is enabled using <code>log-enabled = true</code>.
+Specifies whether HTTP request logging is written to the specified path when enabled.
+If <code>influxd</code> is unable to access the specified path, it will log an error and fall back to <code>stderr</code>.
+When HTTP request logging is enabled, this option specifies the path where log entries should be written.
+If unspecified, the default is to write to stderr, which intermingles HTTP logs with internal InfluxDB logging.
+If <code>influxd</code> is unable to access the specified path, it will log an error and fall back to writing the request log to <code>stderr</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_ACCESS_LOG_PATH</code></p>
+
+<h4 id="access-log-status-filters"><code>access-log-status-filters = []</code></h4>
+
+<p>Filters which requests should be logged. Each filter is of the pattern <code>nnn</code>, <code>nnx</code>, or <code>nxx</code> where <code>n</code> is
+a number and <code>x</code> is the wildcard for any number.
+To filter all <code>5xx</code> responses, use the string <code>5xx</code>.
+If multiple filters are used, then only one has to match.
+The default value is no filters, with every request being printed.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_ACCESS_LOG_STATUS_FILTERS_x</code></p>
+
+<h5 id="examples">Examples</h5>
+
+<h6 id="setting-access-log-status-filters-using-configuration-settings">Setting access log status filters using configuration settings</h6>
+
+<p><code>access-log-status-filter = [&#34;4xx&#34;, &#34;5xx&#34;]</code></p>
+
+<p><code>&#34;4xx&#34;</code> is in array position <code>0</code>
+<code>&#34;5xx&#34;</code> is in array position <code>1</code></p>
+
+<h6 id="setting-access-log-status-filters-using-environment-variables">Setting access log status filters using environment variables</h6>
+
+<p>The input values for the <code>access-log-status-filters</code> is an array.
+When using environment variables, the values can be supplied as follows.</p>
+
+<p><code>INFLUXDB_HTTP_ACCESS_LOG_STATUS_FILTERS_0=4xx</code></p>
+
+<p><code>INFLUXDB_HTTP_ACCESS_LOG_STATUS_FILTERS_1=5xx</code></p>
+
+<p>The <code>_n</code> at the end of the environment variable represents the array position of the entry.</p>
+
+<h4 id="write-tracing-false"><code>write-tracing = false</code></h4>
+
+<p>Determines whether detailed write logging is enabled.
+Set to <code>true</code> to enable logging for the write payload.
+If set to <code>true</code>, this will duplicate every write statement in the logs and is thus not recommended for general use.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_WRITE_TRACING</code></p>
+
+<h4 id="pprof-enabled-true"><code>pprof-enabled = true</code></h4>
+
+<p>Determines whether the <code>/net/http/pprof</code> HTTP endpoint is enabled.
+Useful for troubleshooting and monitoring.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_PPROF_ENABLED</code></p>
+
+<h4 id="pprof-auth-enabled-false"><code>pprof-auth-enabled = false</code></h4>
+
+<p>Enables authentication on <code>/debug</code> endpoints.
+If enabled, users need admin permissions to access the following endpoints:</p>
+
+<ul>
+<li><code>/debug/pprof</code></li>
+<li><code>/debug/requests</code></li>
+<li><code>/debug/vars</code></li>
+</ul>
+
+<p>This setting has no effect if either <a href="index.html#auth-enabled-false"><code>auth-enabled</code></a> or
+<a href="index.html#pprof-enabled-true"><code>pprof-enabled</code></a> are set to <code>false</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_PPROF_AUTH_ENABLED</code></p>
+
+<h4 id="debug-pprof-enabled-false"><code>debug-pprof-enabled = false</code></h4>
+
+<p>Enable the default <code>/pprof</code> endpoint and bind against <code>localhost:6060</code>.
+Useful for debugging startup performance issues.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_DEBUG_PPROF_ENABLED</code></p>
+
+<h4 id="ping-auth-enabled-false"><code>ping-auth-enabled = false</code></h4>
+
+<p>Enables authentication on the <code>/ping</code>, <code>/metrics</code>, and deprecated <code>/status</code> endpoints.
+This setting has no effect if <a href="index.html#auth-enabled-false"><code>auth-enabled</code></a> is set to <code>false</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_PING_AUTH_ENABLED</code></p>
+
+<h4 id="https-enabled-false"><code>https-enabled = false</code></h4>
+
+<p>Determines whether HTTPS is enabled.
+To enable HTTPS, set the value to <code>true</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_HTTPS_ENABLED</code></p>
+
+<h4 id="https-certificate-etc-ssl-influxdb-pem"><code>https-certificate = &#34;/etc/ssl/influxdb.pem&#34;</code></h4>
+
+<p>The path of the SSL certificate file to use when HTTPS is enabled.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_HTTPS_CERTIFICATE</code></p>
+
+<h4 id="https-private-key"><code>https-private-key = &#34;&#34;</code></h4>
+
+<p>Use a separate private key location.
+If only the <code>https-certificate</code> is specified, the <code>httpd</code> service will try to load the private key from the <code>https-certificate</code> file.
+If a separate <code>https-private-key</code> file is specified, the <code>httpd</code> service will load the private key from the <code>https-private-key</code> file.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_HTTPS_PRIVATE_KEY</code></p>
+
+<h4 id="shared-secret"><code>shared-secret = &#34;&#34;</code></h4>
+
+<p>The shared secret used to validate public API requests using JWT tokens.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_SHARED_SECRET</code></p>
+
+<h4 id="max-row-limit-0"><code>max-row-limit = 0</code></h4>
+
+<p>The maximum number of rows that the system can return in a <a href="../../tools/api.html#query-string-parameters">non-chunked</a> query.
+The default setting (<code>0</code>) allows for an unlimited number of rows.
+If the query results exceed a specified value, then InfluxDB includes a <code>&#34;partial&#34;:true</code> tag in the response body.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_MAX_ROW_LIMIT</code></p>
+
+<h4 id="max-connection-limit-0"><code>max-connection-limit = 0</code></h4>
+
+<p>The maximum number of connections that may be open at once.
+New connections that would exceed the limit are dropped.<br/>
+The default value of <code>0</code> disables the limit.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_MAX_CONNECTION_LIMIT</code></p>
+
+<h4 id="unix-socket-enabled-false"><code>unix-socket-enabled = false</code></h4>
+
+<p>Enable HTTP service over the UNIX domain socket.
+To enable HTTP service over the UNIX domain socket, set the value to <code>true</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_UNIX_SOCKET_ENABLED</code></p>
+
+<h4 id="bind-socket-var-run-influxdb-sock"><code>bind-socket = &#34;/var/run/influxdb.sock&#34;</code></h4>
+
+<p>The path of the UNIX domain socket.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_UNIX_BIND_SOCKET</code></p>
+
+<h4 id="max-body-size-25000000"><code>max-body-size = 25000000</code></h4>
+
+<p>The maximum size, in bytes, of a client request body.
+When a HTTP client sends data that exceeds the configured maximum size, a <code>413 Request Entity Too Large</code> HTTP response is returned.
+To disable the limit, set the value to <code>0</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_MAX_BODY_SIZE</code></p>
+
+<h4 id="max-concurrent-write-limit-0"><code>max-concurrent-write-limit = 0</code></h4>
+
+<p>The maximum number of writes that can be processed concurrently.
+To disable the limit, set the value to <code>0</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_MAX_CONCURRENT_WRITE_LIMIT</code></p>
+
+<h4 id="max-enqueued-write-limit-0"><code>max-enqueued-write-limit = 0</code></h4>
+
+<p>The maximum number of writes queued for processing.
+To disable the limit, set the value to <code>0</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_MAX_ENQUEUED_WRITE_LIMIT</code></p>
+
+<h3 id="enqueued-write-timeout-0"><code>enqueued-write-timeout = 0</code></h3>
+
+<p>The maximum duration for a write to wait in the queue to be processed.
+To disable the limit, set this to <code>0</code> or set the <code>max-concurrent-write-limit</code> value to <code>0</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_HTTP_ENQUEUED_WRITE_TIMEOUT</code></p>
+
+<hr/>
+
+<h2 id="logging-settings">Logging settings</h2>
+
+<h3 id="logging"><code>[logging]</code></h3>
+
+<p>Controls how the logger emits logs to the output.</p>
+
+<h4 id="format-auto"><code>format = &#34;auto&#34;</code></h4>
+
+<p>Determines which log encoder to use for logs.
+Valid values are <code>auto</code>(default), <code>logfmt</code>, and <code>json</code>.
+With the default <code>auto</code> option, if the output is to a TTY device (e.g., a terminal), a more user-friendly console encoding is used.
+If the output is to files, the auto option uses the <code>logfmt</code> encoding.
+The <code>logfmt</code> and <code>json</code> options are useful for integration with external tools.</p>
+
+<p>Environment variable: <code>INFLUXDB_LOGGING_FORMAT</code></p>
+
+<h4 id="level-info"><code>level = &#34;info&#34;</code></h4>
+
+<p>The log level to be emitted.
+Valid values are <code>error</code>, <code>warn</code>, <code>info</code>(default), and <code>debug</code>.
+Logs that are equal to, or above, the specified level will be emitted.</p>
+
+<p>Environment variable: <code>INFLUXDB_LOGGING_LEVEL</code></p>
+
+<h4 id="suppress-logo-false"><code>suppress-logo = false</code></h4>
+
+<p>Suppresses the logo output that is printed when the program is started.
+The logo is always suppressed if <code>STDOUT</code> is not a TTY.</p>
+
+<p>Environment variable: <code>INFLUXDB_LOGGING_SUPPRESS_LOGO</code></p>
+
+<hr/>
+
+<h2 id="subscription-settings">Subscription settings</h2>
+
+<h3 id="subscriber"><code>[subscriber]</code></h3>
+
+<p>The <code>[subscriber]</code> section controls how <a href="https://docs.influxdata.com/kapacitor/v1.4/">Kapacitor</a> will receive data.</p>
+
+<h4 id="enabled-true-3"><code>enabled = true</code></h4>
+
+<p>Determines whether the subscriber service is enabled.
+To disable the subscriber service, set the value to <code>false</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_SUBSCRIBER_ENABLED</code></p>
+
+<h4 id="http-timeout-30s"><code>http-timeout = &#34;30s&#34;</code></h4>
+
+<p>The duration that an HTTP write to a subscriber runs until it times out.</p>
+
+<p>Environment variable: <code>INFLUXDB_SUBSCRIBER_HTTP_TIMEOUT</code></p>
+
+<h4 id="insecure-skip-verify-false"><code>insecure-skip-verify = false</code></h4>
+
+<p>Determines whether to allow insecure HTTPS connections to subscribers.
+This is useful when testing with self-signed certificates.</p>
+
+<p>Environment variable: <code>INFLUXDB_SUBSCRIBER_INSECURE_SKIP_VERIFY</code></p>
+
+<h4 id="ca-certs"><code>ca-certs = &#34;&#34;</code></h4>
+
+<p>The path to the PEM-encoded CA certs file.
+If the value is an empty string (<code>&#34;&#34;</code>), the default system certs will be used.</p>
+
+<p>Environment variable: <code>INFLUXDB_SUBSCRIBER_CA_CERTS</code></p>
+
+<h4 id="write-concurrency-40"><code>write-concurrency = 40</code></h4>
+
+<p>The number of writer goroutines processing the write channel.</p>
+
+<p>Environment variable: <code>INFLUXDB_SUBSCRIBER_WRITE_CONCURRENCY</code></p>
+
+<h4 id="write-buffer-size-1000"><code>write-buffer-size = 1000</code></h4>
+
+<p>The number of in-flight writes buffered in the write channel.</p>
+
+<p>Environment variable: <code>INFLUXDB_SUBSCRIBER_WRITE_BUFFER_SIZE</code></p>
+
+<hr/>
+
+<h2 id="graphite-settings">Graphite settings</h2>
+
+<h3 id="graphite"><code>[[graphite]]</code></h3>
+
+<p>This section controls one or many listeners for Graphite data.
+For more information, see <a href="../../supported_protocols/graphite/index.html">Graphite protocol support in InfluxDB</a>.</p>
+
+<h4 id="enabled-false"><code>enabled = false</code></h4>
+
+<p>Set to <code>true</code> to enable Graphite input.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_0_ENABLED</code></p>
+
+<h4 id="database-graphite"><code>database = &#34;graphite&#34;</code></h4>
+
+<p>The name of the database that you want to write to.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_0_DATABASE</code></p>
+
+<h4 id="retention-policy"><code>retention-policy = &#34;&#34;</code></h4>
+
+<p>The relevant retention policy.
+An empty string is equivalent to the database&rsquo;s <code>DEFAULT</code> retention policy.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_0_RETENTION_POLICY</code></p>
+
+<h4 id="bind-address-2003"><code>bind-address = &#34;:2003&#34;</code></h4>
+
+<p>The default port.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_0_BIND_ADDRESS</code></p>
+
+<h4 id="protocol-tcp"><code>protocol = &#34;tcp&#34;</code></h4>
+
+<p>Set to <code>tcp</code> or <code>udp</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_PROTOCOL</code></p>
+
+<h4 id="consistency-level-one"><code>consistency-level = &#34;one&#34;</code></h4>
+
+<p>The number of nodes that must confirm the write.
+If the requirement is not met the return value will be either <code>partial write</code> if some points in the batch fail or <code>write failure</code> if all points in the batch fail.
+For more information, see the Query String Parameters for Writes section in the <a href="../../write_protocols/write_syntax/index.html">InfluxDB line protocol syntax reference</a>.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_CONSISTENCY_LEVEL</code></p>
+
+<p><em>The next three settings control how batching works.
+You should have this enabled otherwise you could get dropped metrics or poor performance.
+Batching will buffer points in memory if you have many coming in.</em></p>
+
+<h4 id="batch-size-5000"><code>batch-size = 5000</code></h4>
+
+<p>The input will flush if this many points get buffered.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_BATCH_SIZE</code></p>
+
+<h4 id="batch-pending-10"><code>batch-pending = 10</code></h4>
+
+<p>The number of batches that may be pending in memory.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_BATCH_PENDING</code></p>
+
+<h4 id="batch-timeout-1s"><code>batch-timeout = &#34;1s&#34;</code></h4>
+
+<p>The input will flush at least this often even if it hasn&rsquo;t reached the configured batch-size.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_BATCH_TIMEOUT</code></p>
+
+<h4 id="udp-read-buffer-0"><code>udp-read-buffer = 0</code></h4>
+
+<p>UDP Read buffer size, <code>0</code> means OS default.
+UDP listener will fail if set above OS max.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_UDP_READ_BUFFER</code></p>
+
+<h4 id="separator"><code>separator = &#34;.&#34;</code></h4>
+
+<p>This string joins multiple matching &lsquo;measurement&rsquo; values providing more control over the final measurement name.</p>
+
+<p>Environment variable: <code>INFLUXDB_GRAPHITE_SEPARATOR</code></p>
+
+<hr/>
+
+<h2 id="collectd-settings">CollectD settings</h2>
+
+<h3 id="collectd"><code>[[collectd]]</code></h3>
+
+<p>The <code>[[collectd]]</code> settings control the listener for <code>collectd</code> data.
+For more information, see <a href="../../supported_protocols/collectd/index.html">CollectD protocol support in InfluxDB</a>.</p>
+
+<h4 id="enabled-false-1"><code>enabled = false</code></h4>
+
+<p>Set to <code>true</code> to enable <code>collectd</code> writes.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_ENABLED</code></p>
+
+<h4 id="bind-address-25826"><code>bind-address = &#34;:25826&#34;</code></h4>
+
+<p>The port.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_BIND_ADDRESS</code></p>
+
+<h4 id="database-collectd"><code>database = &#34;collectd&#34;</code></h4>
+
+<p>The name of the database that you want to write to.
+This defaults to <code>collectd</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_DATABASE</code></p>
+
+<h4 id="retention-policy-1"><code>retention-policy = &#34;&#34;</code></h4>
+
+<p>The relevant retention policy.
+An empty string is equivalent to the database&rsquo;s <code>DEFAULT</code> retention policy.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_RETENTION_POLICY</code></p>
+
+<h4 id="typesdb-usr-local-share-collectd"><code>typesdb = &#34;/usr/local/share/collectd&#34;</code></h4>
+
+<p>The collectd service supports either scanning a directory for multiple types
+db files, or specifying a single db file.
+A sample <code>types.db</code> file
+can be found
+<a href="https://github.com/collectd/collectd/blob/master/src/types.db">here</a>.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_TYPESDB</code></p>
+
+<h4 id="security-level-none"><code>security-level = &#34;none&#34;</code></h4>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_SECURITY_LEVEL</code></p>
+
+<h4 id="auth-file-etc-collectd-auth-file"><code>auth-file = &#34;/etc/collectd/auth_file&#34;</code></h4>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_AUTH_FILE</code></p>
+
+<p><em>The next three settings control how batching works.
+You should have this enabled otherwise you could get dropped metrics or poor performance.
+Batching will buffer points in memory if you have many coming in.</em></p>
+
+<h4 id="batch-size-5000-1"><code>batch-size = 5000</code></h4>
+
+<p>The input will flush if this many points get buffered.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_BATCH_SIZE</code></p>
+
+<h4 id="batch-pending-10-1"><code>batch-pending = 10</code></h4>
+
+<p>The number of batches that may be pending in memory.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_BATCH_PENDING</code></p>
+
+<h4 id="batch-timeout-10s"><code>batch-timeout = &#34;10s&#34;</code></h4>
+
+<p>The input will flush at least this often even if it hasn&rsquo;t reached the configured batch-size.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_BATCH_TIMEOUT</code></p>
+
+<h4 id="read-buffer-0"><code>read-buffer = 0</code></h4>
+
+<p>UDP Read buffer size, 0 means OS default.
+UDP listener will fail if set above OS max.</p>
+
+<p>Environment variable: <code>INFLUXDB_COLLECTD_READ_BUFFER</code></p>
+
+<h4 id="parse-multivalue-plugin-split"><code>parse-multivalue-plugin = &#34;split&#34;</code></h4>
+
+<p>When set to <code>split</code>, multi-value plugin data (e.g. df free:5000,used:1000) will be split into separate measurements (e.g., (df_free, value=5000) (df_used, value=1000)).  When set to <code>join</code>, multi-value plugin will be stored as a single multi-value measurement (e.g., (df, free=5000,used=1000)). Defaults to <code>split</code>.</p>
+
+<hr/>
+
+<h2 id="opentsdb-settings">OpenTSDB settings</h2>
+
+<h3 id="opentsdb"><code>[[opentsdb]]</code></h3>
+
+<p>Controls the listener for OpenTSDB data.
+For more information, see <a href="../../supported_protocols/opentsdb/index.html">OpenTSDB protocol support in InfluxDB</a>.</p>
+
+<h4 id="enabled-false-2"><code>enabled = false</code></h4>
+
+<p>Set to <code>true</code> to enable openTSDB writes.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_0_ENABLED</code></p>
+
+<h4 id="bind-address-4242"><code>bind-address = &#34;:4242&#34;</code></h4>
+
+<p>The default port.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_BIND_ADDRESS</code></p>
+
+<h4 id="database-opentsdb"><code>database = &#34;opentsdb&#34;</code></h4>
+
+<p>The name of the database that you want to write to.
+If the database does not exist, it will be created automatically when the input is initialized.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_DATABASE</code></p>
+
+<h4 id="retention-policy-2"><code>retention-policy = &#34;&#34;</code></h4>
+
+<p>The relevant retention policy.
+An empty string is equivalent to the database&rsquo;s <code>DEFAULT</code> retention policy.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_RETENTION_POLICY</code></p>
+
+<h4 id="consistency-level-one-1"><code>consistency-level = &#34;one&#34;</code></h4>
+
+<p>Sets the write consistency level: <code>any</code>, <code>one</code>, <code>quorum</code>, or <code>all</code> for writes.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_CONSISTENCY_LEVEL</code></p>
+
+<h4 id="tls-enabled-false"><code>tls-enabled = false</code></h4>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_TLS_ENABLED</code></p>
+
+<h4 id="certificate-etc-ssl-influxdb-pem"><code>certificate = &#34;/etc/ssl/influxdb.pem&#34;</code></h4>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_CERTIFICATE</code></p>
+
+<h4 id="log-point-errors-true"><code>log-point-errors = true</code></h4>
+
+<p>Log an error for every malformed point.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_0_LOG_POINT_ERRORS</code></p>
+
+<p><em>The next three settings control how batching works.
+You should have this enabled otherwise you could get dropped metrics or poor performance.
+Only points metrics received over the telnet protocol undergo batching.</em></p>
+
+<h4 id="batch-size-1000"><code>batch-size = 1000</code></h4>
+
+<p>The input will flush if this many points get buffered.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_BATCH_SIZE</code></p>
+
+<h4 id="batch-pending-5"><code>batch-pending = 5</code></h4>
+
+<p>The number of batches that may be pending in memory.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_BATCH_PENDING</code></p>
+
+<h4 id="batch-timeout-1s-1"><code>batch-timeout = &#34;1s&#34;</code></h4>
+
+<p>The input will flush at least this often even if it hasn&rsquo;t reached the configured batch-size.</p>
+
+<p>Environment variable: <code>INFLUXDB_OPENTSDB_BATCH_TIMEOUT</code></p>
+
+<hr/>
+
+<h2 id="udp-settings">UDP settings</h2>
+
+<h3 id="udp"><code>[[udp]]</code></h3>
+
+<p>The <code>[[udp]]</code> settings control the listeners for InfluxDB line protocol data using UDP.
+For more information, see <a href="../../supported_protocols/udp/index.html">UDP protocol support in InfluxDB</a>.</p>
+
+<h4 id="enabled-false-3"><code>enabled = false</code></h4>
+
+<p>Determines whether UDP listeners are enabled.
+To enable writes over UDP, set the value to <code>true</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_ENABLED</code></p>
+
+<h4 id="bind-address-8089"><code>bind-address = &#34;:8089&#34;</code></h4>
+
+<p>An empty string is equivalent to <code>0.0.0.0</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_BIND_ADDRESS</code></p>
+
+<h4 id="database-udp"><code>database = &#34;udp&#34;</code></h4>
+
+<p>The name of the database that you want to write to.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_DATABASE</code></p>
+
+<h4 id="retention-policy-3"><code>retention-policy = &#34;&#34;</code></h4>
+
+<p>The relevant retention policy for your data.
+An empty string is equivalent to the database&rsquo;s <code>DEFAULT</code> retention policy.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_RETENTION_POLICY</code></p>
+
+<p><em>The next three settings control how batching works.
+You should have this enabled otherwise you could get dropped metrics or poor performance.
+Batching will buffer points in memory if you have many coming in.</em></p>
+
+<h4 id="batch-size-5000-2"><code>batch-size = 5000</code></h4>
+
+<p>The input will flush if this many points get buffered.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_0_BATCH_SIZE</code></p>
+
+<h4 id="batch-pending-10-2"><code>batch-pending = 10</code></h4>
+
+<p>The number of batches that may be pending in memory.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_0_BATCH_PENDING</code></p>
+
+<h4 id="batch-timeout-1s-2"><code>batch-timeout = &#34;1s&#34;</code></h4>
+
+<p>The input will flush at least this often even if it hasn&rsquo;t reached the configured batch-size.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_BATCH_TIMEOUT</code></p>
+
+<h4 id="read-buffer-0-1"><code>read-buffer = 0</code></h4>
+
+<p>UDP read buffer size, 0 means OS default.
+UDP listener will fail if set above OS max.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_BATCH_SIZE</code></p>
+
+<h4 id="precision"><code>precision = &#34;&#34;</code></h4>
+
+<p><a href="../../query_language/spec/index.html#durations">Time precision</a> used when decoding time values.  Defaults to <code>nanoseconds</code> which is the default of the database.</p>
+
+<p>Environment variable: <code>INFLUXDB_UDP_PRECISION</code></p>
+
+<hr/>
+
+<h2 id="continuous-queries-settings">Continuous queries settings</h2>
+
+<h3 id="continuous-queries"><code>[continuous_queries]</code></h3>
+
+<p>The <code>[continuous_queries]</code> settings control how <a href="../../concepts/glossary/index.html#continuous-query-cq">continuous queries (CQs)</a> run within InfluxDB.
+Continuous queries are automated batches of queries that execute over recent time intervals.
+InfluxDB executes one auto-generated query per <code>GROUP BY time()</code> interval.</p>
+
+<h4 id="enabled-true-4"><code>enabled = true</code></h4>
+
+<p>Set to <code>false</code> to disable CQs.</p>
+
+<p>Environment variable: <code>INFLUXDB_CONTINUOUS_QUERIES_ENABLED</code></p>
+
+<h4 id="log-enabled-true-1"><code>log-enabled = true</code></h4>
+
+<p>Set to <code>false</code> to disable logging for CQ events.</p>
+
+<p>Environment variable: <code>INFLUXDB_CONTINUOUS_QUERIES_LOG_ENABLED</code></p>
+
+<h4 id="query-stats-enabled-false"><code>query-stats-enabled = false</code></h4>
+
+<p>When set to true, continuous query execution statistics are written to the default monitor store.</p>
+
+<p>Environment variable: <code>INFLUXDB_CONTINUOUS_QUERIES_QUERY_STATS_ENABLED</code></p>
+
+<h4 id="run-interval-1s"><code>run-interval = &#34;1s&#34;</code></h4>
+
+<p>The interval at which InfluxDB checks to see if a CQ needs to run. Set this option to the lowest interval at which your CQs run. For example, if your most frequent CQ runs every minute, set <code>run-interval</code> to <code>1m</code>.</p>
+
+<p>Environment variable: <code>INFLUXDB_CONTINUOUS_QUERIES_RUN_INTERVAL</code></p>
+
+<hr/>
+
+<h2 id="transport-layer-security-tls-settings">Transport Layer Security (TLS) settings</h2>
+
+<h3 id="tls"><code>[tls]</code></h3>
+
+<p>Global configuration settings for Transport Layer Security (TLS) in InfluxDB.</p>
+
+<p>If the TLS configuration settings is not specified, InfluxDB supports all of the cipher suite IDs listed and all TLS versions implemented in the <a href="https://golang.org/pkg/crypto/tls/#pkg-constants">Constants section of the Go <code>crypto/tls</code> package documentation</a>, depending on the version of Go used to build InfluxDB.
+Use the <code>SHOW DIAGNOSTICS</code> command to see the version of Go used to build InfluxDB.</p>
+
+<h3 id="recommended-server-configuration-for-modern-compatibility">Recommended server configuration for &ldquo;modern compatibility&rdquo;</h3>
+
+<p>InfluxData recommends configuring your InfluxDB server&rsquo;s TLS settings for &ldquo;modern compatibility&rdquo; that provides a higher level of security and assumes that backward compatibility is not required.
+Our recommended TLS configuration settings for <code>ciphers</code>, <code>min-version</code>, and <code>max-version</code> are based on Mozilla&rsquo;s &ldquo;modern compatibility&rdquo; TLS server configuration described in <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">Security/Server Side TLS</a>.</p>
+
+<p>InfluxData&rsquo;s recommended TLS settings for &ldquo;modern compatibility&rdquo; are specified in the following configuration settings example.</p>
+
+<p>####</p>
+
+<pre><code>ciphers = [ &#34;TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305&#34;,
+            &#34;TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305&#34;,
+            &#34;TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256&#34;,
+            &#34;TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256&#34;,
+            &#34;TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384&#34;,
+            &#34;TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384&#34;
+]
+
+min-version = &#34;tls1.2&#34;
+
+max-version = &#34;tls1.2&#34;
+
+</code></pre>
+
+<blockquote>
+<p><strong>Important:</strong>* The order of the cipher suite IDs in the <code>ciphers</code> setting determines which algorithms are selected by priority. The TLS <code>min-version</code> and the <code>max-version</code> settings restrict support to TLS 1.2.</p>
+</blockquote>
+
+<h4 id="ciphers-tls-ecdhe-ecdsa-with-chacha20-poly1305-tls-ecdhe-rsa-with-aes-128-gcm-sha256"><code>ciphers = [ &#34;TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305&#34;, &#34;TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256&#34;, ]</code></h4>
+
+<p>Specifies the set of cipher suite IDs to negotiate.
+If not specified, <code>ciphers</code> supports all existing cipher suite IDs listed in the Go <code>crypto/tls</code> package.
+This is consistent with the behavior within previous releases.
+In this example, only the two specified cipher suite IDs would be supported.</p>
+
+<p>Environment variable: <code>INFLUXDB_TLS_CIPHERS</code></p>
+
+<h4 id="min-version-tls1-0"><code>min-version = &#34;tls1.0&#34;</code></h4>
+
+<p>Minimum version of the TLS protocol that will be negotiated. Valid values include: <code>tls1.0</code>, <code>tls1.1</code>, and <code>tls1.2</code>. If not specified, <code>min-version</code> is the minimum TLS version specified in the <a href="https://golang.org/pkg/crypto/tls/#pkg-constants">Go <code>crypto/tls</code> package</a>. In this example, <code>tls1.0</code> specifies the minimum version as TLS 1.0, which is consistent with the behavior of previous InfluxDB releases.</p>
+
+<p>Environment variable: <code>INFLUXDB_TLS_MIN_VERSION</code></p>
+
+<h4 id="max-version-tls1-2"><code>max-version = &#34;tls1.2&#34;</code></h4>
+
+<p>The maximum version of the TLS protocol that will be negotiated. Valid values include: <code>tls1.0</code>, <code>tls1.1</code>, and <code>tls1.2</code>. If not specified, <code>max-version</code> is the maximum TLS version specified in the <a href="https://golang.org/pkg/crypto/tls/#pkg-constants">Go <code>crypto/tls</code> package</a>. In this example, <code>tls1.2</code> specifies the maximum version as TLS 1.2, which is consistent with the behavior of previous InfluxDB releases.</p>
+
+<p>Environment variable: <code>INFLUXDB_TLS_MAX_VERSION</code></p>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/administration/config.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/administration/config/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+
+
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+
+</body></html>

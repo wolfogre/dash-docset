@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> InfluxDB error messages | InfluxData Documentation</title>
+    <meta name="description" content="Covers InfluxDB error messages, their descriptions, and common resolutions.. ">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../../../img/favicon.ico" type="image/x-icon">
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true">
+    
+    
+
+    
+    <meta name="robots" 
+        
+         content="index, follow"  >
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+    <link rel="stylesheet" title="dark-theme" href="../../../../css/docs-default.css">
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
+
+    <meta name="application-name" content="InfluxData" />
+    <meta name="msapplication-TileColor" content="" />
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@influxdb">
+    <meta name="twitter:title" content=" InfluxDB error messages | InfluxData Documentation">
+    <meta name="twitter:description" content="Covers InfluxDB error messages, their descriptions, and common resolutions.. ">
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png" />
+
+    <meta property="fb:app_id" content="222112578359661" />
+    <meta property="og:title" content=" InfluxDB error messages | InfluxData Documentation" />
+    <meta property="og:description" content="Covers InfluxDB error messages, their descriptions, and common resolutions.. " />
+    <meta property="og:url" content="https://docs.influxdata.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg" />
+    <meta property="og:image:width" content="555px" />
+    <meta property="og:image:height" content="290px" />
+
+    <meta name="Copyright" content="InfluxData Inc." />
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body      class="docs-theme--influxdb"
+               >
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/"  target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</span></a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">&#9658;&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">&#9658;&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs...">
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style('light-theme');return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style('dark-theme');return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle"></span>InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../administration/index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../administration/config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../administration/subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="../index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="index.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>InfluxDB error messages</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p>This page documents errors, their descriptions, and, where applicable,
+common resolutions.</p>
+
+
+<div class="warn">
+  <p><strong>Disclaimer:</strong> This document does not contain an exhaustive list of all possible InfluxDB errors.</p>
+
+</div>
+
+
+<h2 id="error-database-name-required"><code>error: database name required</code></h2>
+
+<p>The <code>database name required</code> error occurs when certain <code>SHOW</code> queries do
+not specify a <a href="../../concepts/glossary/index.html#database">database</a>.
+Specify a database with an <code>ON</code> clause in the <code>SHOW</code> query, with <code>USE &lt;database_name&gt;</code> in the
+<a href="../../tools/shell/index.html">CLI</a>, or with the <code>db</code> query string parameter in
+the <a href="../../tools/api/index.html#query-string-parameters">InfluxDB API</a> request.</p>
+
+<p>The relevant <code>SHOW</code> queries include <code>SHOW RETENTION POLICIES</code>, <code>SHOW SERIES</code>,
+<code>SHOW MEASUREMENTS</code>, <code>SHOW TAG KEYS</code>, <code>SHOW TAG VALUES</code>, and <code>SHOW FIELD KEYS</code>.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../query_language/schema_exploration/index.html">Schema exploration</a>,
+<a href="../../query_language/spec/index.html">InfluxQL reference</a></p>
+
+<h2 id="error-max-series-per-database-exceeded"><code>error: max series per database exceeded: &lt; &gt;</code></h2>
+
+<p>The <code>max series per database exceeded</code> error occurs when a write causes the
+number of <a href="../../concepts/glossary/index.html#series">series</a> in a database to
+exceed the maximum allowable series per database.
+The maximum allowable series per database is controlled by the
+<code>max-series-per-database</code> setting in the <code>[data]</code> section of the configuration
+file.</p>
+
+<p>The information in the <code>&lt; &gt;</code> shows the measurement and the tag set of the series
+that exceeded <code>max-series-per-database</code>.</p>
+
+<p>By default <code>max-series-per-database</code> is set to one million.
+Changing the setting to <code>0</code> allows an unlimited number of series per database.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../administration/config/index.html#max-series-per-database-1000000">Database Configuration</a></p>
+
+<h2 id="error-parsing-query-found-expected-identifier-at-line-char"><code>error parsing query: found &lt; &gt;, expected identifier at line &lt; &gt;, char &lt; &gt;</code></h2>
+
+<h3 id="influxql-syntax">InfluxQL syntax</h3>
+
+<p>The <code>expected identifier</code> error occurs when InfluxDB anticipates an identifier
+in a query but doesn&rsquo;t find it.
+Identifiers are tokens that refer to continuous query names, database names,
+field keys, measurement names, retention policy names, subscription names,
+tag keys, and user names.
+The error is often a gentle reminder to double-check your query&rsquo;s syntax.</p>
+
+<p><strong>Examples</strong></p>
+
+<p><em>Query 1:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="k">ON</span> <span class="s2">&#34;telegraf&#34;</span> <span class="k">BEGIN</span> <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;usage_idle&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;average_cpu&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;cpu&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">h</span><span class="p">),</span><span class="s2">&#34;cpu&#34;</span> <span class="k">END</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="k">found</span> <span class="k">ON</span><span class="p">,</span> <span class="n">expected</span> <span class="n">identifier</span> <span class="k">at</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">char</span> <span class="mi">25</span></code></pre></div>
+<p>Query 1 is missing a continuous query name between <code>CREATE CONTINUOUS QUERY</code> and
+<code>ON</code>.</p>
+
+<p><em>Query 2:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">WHERE</span> <span class="s2">&#34;blue&#34;</span> <span class="o">=</span> <span class="k">true</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="k">found</span> <span class="k">WHERE</span><span class="p">,</span> <span class="n">expected</span> <span class="n">identifier</span> <span class="k">at</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">char</span> <span class="mi">15</span></code></pre></div>
+<p>Query 2 is missing a measurement name between <code>FROM</code> and <code>WHERE</code>.</p>
+
+<h3 id="influxql-keywords">InfluxQL keywords</h3>
+
+<p>In some cases the <code>expected identifier</code> error occurs when one of the
+<a href="../../concepts/glossary/index.html#identifier">identifiers</a> in the query is an
+<a href="../../query_language/spec/index.html#keywords">InfluxQL Keyword</a>.
+To successfully query an identifier that&rsquo;s also a keyword, enclose that
+identifier in double quotes.</p>
+
+<p><strong>Examples</strong></p>
+
+<p><em>Query 1:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="n">duration</span> <span class="k">FROM</span> <span class="n">runs</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="k">found</span> <span class="n">DURATION</span><span class="p">,</span> <span class="n">expected</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="nb">number</span><span class="p">,</span> <span class="n">bool</span> <span class="k">at</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">char</span> <span class="mi">8</span></code></pre></div>
+<p>In Query 1, the field key <code>duration</code> is an InfluxQL Keyword.
+Double quote <code>duration</code> to avoid the error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="s2">&#34;duration&#34;</span> <span class="k">FROM</span> <span class="n">runs</span></code></pre></div>
+<p><em>Query 2:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="k">limit</span> <span class="k">ON</span> <span class="n">telegraf</span> <span class="n">DURATION</span> <span class="mi">1</span><span class="n">d</span> <span class="n">REPLICATION</span> <span class="mi">1</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="k">found</span> <span class="k">LIMIT</span><span class="p">,</span> <span class="n">expected</span> <span class="n">identifier</span> <span class="k">at</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">char</span> <span class="mi">25</span></code></pre></div>
+<p>In Query 2, the retention policy name <code>limit</code> is an InfluxQL Keyword.
+Double quote <code>limit</code> to avoid the error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;limit&#34;</span> <span class="k">ON</span> <span class="n">telegraf</span> <span class="n">DURATION</span> <span class="mi">1</span><span class="n">d</span> <span class="n">REPLICATION</span> <span class="mi">1</span></code></pre></div>
+<p>While using double quotes is an acceptable workaround, we recommend that you avoid using InfluxQL keywords as identifiers for simplicity&rsquo;s sake.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../query_language/spec/index.html#keywords">InfluxQL Keywords</a>,
+<a href="../../query_language/index.html">Query Language Documentation</a></p>
+
+<h2 id="error-parsing-query-found-expected-string-at-line-char"><code>error parsing query: found &lt; &gt;, expected string at line &lt; &gt;, char &lt; &gt;</code></h2>
+
+<p>The <code>expected string</code> error occurs when InfluxDB anticipates a string
+but doesn&rsquo;t find it.
+In most cases, the error is a result of forgetting to quote the password
+string in the <code>CREATE USER</code> statement.</p>
+
+<p><strong>Example</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">USER</span> <span class="n">penelope</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="n">timeseries4dayz</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="k">found</span> <span class="n">timeseries4dayz</span><span class="p">,</span> <span class="n">expected</span> <span class="n">string</span> <span class="k">at</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">char</span> <span class="mi">36</span></code></pre></div>
+<p>The <code>CREATE USER</code> statement requires single quotation marks around the password
+string:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">CREATE</span> <span class="k">USER</span> <span class="n">penelope</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;timeseries4dayz&#39;</span></code></pre></div>
+<p>Note that you should not include the single quotes when authenticating requests.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../administration/authentication_and_authorization/index.html">Authentication and Authorization</a></p>
+
+<h2 id="error-parsing-query-mixing-aggregate-and-non-aggregate-queries-is-not-supported"><code>error parsing query: mixing aggregate and non-aggregate queries is not supported</code></h2>
+
+<p>The <code>mixing aggregate and non-aggregate</code> error occurs when a <code>SELECT</code> statement
+includes both an <a href="../../query_language/functions/index.html">aggregate function</a>
+and a standalone <a href="../../concepts/glossary/index.html#field-key">field key</a> or
+<a href="../../concepts/glossary/index.html#tag-key">tag key</a>.</p>
+
+<p>Aggregate functions return a single calculated value and there is no obvious
+single value to return for any unaggregated fields or tags.</p>
+
+<p><strong>Example</strong></p>
+
+<p><em>Raw data:</em></p>
+
+<p>The <code>peg</code> measurement has two fields (<code>square</code> and <code>round</code>) and one tag
+(<code>force</code>):</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">name</span><span class="p">:</span> <span class="n">peg</span>
+<span class="c1">---------
+</span><span class="c1"></span><span class="n">time</span>                   <span class="n">square</span>   <span class="n">round</span>   <span class="k">force</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span><span class="n">T18</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span>        <span class="mi">8</span>       <span class="mi">1</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span><span class="n">T18</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">10</span><span class="n">Z</span>   <span class="mi">4</span>        <span class="mi">12</span>      <span class="mi">2</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span><span class="n">T18</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">20</span><span class="n">Z</span>   <span class="mi">6</span>        <span class="mi">14</span>      <span class="mi">4</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">07</span><span class="n">T18</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">30</span><span class="n">Z</span>   <span class="mi">7</span>        <span class="mi">15</span>      <span class="mi">3</span></code></pre></div>
+<p><em>Query 1:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;square&#34;</span><span class="p">),</span><span class="s2">&#34;round&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;peg&#34;</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="n">mixing</span> <span class="k">aggregate</span> <span class="k">and</span> <span class="n">non</span><span class="o">-</span><span class="k">aggregate</span> <span class="n">queries</span> <span class="k">is</span> <span class="k">not</span> <span class="n">supported</span></code></pre></div>
+<p>Query 1 includes an aggregate function and a standalone field.</p>
+
+<p><code>mean(&quot;square&quot;)</code> returns a single aggregated value calculated from the four values
+of <code>square</code> in the <code>peg</code> measurement, and there is no obvious single field value
+to return from the four unaggregated values of the <code>round</code> field.</p>
+
+<p><em>Query 2:</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;square&#34;</span><span class="p">),</span><span class="s2">&#34;force&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;peg&#34;</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">error</span> <span class="n">parsing</span> <span class="n">query</span><span class="p">:</span> <span class="n">mixing</span> <span class="k">aggregate</span> <span class="k">and</span> <span class="n">non</span><span class="o">-</span><span class="k">aggregate</span> <span class="n">queries</span> <span class="k">is</span> <span class="k">not</span> <span class="n">supported</span></code></pre></div>
+<p>Query 2 includes an aggregate function and a standalone tag.</p>
+
+<p><code>mean(&quot;square&quot;)</code> returns a single aggregated value calculated from the four values
+of <code>square</code> in the <code>peg</code> measurement, and there is no obvious single tag value
+to return from the four unaggregated values of the <code>force</code> tag.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../query_language/functions/index.html">Functions</a></p>
+
+<h2 id="invalid-operation-time-and-influxql-varref-are-not-compatible"><code>invalid operation: time and \*influxql.VarRef are not compatible</code></h2>
+
+<p>The <code>time and \*influxql.VarRef are not compatible</code> error occurs when
+date-time strings are double quoted in queries.
+Date-time strings require single quotes.</p>
+
+<h3 id="examples">Examples</h3>
+
+<p>Double quoted date-time strings:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="s2">&#34;water_level&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_feet&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;location&#34;</span> <span class="o">=</span> <span class="s1">&#39;santa_monica&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s2">&#34;2015-08-18T00:00:00Z&#34;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="s2">&#34;2015-08-18T00:12:00Z&#34;</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="n">invalid</span> <span class="k">operation</span><span class="p">:</span> <span class="n">time</span> <span class="k">and</span> <span class="o">*</span><span class="n">influxql</span><span class="p">.</span><span class="n">VarRef</span> <span class="k">are</span> <span class="k">not</span> <span class="n">compatible</span></code></pre></div>
+<p>Single quoted date-time strings:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="s2">&#34;water_level&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;h2o_feet&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;location&#34;</span> <span class="o">=</span> <span class="s1">&#39;santa_monica&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&gt;=</span> <span class="s1">&#39;2015-08-18T00:00:00Z&#39;</span> <span class="k">AND</span> <span class="n">time</span> <span class="o">&lt;=</span> <span class="s1">&#39;2015-08-18T00:12:00Z&#39;</span>
+
+<span class="n">name</span><span class="p">:</span> <span class="n">h2o_feet</span>
+<span class="n">time</span>                   <span class="n">water_level</span>
+<span class="c1">----                   -----------
+</span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">064</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">116</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">028</span></code></pre></div>
+<p><strong>Resources:</strong>
+<a href="../../query_language/data_exploration/index.html#time-syntax">Data Exploration</a></p>
+
+<h2 id="unable-to-parse-bad-timestamp"><code>unable to parse &lt; &gt;: bad timestamp</code></h2>
+
+<h3 id="timestamp-syntax">Timestamp syntax</h3>
+
+<p>The <code>bad timestamp</code> error occurs when the
+<a href="../../concepts/glossary/index.html#influxdb-line-protocol">line protocol</a> includes a
+timestamp in a format other than a UNIX timestamp.</p>
+
+<p><strong>Example</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">INSERT</span> <span class="n">pineapple</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span> <span class="s1">&#39;2015-08-18T23:00:00Z&#39;</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="err">{</span><span class="s2">&#34;error&#34;</span><span class="p">:</span><span class="s2">&#34;unable to parse &#39;pineapple value=1 &#39;2015-08-18T23:00:00Z&#39;&#39;: bad timestamp&#34;</span><span class="err">}</span></code></pre></div>
+<p>The line protocol above uses an <a href="https://www.ietf.org/rfc/rfc3339.txt">RFC3339</a>
+timestamp.
+Replace the timestamp with a UNIX timestamp to avoid the error and successfully
+write the point to InfluxDB:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">INSERT</span> <span class="n">pineapple</span><span class="p">,</span><span class="n">fresh</span><span class="o">=</span><span class="k">true</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span> <span class="mi">1439938800000000000</span></code></pre></div>
+<h3 id="influxdb-line-protocol-syntax">InfluxDB line protocol syntax</h3>
+
+<p>In some cases, the <code>bad timestamp</code> error occurs with more general syntax errors
+in the InfluxDB line protocol.
+Line protocol is whitespace sensitive; misplaced spaces can cause InfluxDB
+to assume that a field or tag is an invalid timestamp.</p>
+
+<p><strong>Example</strong></p>
+
+<p><em>Write 1</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">INSERT</span> <span class="n">hens</span> <span class="k">location</span><span class="o">=</span><span class="mi">2</span> <span class="n">value</span><span class="o">=</span><span class="mi">9</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="err">{</span><span class="s2">&#34;error&#34;</span><span class="p">:</span><span class="s2">&#34;unable to parse &#39;hens location=2 value=9&#39;: bad timestamp&#34;</span><span class="err">}</span></code></pre></div>
+<p>The line protocol in Write 1 separates the <code>hen</code> measurement from the <code>location=2</code>
+tag with a space instead of a comma.
+InfluxDB assumes that the <code>value=9</code> field is the timestamp and returns an error.</p>
+
+<p>Use a comma instead of a space between the measurement and tag to avoid the error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">INSERT</span> <span class="n">hens</span><span class="p">,</span><span class="k">location</span><span class="o">=</span><span class="mi">2</span> <span class="n">value</span><span class="o">=</span><span class="mi">9</span></code></pre></div>
+<p><em>Write 2</em></p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">INSERT</span> <span class="n">cows</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">daisy</span> <span class="n">milk_prod</span><span class="o">=</span><span class="mi">3</span> <span class="n">happy</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">ERR</span><span class="p">:</span> <span class="err">{</span><span class="s2">&#34;error&#34;</span><span class="p">:</span><span class="s2">&#34;unable to parse &#39;cows,name=daisy milk_prod=3 happy=3&#39;: bad timestamp&#34;</span><span class="err">}</span></code></pre></div>
+<p>The line protocol in Write 2 separates the <code>milk_prod=3</code> field and the
+<code>happy=3</code> field with a space instead of a comma.
+InfluxDB assumes that the <code>happy=3</code> field is the timestamp and returns an error.</p>
+
+<p>Use a comma instead of a space between the two fields to avoid the error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&gt;</span> <span class="k">INSERT</span> <span class="n">cows</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">daisy</span> <span class="n">milk_prod</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">happy</span><span class="o">=</span><span class="mi">3</span></code></pre></div>
+<p><strong>Resources:</strong>
+<a href="../../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a>,
+<a href="../../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></p>
+
+<h2 id="unable-to-parse-time-outside-range"><code>unable to parse &lt; &gt;: time outside range</code></h2>
+
+<p>The <code>time outside range</code> error occurs when the timestamp in the
+<a href="../../concepts/glossary/index.html#influxdb-line-protocol">InfluxDB line protocol</a>
+falls outside the valid time range for InfluxDB.</p>
+
+<p>The minimum valid timestamp is <code>-9223372036854775806</code> or <code>1677-09-21T00:12:43.145224194Z</code>.
+The maximum valid timestamp is <code>9223372036854775806</code> or <code>2262-04-11T23:47:16.854775806Z</code>.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../write_protocols/line_protocol_tutorial/index.html#data-types">InfluxDB line protocol tutorial</a>,
+<a href="../../write_protocols/line_protocol_reference/index.html#data-types">InfluxDB line protocol reference</a></p>
+
+<h2 id="write-failed-for-shard-engine-cache-maximum-memory-size-exceeded">write failed for shard &lt; &gt;: engine: cache maximum memory size exceeded</h2>
+
+<p>The <code>cache maximum memory size exceeded</code> error occurs when the cached
+memory size increases beyond the
+<a href="../../administration/config/index.html#cache-max-memory-size-1g"><code>cache-max-memory-size</code> setting</a>
+in the configuration file.</p>
+
+<p>By default, <code>cache-max-memory-size</code> is set to 512mb.
+This value is fine for most workloads, but is too small for larger write volumes
+or for datasets with higher <a href="../../concepts/glossary/index.html#series-cardinality">series cardinality</a>.
+If you have lots of RAM you could set it to <code>0</code> to disable the cached memory
+limit and never get this error.
+You can also examine the <code>memBytes</code> field in the<code>cache</code> measurement in the
+<a href="../../administration/server_monitoring/index.html#internal-monitoring"><code>_internal</code> database</a>
+to get a sense of how big the caches are in memory.</p>
+
+<p><strong>Resources:</strong>
+<a href="../../administration/config/index.html">Database Configuration</a></p>
+
+<h2 id="already-killed"><code>already killed</code></h2>
+
+<p>The <code>already killed</code> error occurs when a query has already been killed, but
+there are subsequent kill attempts before the query has exited.
+When a query is killed, it may not exit immediately.
+It will be in the <code>killed</code> state, which means the signal has been sent, but the
+query itself has not hit an interrupt point.</p>
+
+<p><strong>Resources:</strong>
+<a href="https://docs.influxdata.com/influxdb/v1.0/troubleshooting/query_management/">Query management</a></p>
+
+<h2 id="common-import-errors">Common <code>-import</code> errors</h2>
+
+<p>Find common errors that occur when importing data in the command line interface (CLI).</p>
+
+<ol>
+<li><p>(Optional) Customize how to view <code>-import</code> errors and output by running any of the following commands:</p>
+
+<ul>
+<li>Send errors and output to a new file: <code>influx -import -path={import-file}.gz -compressed {new-file} 2&gt;&amp;1</code></li>
+<li>Send errors and output to separate files: <code>influx -import -path={import-file}.gz -compressed &gt; {output-file} 2&gt; {error-file}</code></li>
+<li>Send errors to a new file: <code>influx -import -path={import-file}.gz -compressed 2&gt; {new-file}</code></li>
+<li>Send output to a new file: <code>influx -import -path={import-file}.gz -compressed {new-file}</code></li>
+</ul></li>
+
+<li><p>Review import errors for possible causes to resolve:</p>
+
+<ul>
+<li><a href="index.html#inconsistent-data-types">Inconsistent data types</a></li>
+<li><a href="index.html#data-points-older-than-retention-policy">Data points older than retention policy</a></li>
+<li><a href="index.html#unnamed-import-file">Unnamed import file</a></li>
+<li><a href="index.html#container-cannot-read-host-files">Docker container cannot read host files</a></li>
+</ul></li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> To learn how to use the <code>-import</code> command, see <a href="../../tools/shell/index.html#import-data-from-a-file-with-import">Import data from a file with <code>-import</code></a>.</p>
+</blockquote>
+
+<h3 id="inconsistent-data-types">Inconsistent data types</h3>
+
+<p><strong>Error:</strong> <code>partial write: field type conflict:</code></p>
+
+<p>This error occurs when fields in an imported measurement have inconsistent data types. Make sure all fields in a measurement have the same data type, such as float64, int64, and so on.</p>
+
+<h3 id="data-points-older-than-retention-policy">Data points older than retention policy</h3>
+
+<p><strong>Error:</strong> <code>partial write: points beyond retention policy dropped={number-of-points-dropped}</code></p>
+
+<p>This error occurs when an imported data point is older than the specified retention policy and dropped. Verify the correct retention policy is specified in the import file.</p>
+
+<h3 id="unnamed-import-file">Unnamed import file</h3>
+
+<p><strong>Error:</strong> <code>reading standard input: /path/to/directory: is a directory</code></p>
+
+<p>This error occurs when the <code>-import</code> command doesn&rsquo;t include the name of an import file. Specify the file to import, for example: <code>$ influx -import -path={filename}.txt -precision=s</code></p>
+
+<h3 id="docker-container-cannot-read-host-files">Docker container cannot read host files</h3>
+
+<p><strong>Error:</strong> <code>open /path/to/file: no such file or directory</code></p>
+
+<p>This error occurs when the Docker container cannot read files on the host machine. To make host machine files readable, complete the following procedure.</p>
+
+<h4 id="make-host-machine-files-readable-to-docker">Make host machine files readable to Docker</h4>
+
+<ol>
+<li>Create a directory, and then copy files to import into InfluxDB to this directory.</li>
+
+<li><p>When you launch the Docker container, mount the new directory on the InfluxDB container by running the following command:</p>
+
+<pre><code>docker run -v /dir/path/on/host:/dir/path/in/container
+</code></pre></li>
+
+<li><p>Verify the Docker container can read host machine files by running the following command:</p>
+
+<pre><code>influx -import -path=/path/in/container
+</code></pre></li>
+</ol>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/troubleshooting/errors.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/troubleshooting/errors/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+</body>
+</html>
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+

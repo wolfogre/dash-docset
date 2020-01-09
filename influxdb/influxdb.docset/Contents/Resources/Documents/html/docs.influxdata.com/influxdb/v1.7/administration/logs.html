@@ -1,0 +1,1274 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title> Logging and tracing in InfluxDB | InfluxData Documentation</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../../../img/favicon.ico" type="image/x-icon"/>
+
+    
+    
+    
+    
+    <meta name="docsearch:latest" content="true"/>
+    
+    
+
+    
+    <meta name="robots" content="index, follow"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+    <link rel="stylesheet" title="dark-theme" href="../../../css/docs-default.css"/>
+    <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css"/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+
+    <meta name="application-name" content="InfluxData"/>
+    <meta name="msapplication-TileColor" content=""/>
+
+    <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@influxdb"/>
+    <meta name="twitter:title" content=" Logging and tracing in InfluxDB | InfluxData Documentation"/>
+    <meta name="twitter:description" content=""/>
+
+    <meta name="twitter:image" content="https://docs.influxdata.com/img/influx-logo-cubo-dark.png"/>
+
+    <meta property="fb:app_id" content="222112578359661"/>
+    <meta property="og:title" content=" Logging and tracing in InfluxDB | InfluxData Documentation"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:url" content="https://docs.influxdata.com/"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://www.influxdata.com/wp-content/uploads/Simple-Kubo.jpg"/>
+    <meta property="og:image:width" content="555px"/>
+    <meta property="og:image:height" content="290px"/>
+
+    <meta name="Copyright" content="InfluxData Inc."/>
+
+    
+    <script type="text/javascript" src="https://script.crazyegg.com/pages/scripts/0080/4231.js" async="async"></script>
+
+    <script src="../../../js/vendor/js.cookie.js" type="text/javascript"></script>
+    <script src="../../../js/docs-themes.js" type="text/javascript"></script>
+    <script src="../../../js/docs-chronograf-url.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        set_style_from_cookie();
+
+    </script>
+</head>
+
+<body class="docs-theme--influxdb">
+    
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-WXRH9C');
+
+    </script>
+    
+    <nav class="navbar" id="main-nav">
+    <div class="navbar--logo">
+      <a href="https://www.influxdata.com/" target="_blank" title="Go to InfluxData">
+        <span class="icon logo"></span>
+        <span class="icon logotype"></span>
+      </a>
+      <span class="divider"></span>
+      <a href="https://docs.influxdata.com/" class="navbar--docs klavika-font" title="Go to Documentation Homepage">Docs</a>
+    </div>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+      
+      
+        
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          InfluxDB v1.7
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+      
+        
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+    </div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v1.13/">Telegraf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="../index.html">InfluxDB</a></li>
+            <li><a class="navbar--product v2" href="https://v2.docs.influxdata.com" target="_blank">InfluxDB 2.0 <span class="v2-status">beta</span></a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_influxdb/v1.7/">InfluxDB Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v1.7/">Chronograf</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v1.5/">Kapacitor</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/enterprise_kapacitor/v1.5/">Kapacitor Enterprise</a></li>
+          
+        
+          
+            <li><a class="navbar--product" href="https://docs.influxdata.com/flux/v0.50/">Flux</a></li>
+          
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	
+	
+	
+	
+			
+				<input class="navbar--search-field" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..."/>
+			
+		
+	
+	
+	
+	
+	
+	
+</div>
+
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+<div class="sidebar--toggle" id="sidebar--toggle">InfluxDB Contents</div>
+<aside class="sidebar" id="sidebar">
+  <section class="sidebar--section">
+    <div id="sidebar--ad"></div>
+
+  </section>
+  
+  
+    
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../about_the_project/index.html">About the project</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/releasenotes-changelog/index.html">Release notes</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/contributing/index.html">Contributing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/cla/index.html">Contributor license agreement</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/licenses/index.html">InfluxDB license</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../about_the_project/third-party/index.html">Third party software</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../introduction/index.html">Introduction</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../introduction/downloading/index.html">Downloading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../introduction/installation/index.html">Installing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../introduction/getting-started/index.html">Getting started</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../concepts/index.html">Concepts</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../concepts/key_concepts/index.html">Key concepts</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/glossary/index.html">Glossary</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/crosswalk/index.html">Comparing InfluxDB to SQL databases</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/insights_tradeoffs/index.html">InfluxDB design insights and tradeoffs</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/schema_and_data_layout/index.html">Schema design and data layout</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/storage_engine/index.html">In-memory indexing with TSM</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/time-series-index/index.html">Time Series Index (TSI) overview</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../concepts/tsi-details/index.html">Time Series Index (TSI) details</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class=" active" href="index.html">Administration</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="config/index.html">Configuring InfluxDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="authentication_and_authorization/index.html">Authentication and authorization</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="upgrading/index.html">Upgrading</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https_setup/index.html">Enabling HTTPS</a></li>
+              
+            
+              
+                <li><a class="sidebar--page active" href="logs/index.html">Logging and tracing</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="ports/index.html">Ports</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="backup_and_restore/index.html">Backing up and restoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="rebuild-tsi-index/index.html">Rebuild the TSI index</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="security/index.html">Managing security</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="server_monitoring/index.html">Server monitoring</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="stability_and_compatibility/index.html">Stability and compatibility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="subscription-management/index.html">Manage subscriptions</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../tools/index.html">Tools</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../tools/shell/index.html">InfluxDB command line interface (CLI/shell)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/api/index.html">InfluxDB API reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/api_client_libraries/index.html">InfluxDB API client libraries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/influx_inspect/index.html">Influx Inspect disk utility</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../tools/inch/index.html">InfluxDB inch tool</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="https://grafana.com/docs/grafana/latest/features/datasources/influxdb/">Grafana graphs and dashboards</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../query_language/index.html">Influx Query Language (InfluxQL)</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../query_language/data_download/index.html">Sample data</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/data_exploration/index.html">Data exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/schema_exploration/index.html">Schema exploration</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/database_management/index.html">Data management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/continuous_queries/index.html">Continuous Queries</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/functions/index.html">Functions</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/math_operators/index.html">Mathematical operators</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../query_language/spec/index.html">InfluxQL reference</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../write_protocols/index.html">Write protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../write_protocols/line_protocol_reference/index.html">InfluxDB line protocol reference</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../write_protocols/line_protocol_tutorial/index.html">InfluxDB line protocol tutorial</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../supported_protocols/index.html">Supported protocols</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/collectd/index.html">CollectD</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/graphite/index.html">Graphite</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/opentsdb/index.html">OpenTSDB</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/prometheus/index.html">Prometheus</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../supported_protocols/udp/index.html">UDP</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../high_availability/index.html">High availability</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../high_availability/clusters/index.html">Clustering</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../troubleshooting/index.html">Troubleshooting</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../troubleshooting/frequently-asked-questions/index.html">Frequently asked questions (FAQ)</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../troubleshooting/query_management/index.html">Query management</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../troubleshooting/errors/index.html">Error messages</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="../additional_resources/additional_resources/index.html">Additional resources</a>
+          </div>
+
+          
+
+        </section>
+      
+        <section class="sidebar--section">
+          <div class="sidebar--section-title">
+            <a class="" href="logs.html">Guides</a>
+          </div>
+
+          
+            <ul>
+            
+              
+                <li><a class="sidebar--page" href="../guides/writing_data/index.html">Writing data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/querying_data/index.html">Querying data with the InfluxDB API</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/downsampling_and_retention/index.html">Downsampling and data retention</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/hardware_sizing/index.html">Hardware sizing guidelines</a></li>
+              
+            
+              
+                <li><a class="sidebar--page" href="../guides/calculating_percentages/index.html">Calculating percentages in a query</a></li>
+              
+            
+            </ul>
+          
+
+        </section>
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+  <section class="sidebar--section">
+    <div class="sidebar--section-title">
+      <a href="https://docs.influxdata.com/influxdb/">InfluxDB versions</a>
+    </div>
+    <ul>
+      
+      <li><a class="sidebar--page" href="../index.html">v1.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.6/">v1.6</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.5/">v1.5</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.4/">v1.4</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.3/">v1.3</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.2/">v1.2</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.1/">v1.1</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a></li>
+      
+      <li><a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a></li>
+      
+    </ul>
+  </section>
+</aside>
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>Logging and tracing in InfluxDB</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+
+			
+
+<p><strong>Content</strong></p>
+
+<ul>
+<li><a href="logs.html#logging-locations">Logging locations</a></li>
+<li><a href="logs.html#http-access-logging">HTTP access logging</a></li>
+<li><a href="logs.html#structured-logging">Structured logging</a></li>
+<li><a href="logs.html#tracing">Tracing</a></li>
+</ul>
+
+<h2 id="logging-locations">Logging locations</h2>
+
+<p>InfluxDB writes log output, by default, to <code>stderr</code>.
+Depending on your use case, this log information can be written to another location.</p>
+
+<h3 id="running-influxdb-directly">Running InfluxDB directly</h3>
+
+<p>When you run InfluxDB directly, using <code>influxd</code>, all logs are written to <code>stderr</code>.
+You can also redirect the log output, as you would any output to <code>stderr</code>, like in this example:</p>
+
+<pre><code>influxd 2&gt;$HOME/my_log_file
+</code></pre>
+
+<h3 id="launched-as-a-service">Launched as a service</h3>
+
+<!--------------------------- BEGIN TABS  ---------------------->
+
+<p>
+</p><div class="tabs-container">
+  
+
+<div class="tabs">
+  <p><a href="logs.html#">systemd</a>
+<a href="logs.html#">sysinit</a></p>
+
+</div>
+
+
+<div class="tab-content-container">
+  
+<!--------------------------- BEGIN systemd  ------------------->
+
+<div class="tab-content">
+  <h4 id="systemd">systemd</h4>
+
+<p>Most Linux systems direct logs to the <code>systemd</code> journal.
+To access these logs, use this command:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">sudo journalctl -u influxdb.service</code></pre></div>
+<p>For more information, see the <a href="https://www.freedesktop.org/software/systemd/man/journald.conf.html"><code>journald.conf</code> manual page</a>.</p>
+
+</div>
+
+<!--------------------------- END systemd  --------------------->
+<!--------------------------- BEGIN sysvinit  ------------------>
+
+<div class="tab-content">
+  <h4 id="sysvinit">sysvinit</h4>
+
+<p>On Linux sytems not using systemd, InfluxDB writes all log data and <code>stderr</code> to <code>/var/log/influxdb/influxd.log</code>.
+You can override this location by setting the environment variable <code>STDERR</code> in a start-up script at <code>/etc/default/influxdb</code>.
+(If this file doesn&rsquo;t exist, you need to create it.)</p>
+
+<p>For example, if <code>/etc/default/influxdb</code> contains:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nv">STDERR</span><span class="o">=</span>/dev/null</code></pre></div>
+<p>all log data is discarded.
+Likewise, you can direct output to <code>stdout</code> by setting <code>STDOUT</code> in the same file.
+<code>stdout</code> is sent to <code>/dev/null</code> by default when InfluxDB is launched as a service.</p>
+
+<p>InfluxDB must be restarted to use any changes to <code>/etc/default/influxdb</code>.</p>
+
+</div>
+
+<!--------------------------- END sysvinit --------------------->
+
+</div>
+
+
+</div>
+
+<!--------------------------- END TABS  ------------------------><p></p>
+
+<blockquote>
+<h4 id="log-location-on-macos">Log location on macOS</h4>
+
+<p>On macOs, InfluxDB stores logs at <code>/usr/local/var/log/influxdb.log</code> by default.</p>
+</blockquote>
+
+<h3 id="using-logrotate">Using logrotate</h3>
+
+<p>You can use <a href="http://manpages.ubuntu.com/manpages/cosmic/en/man8/logrotate.8.html">logrotate</a> to rotate the log files generated by InfluxDB on systems where logs are written to flat files.
+If using the package install on a <code>sysvinit</code> system, the config file for logrotate is installed in <code>/etc/logrotate.d</code>.
+You can view the file <a href="https://github.com/influxdb/influxdb/blob/1.7/scripts/logrotate">here</a>.</p>
+
+<h2 id="http-access-logging">HTTP access logging</h2>
+
+<p>Use the HTTP access log to log HTTP request traffic separately from the other InfluxDB log output.</p>
+
+<h3 id="http-access-log-format">HTTP access log format</h3>
+
+<p>The following is an example of the HTTP access log format. The table below describes each component of the HTTP access log.</p>
+
+<pre><code>172.13.8.13,172.39.5.169 - - [21/Jul/2019:03:01:27 +0000] &#34;GET /query?db=metrics&amp;q=SELECT+MEAN%28value%29+as+average_cpu%2C+MAX%28value%29+as+peak_cpu+FROM+%22foo.load%22+WHERE+time+%3E%3D+now%28%29+-+1m+AND+org_id+%21%3D+%27%27+AND+group_id+%21%3D+%27%27+GROUP+BY+org_id%2Cgroup_id HTTP/1.0&#34; 200 11450 &#34;-&#34; &#34;Baz Service&#34; d6ca5a13-at63-11o9-8942-000000000000 9337349
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Example</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Host</td>
+<td><code>172.13.8.13,172.39.5.169</code></td>
+</tr>
+
+<tr>
+<td>Time of log event</td>
+<td><code>[21/Jul/2019:03:01:27 +0000]</code></td>
+</tr>
+
+<tr>
+<td>Request method</td>
+<td><code>GET</code></td>
+</tr>
+
+<tr>
+<td>Username</td>
+<td><code>user</code></td>
+</tr>
+
+<tr>
+<td>HTTP API call being made*</td>
+<td><code>/query?db=metrics%26q=SELECT%20used_percent%20FROM%20%22telegraf.autogen.mem%22%20WHERE%20time%20%3E=%20now()%20-%201m%20</code></td>
+</tr>
+
+<tr>
+<td>Request protocol</td>
+<td><code>HTTP/1.0</code></td>
+</tr>
+
+<tr>
+<td>HTTP response code</td>
+<td><code>200</code></td>
+</tr>
+
+<tr>
+<td>Size of response in bytes</td>
+<td><code>11450</code></td>
+</tr>
+
+<tr>
+<td>Referrer</td>
+<td><code>-</code></td>
+</tr>
+
+<tr>
+<td>User agent</td>
+<td><code>Baz Service</code></td>
+</tr>
+
+<tr>
+<td>Request ID</td>
+<td><code>d4ca9a10-ab63-11e9-8942-000000000000</code></td>
+</tr>
+
+<tr>
+<td>Response time in microseconds</td>
+<td><code>9357049</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>* This field shows the database being acessed and the query being run. For more details, see <a href="../tools/api/index.html">InfluxDB API reference</a>. Note that this field is URL-encoded.</p>
+
+<h3 id="redirecting-http-access-logging">Redirecting HTTP access logging</h3>
+
+<p>When HTTP request logging is enabled, the HTTP logs are intermingled by default with internal InfluxDB logging. By redirecting the HTTP request log entries to a separate file, both log files are easier to read, monitor, and debug.</p>
+
+<p><strong>To redirect HTTP request logging:</strong></p>
+
+<p>Locate the <code>[http]</code> section of your InfluxDB configuration file and set the <code>access-log-path</code> option to specify the path where HTTP log entries should be written.</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>If <code>influxd</code> is unable to access the specified path, it will log an error and fall back to writing the request log to <code>stderr</code>.</li>
+<li>The <code>[httpd]</code> prefix is stripped when HTTP request logging is redirected to a separate file, allowing access log parsing tools (like <a href="https://lnav.org">lnav</a>) to render the files without additional modification.</li>
+<li>To rotate the HTTP request log file, use the <code>copytruncate</code> method of <code>logrotate</code> or similar to leave the original file in place.</li>
+</ul>
+
+<h2 id="structured-logging">Structured logging</h2>
+
+<p>Structured logging enables machine-readable and more developer-friendly log output formats. The two structured log formats, <code>logfmt</code> and <code>json</code>, provide easier filtering and searching with external tools and simplifies integration of InfluxDB logs  with Splunk, Papertrail, Elasticsearch, and other third party tools.</p>
+
+<p>The InfluxDB logging configuration options (in the <code>[logging]</code> section) now include the following options:</p>
+
+<ul>
+<li><code>format</code>: <code>auto</code> (default) | <code>logfmt</code> | <code>json</code></li>
+<li><code>level</code>: <code>error</code> | <code>warn</code> | <code>info</code> (default) | <code>debug</code></li>
+<li><code>suppress-logo</code>: <code>false</code> (default) | <code>true</code></li>
+</ul>
+
+<p>For details on these logging configuration options and their corresponding environment variables, see <a href="config.html#logging-settings">Logging options</a> in the configuration file documentation.</p>
+
+<h3 id="logging-formats">Logging formats</h3>
+
+<p>Three logging <code>format</code> options are available: <code>auto</code>, <code>logfmt</code>, and <code>json</code>. The default logging format setting, <code>format = &#34;auto&#34;</code>, lets InfluxDB automatically manage the log encoding format:</p>
+
+<ul>
+<li>When logging to a file, the <code>logfmt</code> is used</li>
+<li>When logging to a terminal (or other TTY device), a user-friendly console format is used.</li>
+</ul>
+
+<p>The <code>json</code> format is available when specified.</p>
+
+<h3 id="examples-of-log-output">Examples of log output:</h3>
+
+<p><strong>Logfmt</strong></p>
+
+<pre><code>ts=2018-02-20T22:48:11.291815Z lvl=info msg=&#34;InfluxDB starting&#34; version=unknown branch=unknown commit=unknown
+ts=2018-02-20T22:48:11.291858Z lvl=info msg=&#34;Go runtime&#34; version=go1.10 maxprocs=8
+ts=2018-02-20T22:48:11.291875Z lvl=info msg=&#34;Loading configuration file&#34; path=/Users/user_name/.influxdb/influxdb.conf
+</code></pre>
+
+<p><strong>JSON</strong></p>
+
+<pre><code>{&#34;lvl&#34;:&#34;info&#34;,&#34;ts&#34;:&#34;2018-02-20T22:46:35Z&#34;,&#34;msg&#34;:&#34;InfluxDB starting, version unknown, branch unknown, commit unknown&#34;}
+{&#34;lvl&#34;:&#34;info&#34;,&#34;ts&#34;:&#34;2018-02-20T22:46:35Z&#34;,&#34;msg&#34;:&#34;Go version go1.10, GOMAXPROCS set to 8&#34;}
+{&#34;lvl&#34;:&#34;info&#34;,&#34;ts&#34;:&#34;2018-02-20T22:46:35Z&#34;,&#34;msg&#34;:&#34;Using configuration at: /Users/user_name/.influxdb/influxdb.conf&#34;}
+</code></pre>
+
+<p><strong>Console/TTY</strong></p>
+
+<pre><code>2018-02-20T22:55:34.246997Z     info    InfluxDB starting       {&#34;version&#34;: &#34;unknown&#34;, &#34;branch&#34;: &#34;unknown&#34;, &#34;commit&#34;: &#34;unknown&#34;}
+2018-02-20T22:55:34.247042Z     info    Go runtime      {&#34;version&#34;: &#34;go1.10&#34;, &#34;maxprocs&#34;: 8}
+2018-02-20T22:55:34.247059Z     info    Loading configuration file      {&#34;path&#34;: &#34;/Users/user_name/.influxdb/influxdb.conf&#34;}
+</code></pre>
+
+<h3 id="logging-levels">Logging levels</h3>
+
+<p>The <code>level</code> option sets the log level to be emitted. Valid logging level settings are <code>error</code>, <code>warn</code>, <code>info</code>(default), and <code>debug</code>. Logs that are equal to, or above, the specified level will be emitted.</p>
+
+<h3 id="logo-suppression">Logo suppression</h3>
+
+<p>The <code>suppress-logo</code> option can be used to suppress the logo output that is printed when the program is started. The logo is always suppressed if <code>STDOUT</code> is not a TTY.</p>
+
+<h2 id="tracing">Tracing</h2>
+
+<p>Logging has been enhanced to provide tracing of important InfluxDB operations. Tracing is useful for error reporting and discovering performance bottlenecks.</p>
+
+<h3 id="logging-keys-used-in-tracing">Logging keys used in tracing</h3>
+
+<h4 id="tracing-identifier-key">Tracing identifier key</h4>
+
+<p>The <code>trace_id</code> key specifies a unique identifier for a specific instance of a trace. You can use this key to filter and correlate all related log entries for an operation.</p>
+
+<p>All operation traces include consistent starting and ending log entries, with the same message (<code>msg</code>) describing the operation (e.g., &ldquo;TSM compaction&rdquo;), but adding the appropriate <code>op_event</code> context (either <code>start</code> or <code>end</code>). For an example, see <a href="logs.html#finding-all-trace-log-entries-for-an-influxdb-operation">Finding all trace log entries for an InfluxDB operation</a>.</p>
+
+<p><strong>Example:</strong> <code>trace_id=06R0P94G000</code></p>
+
+<h4 id="operation-keys">Operation keys</h4>
+
+<p>The following operation keys identify an operation&rsquo;s name, the start and end timestamps, and the elapsed execution time.</p>
+
+<h5 id="op-name"><code>op_name</code></h5>
+
+<p>Unique identifier for an operation. You can filter on all operations of a specific name.</p>
+
+<p><strong>Example:</strong> <code>op_name=tsm1_compact_group</code></p>
+
+<h5 id="op-event"><code>op_event</code></h5>
+
+<p>Specifies the start and end of an event. The two possible values, <code>(start)</code> or <code>(end)</code>, are used to indicate when an operation started or ended. For example, you can grep by values in <code>op_name</code> AND <code>op_event</code> to find all starting operation log entries. For an example of this, see <a href="logs.html#finding-all-starting-operation-log-entries">Finding all starting log entries</a>.</p>
+
+<p><strong>Example:</strong> <code>op_event=start</code></p>
+
+<h5 id="op-elapsed"><code>op_elapsed</code></h5>
+
+<p>Amount of time the operation spent executing. Logged with the ending trace log entry. Time unit displayed depends on how much time has elapsed &ndash; if it was seconds, it will be suffixed with <code>s</code>. Valid time units are <code>ns</code>, <code>&micro;s</code>, <code>ms</code>, and <code>s</code>.</p>
+
+<p><strong>Example:</strong> <code>op_elapsed=0.352ms</code></p>
+
+<h4 id="log-identifier-context-key">Log identifier context key</h4>
+
+<p>The log identifier key (<code>log_id</code>) lets you easily identify <em>every</em> log entry for a single execution of an <code>influxd</code> process. There are other ways a log file could be split by a single execution, but the consistent <code>log_id</code> eases the searching of log aggregation services.</p>
+
+<p><strong>Example:</strong> <code>log_id=06QknqtW000</code></p>
+
+<h4 id="database-context-keys">Database context keys</h4>
+
+<p><code>db_instance</code>: Database name</p>
+
+<p><code>db_rp</code>: Retention policy name</p>
+
+<p><code>db_shard_id</code>: Shard identifier</p>
+
+<p><code>db_shard_group</code> Shard group identifier</p>
+
+<h3 id="tooling">Tooling</h3>
+
+<p>Here are a couple of popular tools available for processing and filtering log files output in <code>logfmt</code> or <code>json</code> formats.</p>
+
+<h4 id="hutils-https-blog-heroku-com-hutils-explore-your-structured-data-logs"><a href="https://blog.heroku.com/hutils-explore-your-structured-data-logs">hutils</a></h4>
+
+<p>The <a href="https://blog.heroku.com/hutils-explore-your-structured-data-logs">hutils</a>, provided by Heroku, is a collection of command line utilities for working with logs with <code>logfmt</code> encoding, including:</p>
+
+<ul>
+<li><code>lcut</code>: Extracts values from a <code>logfmt</code> trace based on a specified field name.</li>
+<li><code>lfmt</code>: Prettifies <code>logfmt</code> lines as they emerge from a stream, and highlights their key sections.</li>
+<li><code>ltap</code>: Accesses messages from log providers in a consistent way to allow easy parsing by other utilities that operate on <code>logfmt</code> traces.</li>
+<li><code>lviz</code>: Visualizes <code>logfmt</code> output by building a tree out of a dataset combining common sets of key-value pairs into shared parent nodes.</li>
+</ul>
+
+<h4 id="lnav-log-file-navigator-http-lnav-org"><a href="http://lnav.org">lnav (Log File Navigator)</a></h4>
+
+<p>The <a href="http://lnav.org">lnav (Log File Navigator)</a> is an advanced log file viewer useful for watching and analyzing your log files from a terminal. The lnav viewer provides a single log view, automatic log format detection, filtering, timeline view, pretty-print view, and querying logs using SQL.</p>
+
+<h3 id="operations">Operations</h3>
+
+<p>The following operations, listed by their operation name (<code>op_name</code>) are traced in InfluxDB internal logs and available for use without changes in logging level.</p>
+
+<h4 id="initial-opening-of-data-files">Initial opening of data files</h4>
+
+<p>The <code>tsdb_open</code> operation traces include all events related to the initial opening of the <code>tsdb_store</code>.</p>
+
+<h4 id="retention-policy-shard-deletions">Retention policy shard deletions</h4>
+
+<p>The <code>retention.delete_check</code> operation includes all shard deletions related to the retention policy.</p>
+
+<h4 id="tsm-snapshotting-in-memory-cache-to-disk">TSM snapshotting in-memory cache to disk</h4>
+
+<p>The <code>tsm1_cache_snapshot</code> operation represents the snapshotting of the TSM in-memory cache to disk.</p>
+
+<h4 id="tsm-compaction-strategies">TSM compaction strategies</h4>
+
+<p>The <code>tsm1_compact_group</code> operation includes all trace log entries related to TSM compaction strategies and displays the related TSM compaction strategy keys:</p>
+
+<ul>
+<li><code>tsm1_strategy</code>: <code>level</code> | <code>full</code></li>
+<li><code>tsm1_level</code>: <code>1</code> | <code>2</code> | <code>3</code></li>
+<li><code>tsm1_optimize</code>: <code>true</code> | <code>false</code></li>
+</ul>
+
+<h4 id="series-file-compactions">Series file compactions</h4>
+
+<p>The <code>series_partition_compaction</code> operation includes all trace log entries related to series file compactions.</p>
+
+<h4 id="continuous-query-execution-if-logging-enabled">Continuous query execution (if logging enabled)</h4>
+
+<p>The <code>continuous_querier_execute</code> operation includes all continuous query executions, if logging is enabled.</p>
+
+<h4 id="tsi-log-file-compaction">TSI log file compaction</h4>
+
+<p>The <code>tsi1_compact_log_file</code></p>
+
+<h4 id="tsi-level-compaction">TSI level compaction</h4>
+
+<p>The <code>tsi1_compact_to_level</code> operation includes all trace log entries for TSI level compactions.</p>
+
+<h3 id="tracing-examples">Tracing examples</h3>
+
+<h4 id="finding-all-trace-log-entries-for-an-influxdb-operation">Finding all trace log entries for an InfluxDB operation</h4>
+
+<p>In the example below, you can see the log entries for all trace operations related to a &ldquo;TSM compaction&rdquo; process. Note that the initial entry shows the message &ldquo;TSM compaction (start)&rdquo; and the final entry displays the message &ldquo;TSM compaction (end)&rdquo;. [Note: Log entries were grepped using the <code>trace_id</code> value and then the specified key values were displayed using <code>lcut</code> (an hutils tool).]</p>
+
+<pre><code>$ grep &#34;06QW92x0000&#34; influxd.log | lcut ts lvl msg strategy level
+2018-02-21T20:18:56.880065Z	info	TSM compaction (start)	full
+2018-02-21T20:18:56.880162Z	info	Beginning compaction	full
+2018-02-21T20:18:56.880185Z	info	Compacting file	full
+2018-02-21T20:18:56.880211Z	info	Compacting file	full
+2018-02-21T20:18:56.880226Z	info	Compacting file	full
+2018-02-21T20:18:56.880254Z	info	Compacting file	full
+2018-02-21T20:19:03.928640Z	info	Compacted file	full
+2018-02-21T20:19:03.928687Z	info	Finished compacting files	full
+2018-02-21T20:19:03.928707Z	info	TSM compaction (end)	full
+</code></pre>
+
+<h4 id="finding-all-starting-operation-log-entries">Finding all starting operation log entries</h4>
+
+<p>To find all starting operation log entries, you can grep by values in <code>op_name</code> AND <code>op_event</code>. In the following example, the grep returned 101 entries, so the result below only displays the first entry. In the example result entry, the timestamp, level, strategy, trace_id, op_name, and op_event values are included.</p>
+
+<pre><code>$ grep -F &#39;op_name=tsm1_compact_group&#39; influxd.log | grep -F &#39;op_event=start&#39;
+ts=2018-02-21T20:16:16.709953Z lvl=info msg=&#34;TSM compaction&#34; log_id=06QVNNCG000 engine=tsm1 level=1 strategy=level trace_id=06QV~HHG000 op_name=tsm1_compact_group op_event=start
+...
+</code></pre>
+
+<p>Using the <code>lcut</code> utility (in hutils), the following command uses the previous <code>grep</code> command, but adds an <code>lcut</code> command to only display the keys and their values for keys that are not identical in all of the entries. The following example includes 19 examples of unique log entries displaying selected keys: <code>ts</code>, <code>strategy</code>, <code>level</code>, and <code>trace_id</code>.</p>
+
+<pre><code>$ grep -F &#39;op_name=tsm1_compact_group&#39; influxd.log | grep -F &#39;op_event=start&#39; | lcut ts strategy level trace_id | sort -u
+2018-02-21T20:16:16.709953Z	level	1	06QV~HHG000
+2018-02-21T20:16:40.707452Z	level	1	06QW0k0l000
+2018-02-21T20:17:04.711519Z	level	1	06QW2Cml000
+2018-02-21T20:17:05.708227Z	level	2	06QW2Gg0000
+2018-02-21T20:17:29.707245Z	level	1	06QW3jQl000
+2018-02-21T20:17:53.711948Z	level	1	06QW5CBl000
+2018-02-21T20:18:17.711688Z	level	1	06QW6ewl000
+2018-02-21T20:18:56.880065Z	full		06QW92x0000
+2018-02-21T20:20:46.202368Z	level	3	06QWFizW000
+2018-02-21T20:21:25.292557Z	level	1	06QWI6g0000
+2018-02-21T20:21:49.294272Z	level	1	06QWJ_RW000
+2018-02-21T20:22:13.292489Z	level	1	06QWL2B0000
+2018-02-21T20:22:37.292431Z	level	1	06QWMVw0000
+2018-02-21T20:22:38.293320Z	level	2	06QWMZqG000
+2018-02-21T20:23:01.293690Z	level	1	06QWNygG000
+2018-02-21T20:23:25.292956Z	level	1	06QWPRR0000
+2018-02-21T20:24:33.291664Z	full		06QWTa2l000
+2018-02-21T21:12:08.017055Z	full		06QZBpKG000
+2018-02-21T21:12:08.478200Z	full		06QZBr7W000
+</code></pre>
+
+		</div>
+	</section>
+	
+<section class="article-section article-footer">
+	<div class="article-content">
+		<p><span class="icon logo" style="margin-right: 1em;"></span> This documentation is <a href="https://github.com/influxdata/docs.influxdata.com/blob/master/content/influxdb/v1.7/administration/logs.md">open source</a>. See a typo? Please, open an <a href="https://github.com/influxdata/docs.influxdata.com/issues/new">issue</a>.</p>
+		<br/>
+		<p><span class="icon bubbles2" style="margin-right: 1em;"></span><strong>Need help getting up and running?</strong> <a href="https://www.influxdata.com/products/services/" target="_blank">Get Support</a></p>
+	</div>
+</section>
+
+
+</article>
+<script>window.jQuery || document.write('<script src="../../../js/vendor/jquery-2.1.4.min.js"><\/script>')</script>
+
+<script src="../../../js/docs-interactions.js" type="text/javascript"></script>
+<script>
+  $("h2, h3, h4").each(function() {
+  var link = "<a href="https://docs.influxdata.com/influxdb/v1.7/administration/\&quot;#"" + $(this).attr("id") + "\"></a>"
+  $(this).wrapInner( link );
+  })
+</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript">
+  docsearch({
+    apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+    appId: 'WHM9UWMP6M',
+    indexName: 'influxdata',
+    inputSelector: '#algolia-search-input',
+    algoliaOptions: {
+      hitsPerPage: 15,
+      facets: [ "project", "version", "latest"],
+      facetFilters: [ "latest:true" ]
+    }
+  });
+</script>
+
+
+
+<div class="modal-overlay"></div>
+<div id="chronograf-url-modal" class="modal-content">
+    <label>Chronograf Data Explorer URL</label>
+    <form class="flex-form" id="save-chronograf-url">
+        <input type="text" id="chronograf-url" name="chronograf-url"/>
+        <button class="save-btn"><span>Save</span></button>
+    </form>
+    <a id="default-chronograf-url">Revert to Default</a>
+</div>
+
+</body></html>

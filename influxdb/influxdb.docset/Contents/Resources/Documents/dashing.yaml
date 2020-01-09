@@ -1,0 +1,18 @@
+name: "InfluxDB"
+package: "influxdb"
+index: "html/docs.influxdata.com/influxdb/v1.7/index.html"
+selectors:
+  h3:
+    type: "Function"
+    matchpath: "query_language/functions/.*\\.html"
+    regexp: ""
+    replacement: ""
+ignore: []
+icon32x32: "logo/logo.png"
+allowJS: false
+externalURL: ""
+
+# for Makefile
+url: "https://docs.influxdata.com/influxdb/v1.7/"
+domains: "docs.influxdata.com"
+logo: "html/docs.influxdata.com/img/favicon.ico"
