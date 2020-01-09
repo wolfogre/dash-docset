@@ -7,6 +7,7 @@ html:
 	rm -rf html
 	mkdir -p html
 	cd html && wget --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent --domains $(DOMAINS) $(URL)
+	cd html && date "+%FT%T%z" > created_at.txt
 
 logo:
 	rm -rf logo

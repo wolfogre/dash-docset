@@ -3,8 +3,8 @@ package: "influxdb"
 index: "html/docs.influxdata.com/influxdb/v1.7/index.html"
 selectors:
   h3:
-    type: "Function"
-    matchpath: "query_language/functions/.*\\.html"
+    type: "Query"
+    matchpath: "query_language/(functions|math_operators|spec)/.*\\.html"
     regexp: ""
     replacement: ""
 ignore: []

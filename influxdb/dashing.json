@@ -10,10 +10,10 @@
   "package": "influxdb",
   "selectors": {
     "h3": {
-      "matchpath": "query_language/functions/.*\\.html",
+      "matchpath": "query_language/(functions|math_operators|spec)/.*\\.html",
       "regexp": "",
       "replacement": "",
-      "type": "Function"
+      "type": "Query"
     }
   },
   "url": "https://docs.influxdata.com/influxdb/v1.7/"

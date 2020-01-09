@@ -813,7 +813,7 @@
 That is, parentheses take precedence to division and multiplication, which takes precedence to addition and subtraction.
 For example <code>5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)</code> and <code>5 + 2 * 3 - 2 = 5 + (2 * 3) - 2</code>.</p>
 
-<h3 id="content">Content</h3>
+<a class="dashingAutolink" name="autolink-59"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Content"></a><h3 id="content">Content</h3>
 
 <ul>
 <li><a href="index.html#mathematical-operators">Mathematical Operators</a>
@@ -834,19 +834,19 @@ For example <code>5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)</code> and <code>5 + 2 * 3 
 
 <h2 id="mathematical-operators">Mathematical Operators</h2>
 
-<h3 id="addition">Addition</h3>
+<a class="dashingAutolink" name="autolink-60"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Addition"></a><h3 id="addition">Addition</h3>
 
 <p>Perform addition with a constant.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="mi">5</span> <span class="k">FROM</span> <span class="s2">&#34;add&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;add&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">&gt;</span> <span class="mi">10</span></code></pre></div>
 <p>Perform addition on two fields.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;add&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;add&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="s2">&#34;B&#34;</span> <span class="o">&gt;=</span> <span class="mi">10</span></code></pre></div>
-<h3 id="subtraction">Subtraction</h3>
+<a class="dashingAutolink" name="autolink-61"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Subtraction"></a><h3 id="subtraction">Subtraction</h3>
 
 <p>Perform subtraction with a constant.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">1</span> <span class="o">-</span> <span class="s2">&#34;A&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;sub&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;sub&#34;</span> <span class="k">WHERE</span> <span class="mi">1</span> <span class="o">-</span> <span class="s2">&#34;A&#34;</span> <span class="o">&lt;=</span> <span class="mi">3</span></code></pre></div>
 <p>Perform subtraction with two fields.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">-</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;sub&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;sub&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">-</span> <span class="s2">&#34;B&#34;</span> <span class="o">&lt;=</span> <span class="mi">1</span></code></pre></div>
-<h3 id="multiplication">Multiplication</h3>
+<a class="dashingAutolink" name="autolink-62"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Multiplication"></a><h3 id="multiplication">Multiplication</h3>
 
 <p>Perform multiplication with a constant.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">10</span> <span class="o">*</span> <span class="s2">&#34;A&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">&gt;=</span> <span class="mi">20</span></code></pre></div>
@@ -854,7 +854,7 @@ For example <code>5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)</code> and <code>5 + 2 * 3 
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="s2">&#34;B&#34;</span> <span class="o">*</span> <span class="s2">&#34;C&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">*</span> <span class="s2">&#34;B&#34;</span> <span class="o">&lt;=</span> <span class="mi">80</span></code></pre></div>
 <p>Multiplication distributes across other operators.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">10</span> <span class="o">*</span> <span class="p">(</span><span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="s2">&#34;B&#34;</span> <span class="o">+</span> <span class="s2">&#34;C&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">10</span> <span class="o">*</span> <span class="p">(</span><span class="s2">&#34;A&#34;</span> <span class="o">-</span> <span class="s2">&#34;B&#34;</span> <span class="o">-</span> <span class="s2">&#34;C&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">10</span> <span class="o">*</span> <span class="p">(</span><span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="s2">&#34;B&#34;</span> <span class="o">-</span> <span class="s2">&#34;C&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span></code></pre></div>
-<h3 id="division">Division</h3>
+<a class="dashingAutolink" name="autolink-63"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Division"></a><h3 id="division">Division</h3>
 
 <p>Perform division with a constant.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">10</span> <span class="o">/</span> <span class="s2">&#34;A&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;div&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;div&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">&lt;=</span> <span class="mi">2</span></code></pre></div>
@@ -862,7 +862,7 @@ For example <code>5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)</code> and <code>5 + 2 * 3 
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">/</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;div&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;div&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;A&#34;</span> <span class="o">/</span> <span class="s2">&#34;B&#34;</span> <span class="o">&gt;=</span> <span class="mi">10</span></code></pre></div>
 <p>Division distributes across other operators.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="mi">10</span> <span class="o">/</span> <span class="p">(</span><span class="s2">&#34;A&#34;</span> <span class="o">+</span> <span class="s2">&#34;B&#34;</span> <span class="o">+</span> <span class="s2">&#34;C&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;mult&#34;</span></code></pre></div>
-<h3 id="modulo">Modulo</h3>
+<a class="dashingAutolink" name="autolink-64"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Modulo"></a><h3 id="modulo">Modulo</h3>
 
 <p>Perform modulo arithmetic with a constant.</p>
 
@@ -880,22 +880,22 @@ For example <code>5 / 2 + 3 * 2 =  (5 / 2) + (3 * 2)</code> and <code>5 + 2 * 3 
 <pre><code>SELECT &#34;A&#34; FROM &#34;modulo&#34; WHERE &#34;A&#34; % &#34;B&#34; = 0
 </code></pre>
 
-<h3 id="bitwise-and">Bitwise AND</h3>
+<a class="dashingAutolink" name="autolink-65"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Bitwise%20AND"></a><h3 id="bitwise-and">Bitwise AND</h3>
 
 <p>You can use this operator with any integers or Booleans, whether they are fields or constants.
 It does not work with float or string datatypes, and you cannot mix integers and Booleans.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">&amp;</span> <span class="mi">255</span> <span class="k">FROM</span> <span class="s2">&#34;bitfields&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">&amp;</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bitfields&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;data&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;bitfield&#34;</span> <span class="o">&amp;</span> <span class="mi">15</span> <span class="o">&gt;</span> <span class="mi">0</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">&amp;</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;booleans&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="p">(</span><span class="s2">&#34;A&#34;</span> <span class="o">^</span> <span class="k">true</span><span class="p">)</span> <span class="o">&amp;</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;booleans&#34;</span></code></pre></div>
-<h3 id="bitwise-or">Bitwise OR</h3>
+<a class="dashingAutolink" name="autolink-66"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Bitwise%20OR"></a><h3 id="bitwise-or">Bitwise OR</h3>
 
 <p>You can use this operator with any integers or Booleans, whether they are fields or constants.
 It does not work with float or string datatypes, and you cannot mix integers and Booleans.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">|</span> <span class="mi">5</span> <span class="k">FROM</span> <span class="s2">&#34;bitfields&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">|</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bitfields&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;data&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;bitfield&#34;</span> <span class="o">|</span> <span class="mi">12</span> <span class="o">=</span> <span class="mi">12</span></code></pre></div>
-<h3 id="bitwise-exclusive-or">Bitwise Exclusive-OR</h3>
+<a class="dashingAutolink" name="autolink-67"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Bitwise%20Exclusive-OR"></a><h3 id="bitwise-exclusive-or">Bitwise Exclusive-OR</h3>
 
 <p>You can use this operator with any integers or Booleans, whether they are fields or constants.
 It does not work with float or string datatypes, and you cannot mix integers and Booleans.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">^</span> <span class="mi">255</span> <span class="k">FROM</span> <span class="s2">&#34;bitfields&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="s2">&#34;A&#34;</span> <span class="o">^</span> <span class="s2">&#34;B&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;bitfields&#34;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="s2">&#34;data&#34;</span> <span class="k">WHERE</span> <span class="s2">&#34;bitfield&#34;</span> <span class="o">^</span> <span class="mi">6</span> <span class="o">&gt;</span> <span class="mi">0</span></code></pre></div>
-<h3 id="common-issues-with-mathematical-operators">Common Issues with Mathematical Operators</h3>
+<a class="dashingAutolink" name="autolink-68"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Common%20Issues%20with%20Mathematical%20Operators"></a><h3 id="common-issues-with-mathematical-operators">Common Issues with Mathematical Operators</h3>
 
 <h4 id="issue-1-mathematical-operators-with-wildcards-and-regular-expressions">Issue 1: Mathematical operators with wildcards and regular expressions</h4>
 
@@ -944,19 +944,19 @@ See <a href="../data_exploration/index.html#subqueries">Data Exploration</a> for
 
 <h2 id="unsupported-operators">Unsupported Operators</h2>
 
-<h3 id="inequalities">Inequalities</h3>
+<a class="dashingAutolink" name="autolink-69"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Inequalities"></a><h3 id="inequalities">Inequalities</h3>
 
 <p>Using any of <code>=</code>,<code>!=</code>,<code>&lt;</code>,<code>&gt;</code>,<code>&lt;=</code>,<code>&gt;=</code>,<code>&lt;&gt;</code> in the <code>SELECT</code> clause yields empty results for all types.
 See GitHub issue <a href="https://github.com/influxdb/influxdb/issues/3525">3525</a>.</p>
 
-<h3 id="logical-operators">Logical Operators</h3>
+<a class="dashingAutolink" name="autolink-70"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Logical%20Operators"></a><h3 id="logical-operators">Logical Operators</h3>
 
 <p>Using any of <code>!|</code>,<code>NAND</code>,<code>XOR</code>,<code>NOR</code> yield a parser error.</p>
 
 <p>Additionally using <code>AND</code>, <code>OR</code> in the <code>SELECT</code> clause of a query will not behave as mathematical operators and simply yield empty results, as they are tokens in InfluxQL.
 However, you can apply the bitwise operators <code>&amp;</code>, <code>|</code> and <code>^</code> to Boolean data.</p>
 
-<h3 id="bitwise-not">Bitwise Not</h3>
+<a class="dashingAutolink" name="autolink-71"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Bitwise%20Not"></a><h3 id="bitwise-not">Bitwise Not</h3>
 
 <p>There is no bitwise-not operator, because the results you expect depend on the width of your bitfield.
 InfluxQL does not know how wide your bitfield is, so cannot implement a suitable bitwise-not operator.</p>

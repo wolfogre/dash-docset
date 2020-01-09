@@ -864,7 +864,7 @@ Repetition  = &#34;{&#34; Expression &#34;}&#34; .
 
 <h2 id="query-representation">Query representation</h2>
 
-<h3 id="characters">Characters</h3>
+<a class="dashingAutolink" name="autolink-72"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Characters"></a><h3 id="characters">Characters</h3>
 
 <p>InfluxQL is Unicode text encoded in <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>.</p>
 
@@ -948,7 +948,7 @@ See <a href="../../troubleshooting/frequently-asked-questions/index.html#time">F
 
 <h2 id="literals">Literals</h2>
 
-<h3 id="integers">Integers</h3>
+<a class="dashingAutolink" name="autolink-73"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Integers"></a><h3 id="integers">Integers</h3>
 
 <p>InfluxQL supports decimal integer literals.
 Hexadecimal and octal literals are not currently supported.</p>
@@ -956,7 +956,7 @@ Hexadecimal and octal literals are not currently supported.</p>
 <pre><code>int_lit             = ( &#34;1&#34; &hellip; &#34;9&#34; ) { digit } .
 </code></pre>
 
-<h3 id="floats">Floats</h3>
+<a class="dashingAutolink" name="autolink-74"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Floats"></a><h3 id="floats">Floats</h3>
 
 <p>InfluxQL supports floating-point literals.
 Exponents are not currently supported.</p>
@@ -964,7 +964,7 @@ Exponents are not currently supported.</p>
 <pre><code>float_lit           = int_lit &#34;.&#34; int_lit .
 </code></pre>
 
-<h3 id="strings">Strings</h3>
+<a class="dashingAutolink" name="autolink-75"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Strings"></a><h3 id="strings">Strings</h3>
 
 <p>String literals must be surrounded by single quotes.
 Strings may contain <code>&#39;</code> characters as long as they are escaped (i.e., <code>\&#39;</code>).</p>
@@ -972,7 +972,7 @@ Strings may contain <code>&#39;</code> characters as long as they are escaped (i
 <pre><code>string_lit          = `&#39;` { unicode_char } `&#39;` .
 </code></pre>
 
-<h3 id="durations">Durations</h3>
+<a class="dashingAutolink" name="autolink-76"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Durations"></a><h3 id="durations">Durations</h3>
 
 <p>Duration literals specify a length of time.
 An integer literal followed immediately (with no spaces) by a duration unit listed below is interpreted as a duration literal.
@@ -1035,7 +1035,7 @@ Durations can be specified with mixed units.</p>
 duration_unit       = &#34;ns&#34; | &#34;u&#34; | &#34;&micro;&#34; | &#34;ms&#34; | &#34;s&#34; | &#34;m&#34; | &#34;h&#34; | &#34;d&#34; | &#34;w&#34; .
 </code></pre>
 
-<h3 id="dates-times">Dates &amp; Times</h3>
+<a class="dashingAutolink" name="autolink-77"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Dates%20%26%20Times"></a><h3 id="dates-times">Dates &amp; Times</h3>
 
 <p>The date and time literal format is not specified in EBNF like the rest of this document.
 It is specified using Go&rsquo;s date / time parsing format, which is a reference date written in the format required by InfluxQL.
@@ -1046,12 +1046,12 @@ The reference date time is:</p>
 <pre><code>time_lit            = &#34;2006-01-02 15:04:05.999999&#34; | &#34;2006-01-02&#34; .
 </code></pre>
 
-<h3 id="booleans">Booleans</h3>
+<a class="dashingAutolink" name="autolink-78"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Booleans"></a><h3 id="booleans">Booleans</h3>
 
 <pre><code>bool_lit            = TRUE | FALSE .
 </code></pre>
 
-<h3 id="regular-expressions">Regular Expressions</h3>
+<a class="dashingAutolink" name="autolink-79"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Regular%20Expressions"></a><h3 id="regular-expressions">Regular Expressions</h3>
 
 <pre><code>regex_lit           = &#34;/&#34; { unicode_char } &#34;/&#34; .
 </code></pre>
@@ -1132,7 +1132,7 @@ statement           = alter_retention_policy_stmt |
 
 <h2 id="statements">Statements</h2>
 
-<h3 id="alter-retention-policy">ALTER RETENTION POLICY</h3>
+<a class="dashingAutolink" name="autolink-80"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ALTER%20RETENTION%20POLICY"></a><h3 id="alter-retention-policy">ALTER RETENTION POLICY</h3>
 
 <pre><code>alter_retention_policy_stmt  = &#34;ALTER RETENTION POLICY&#34; policy_name on_clause
                                retention_policy_option
@@ -1148,7 +1148,7 @@ statement           = alter_retention_policy_stmt |
 <span class="c1">-- Change duration and replication factor.
 </span><span class="c1">-- REPLICATION (replication factor) not valid for OSS instances.
 </span><span class="c1"></span><span class="k">ALTER</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;policy1&#34;</span> <span class="k">ON</span> <span class="s2">&#34;somedb&#34;</span> <span class="n">DURATION</span> <span class="mi">1</span><span class="n">h</span> <span class="n">REPLICATION</span> <span class="mi">4</span></code></pre></div>
-<h3 id="create-continuous-query">CREATE CONTINUOUS QUERY</h3>
+<a class="dashingAutolink" name="autolink-81"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CREATE%20CONTINUOUS%20QUERY"></a><h3 id="create-continuous-query">CREATE CONTINUOUS QUERY</h3>
 
 <pre><code>create_continuous_query_stmt = &#34;CREATE CONTINUOUS QUERY&#34; query_name on_clause
                                [ &#34;RESAMPLE&#34; resample_opts ]
@@ -1193,7 +1193,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
   <span class="k">FROM</span> <span class="s2">&#34;cpu&#34;</span>
   <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">m</span><span class="p">)</span>
 <span class="k">END</span><span class="p">;</span></code></pre></div>
-<h3 id="create-database">CREATE DATABASE</h3>
+<a class="dashingAutolink" name="autolink-82"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CREATE%20DATABASE"></a><h3 id="create-database">CREATE DATABASE</h3>
 
 <pre><code>create_database_stmt = &#34;CREATE DATABASE&#34; db_name
                        [ WITH
@@ -1220,7 +1220,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 
 <span class="c1">-- Create a database called mydb with a new DEFAULT retention policy and specify the name of that retention policy
 </span><span class="c1"></span><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="s2">&#34;mydb&#34;</span> <span class="k">WITH</span> <span class="n">NAME</span> <span class="s2">&#34;myrp&#34;</span></code></pre></div>
-<h3 id="create-retention-policy">CREATE RETENTION POLICY</h3>
+<a class="dashingAutolink" name="autolink-83"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CREATE%20RETENTION%20POLICY"></a><h3 id="create-retention-policy">CREATE RETENTION POLICY</h3>
 
 <pre><code>create_retention_policy_stmt = &#34;CREATE RETENTION POLICY&#34; policy_name on_clause
                                retention_policy_duration
@@ -1245,7 +1245,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 
 <span class="c1">-- Create a retention policy and specify the shard group duration.
 </span><span class="c1"></span><span class="k">CREATE</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;10m.events&#34;</span> <span class="k">ON</span> <span class="s2">&#34;somedb&#34;</span> <span class="n">DURATION</span> <span class="mi">60</span><span class="n">m</span> <span class="n">REPLICATION</span> <span class="mi">2</span> <span class="n">SHARD</span> <span class="n">DURATION</span> <span class="mi">30</span><span class="n">m</span></code></pre></div>
-<h3 id="create-subscription">CREATE SUBSCRIPTION</h3>
+<a class="dashingAutolink" name="autolink-84"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CREATE%20SUBSCRIPTION"></a><h3 id="create-subscription">CREATE SUBSCRIPTION</h3>
 
 <p>Subscriptions tell InfluxDB to send all the data it receives to <a href="https://docs.influxdata.com/kapacitor/latest/introduction/">Kapacitor</a>.</p>
 
@@ -1258,7 +1258,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 
 <span class="c1">-- Create a SUBSCRIPTION on database &#39;mydb&#39; and retention policy &#39;autogen&#39; that round robins the data to &#39;h1.example.com:9090&#39; and &#39;h2.example.com:9090&#39;.
 </span><span class="c1"></span><span class="k">CREATE</span> <span class="n">SUBSCRIPTION</span> <span class="s2">&#34;sub0&#34;</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span><span class="p">.</span><span class="s2">&#34;autogen&#34;</span> <span class="n">DESTINATIONS</span> <span class="k">ANY</span> <span class="s1">&#39;udp://h1.example.com:9090&#39;</span><span class="p">,</span> <span class="s1">&#39;udp://h2.example.com:9090&#39;</span></code></pre></div>
-<h3 id="create-user">CREATE USER</h3>
+<a class="dashingAutolink" name="autolink-85"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CREATE%20USER"></a><h3 id="create-user">CREATE USER</h3>
 
 <pre><code>create_user_stmt = &#34;CREATE USER&#34; user_name &#34;WITH PASSWORD&#34; password
                    [ &#34;WITH ALL PRIVILEGES&#34; ] .
@@ -1275,7 +1275,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 <p><strong>Note:</strong> The password string must be wrapped in single quotes.</p>
 </blockquote>
 
-<h3 id="delete">DELETE</h3>
+<a class="dashingAutolink" name="autolink-86"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DELETE"></a><h3 id="delete">DELETE</h3>
 
 <pre><code>delete_stmt = &#34;DELETE&#34; ( from_clause | where_clause | from_clause where_clause ) .
 </code></pre>
@@ -1284,21 +1284,21 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DELETE</span> <span class="k">FROM</span> <span class="s2">&#34;cpu&#34;</span>
 <span class="k">DELETE</span> <span class="k">FROM</span> <span class="s2">&#34;cpu&#34;</span> <span class="k">WHERE</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;2000-01-01T00:00:00Z&#39;</span>
 <span class="k">DELETE</span> <span class="k">WHERE</span> <span class="n">time</span> <span class="o">&lt;</span> <span class="s1">&#39;2000-01-01T00:00:00Z&#39;</span></code></pre></div>
-<h3 id="drop-continuous-query">DROP CONTINUOUS QUERY</h3>
+<a class="dashingAutolink" name="autolink-87"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20CONTINUOUS%20QUERY"></a><h3 id="drop-continuous-query">DROP CONTINUOUS QUERY</h3>
 
 <pre><code>drop_continuous_query_stmt = &#34;DROP CONTINUOUS QUERY&#34; query_name on_clause .
 </code></pre>
 
 <h4 id="example">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">CONTINUOUS</span> <span class="n">QUERY</span> <span class="s2">&#34;myquery&#34;</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span></code></pre></div>
-<h3 id="drop-database">DROP DATABASE</h3>
+<a class="dashingAutolink" name="autolink-88"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20DATABASE"></a><h3 id="drop-database">DROP DATABASE</h3>
 
 <pre><code>drop_database_stmt = &#34;DROP DATABASE&#34; db_name .
 </code></pre>
 
 <h4 id="example-1">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">DATABASE</span> <span class="s2">&#34;mydb&#34;</span></code></pre></div>
-<h3 id="drop-measurement">DROP MEASUREMENT</h3>
+<a class="dashingAutolink" name="autolink-89"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20MEASUREMENT"></a><h3 id="drop-measurement">DROP MEASUREMENT</h3>
 
 <pre><code>drop_measurement_stmt = &#34;DROP MEASUREMENT&#34; measurement .
 </code></pre>
@@ -1306,7 +1306,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 <h4 id="examples-8">Examples</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- drop the cpu measurement
 </span><span class="c1"></span><span class="k">DROP</span> <span class="n">MEASUREMENT</span> <span class="s2">&#34;cpu&#34;</span></code></pre></div>
-<h3 id="drop-retention-policy">DROP RETENTION POLICY</h3>
+<a class="dashingAutolink" name="autolink-90"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20RETENTION%20POLICY"></a><h3 id="drop-retention-policy">DROP RETENTION POLICY</h3>
 
 <pre><code>drop_retention_policy_stmt = &#34;DROP RETENTION POLICY&#34; policy_name on_clause .
 </code></pre>
@@ -1314,7 +1314,7 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 <h4 id="example-2">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- drop the retention policy named 1h.cpu from mydb
 </span><span class="c1"></span><span class="k">DROP</span> <span class="n">RETENTION</span> <span class="n">POLICY</span> <span class="s2">&#34;1h.cpu&#34;</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span></code></pre></div>
-<h3 id="drop-series">DROP SERIES</h3>
+<a class="dashingAutolink" name="autolink-91"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20SERIES"></a><h3 id="drop-series">DROP SERIES</h3>
 
 <pre><code>drop_series_stmt = &#34;DROP SERIES&#34; ( from_clause | where_clause | from_clause where_clause ) .
 </code></pre>
@@ -1325,28 +1325,28 @@ for_stmt                     = &#34;FOR&#34; duration_lit
 
 <h4 id="example-3">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">SERIES</span> <span class="k">FROM</span> <span class="s2">&#34;telegraf&#34;</span><span class="p">.</span><span class="s2">&#34;autogen&#34;</span><span class="p">.</span><span class="s2">&#34;cpu&#34;</span> <span class="k">WHERE</span> <span class="n">cpu</span> <span class="o">=</span> <span class="s1">&#39;cpu8&#39;</span></code></pre></div>
-<h3 id="drop-shard">DROP SHARD</h3>
+<a class="dashingAutolink" name="autolink-92"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20SHARD"></a><h3 id="drop-shard">DROP SHARD</h3>
 
 <pre><code>drop_shard_stmt = &#34;DROP SHARD&#34; ( shard_id ) .
 </code></pre>
 
 <h4 id="example-4">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">SHARD</span> <span class="mi">1</span></code></pre></div>
-<h3 id="drop-subscription">DROP SUBSCRIPTION</h3>
+<a class="dashingAutolink" name="autolink-93"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20SUBSCRIPTION"></a><h3 id="drop-subscription">DROP SUBSCRIPTION</h3>
 
 <pre><code>drop_subscription_stmt = &#34;DROP SUBSCRIPTION&#34; subscription_name &#34;ON&#34; db_name &#34;.&#34; retention_policy .
 </code></pre>
 
 <h4 id="example-5">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="n">SUBSCRIPTION</span> <span class="s2">&#34;sub0&#34;</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span><span class="p">.</span><span class="s2">&#34;autogen&#34;</span></code></pre></div>
-<h3 id="drop-user">DROP USER</h3>
+<a class="dashingAutolink" name="autolink-94"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DROP%20USER"></a><h3 id="drop-user">DROP USER</h3>
 
 <pre><code>drop_user_stmt = &#34;DROP USER&#34; user_name .
 </code></pre>
 
 <h4 id="example-6">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">DROP</span> <span class="k">USER</span> <span class="s2">&#34;jdoe&#34;</span></code></pre></div>
-<h3 id="explain">EXPLAIN</h3>
+<a class="dashingAutolink" name="autolink-95"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/EXPLAIN"></a><h3 id="explain">EXPLAIN</h3>
 
 <p>Parses and plans the query, and then prints a summary of estimated costs.</p>
 
@@ -1380,7 +1380,7 @@ Since InfluxQL does not support joins, the cost of a InfluxQL query is typically
 <span class="nb">NUMBER</span> <span class="k">OF</span> <span class="n">FILES</span><span class="p">:</span> <span class="mi">1</span>
 <span class="nb">NUMBER</span> <span class="k">OF</span> <span class="n">BLOCKS</span><span class="p">:</span> <span class="mi">1</span>
 <span class="k">SIZE</span> <span class="k">OF</span> <span class="n">BLOCKS</span><span class="p">:</span> <span class="mi">931</span></code></pre></div>
-<h3 id="explain-analyze">EXPLAIN ANALYZE</h3>
+<a class="dashingAutolink" name="autolink-96"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/EXPLAIN%20ANALYZE"></a><h3 id="explain-analyze">EXPLAIN ANALYZE</h3>
 
 <p>Executes the query and counts the actual costs during runtime.</p>
 
@@ -1438,7 +1438,7 @@ Since InfluxQL does not support joins, the cost of a InfluxQL query is typically
 <span class="err">├──</span> <span class="n">boolean_blocks_decoded</span><span class="p">:</span> <span class="mi">0</span>
 <span class="err">├──</span> <span class="n">boolean_blocks_size_bytes</span><span class="p">:</span> <span class="mi">0</span>
 <span class="err">└──</span> <span class="n">planning_time</span><span class="p">:</span> <span class="mi">76</span><span class="p">.</span><span class="mi">192</span><span class="err">&micro;</span><span class="n">s</span></code></pre></div>
-<h3 id="grant">GRANT</h3>
+<a class="dashingAutolink" name="autolink-97"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/GRANT"></a><h3 id="grant">GRANT</h3>
 
 <blockquote>
 <p><strong>NOTE:</strong> Users can be granted privileges on databases that do not exist.</p>
@@ -1453,7 +1453,7 @@ Since InfluxQL does not support joins, the cost of a InfluxQL query is typically
 
 <span class="c1">-- grant read access to a database
 </span><span class="c1"></span><span class="k">GRANT</span> <span class="k">READ</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span> <span class="k">TO</span> <span class="s2">&#34;jdoe&#34;</span></code></pre></div>
-<h3 id="kill-query">KILL QUERY</h3>
+<a class="dashingAutolink" name="autolink-98"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/KILL%20QUERY"></a><h3 id="kill-query">KILL QUERY</h3>
 
 <p>Stop currently-running query.</p>
 
@@ -1471,7 +1471,7 @@ available in the <code>SHOW QUERIES</code> output.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- kill query with qid of 36 on the local host
 </span><span class="c1"></span><span class="n">KILL</span> <span class="n">QUERY</span> <span class="mi">36</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- kill query on InfluxDB Enterprise cluster
 </span><span class="c1"></span><span class="n">KILL</span> <span class="n">QUERY</span> <span class="mi">53</span> <span class="k">ON</span> <span class="s2">&#34;myhost:8088&#34;</span></code></pre></div>
-<h3 id="revoke">REVOKE</h3>
+<a class="dashingAutolink" name="autolink-99"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/REVOKE"></a><h3 id="revoke">REVOKE</h3>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">revoke_stmt</span> <span class="o">=</span> <span class="s2">&#34;REVOKE&#34;</span> <span class="n">privilege</span> <span class="p">[</span> <span class="n">on_clause</span> <span class="p">]</span> <span class="s2">&#34;FROM&#34;</span> <span class="n">user_name</span> <span class="p">.</span></code></pre></div>
 <h4 id="examples-11">Examples</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- revoke admin privileges from jdoe
@@ -1479,7 +1479,7 @@ available in the <code>SHOW QUERIES</code> output.</p>
 
 <span class="c1">-- revoke read privileges from jdoe on mydb
 </span><span class="c1"></span><span class="k">REVOKE</span> <span class="k">READ</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span> <span class="k">FROM</span> <span class="s2">&#34;jdoe&#34;</span></code></pre></div>
-<h3 id="select">SELECT</h3>
+<a class="dashingAutolink" name="autolink-100"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SELECT"></a><h3 id="select">SELECT</h3>
 
 <pre><code>select_stmt = &#34;SELECT&#34; fields from_clause [ into_clause ] [ where_clause ]
               [ group_by_clause ] [ order_by_clause ] [ limit_clause ]
@@ -1492,7 +1492,7 @@ available in the <code>SHOW QUERIES</code> output.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">)</span> <span class="k">INTO</span> <span class="s2">&#34;cpu_1h&#34;</span><span class="p">.:</span><span class="n">MEASUREMENT</span> <span class="k">FROM</span> <span class="o">/</span><span class="n">cpu</span><span class="p">.</span><span class="o">*/</span></code></pre></div>
 <p>Select from measurements grouped by the day with a timezone</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="n">mean</span><span class="p">(</span><span class="s2">&#34;value&#34;</span><span class="p">)</span> <span class="k">FROM</span> <span class="s2">&#34;cpu&#34;</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">region</span><span class="p">,</span> <span class="n">time</span><span class="p">(</span><span class="mi">1</span><span class="n">d</span><span class="p">)</span> <span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="n">tz</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span></code></pre></div>
-<h3 id="show-cardinality">SHOW CARDINALITY</h3>
+<a class="dashingAutolink" name="autolink-101"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20CARDINALITY"></a><h3 id="show-cardinality">SHOW CARDINALITY</h3>
 
 <p>Refers to the group of commands used to estimate or count exactly the cardinality of measurements, series, tag keys, tag key values, and field keys.</p>
 
@@ -1510,7 +1510,7 @@ available in the <code>SHOW QUERIES</code> output.</p>
 <li><a href="index.html#show-tag-values-cardinality">SHOW TAG VALUES CARDINALITY</a></li>
 </ul>
 
-<h3 id="show-continuous-queries">SHOW CONTINUOUS QUERIES</h3>
+<a class="dashingAutolink" name="autolink-102"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20CONTINUOUS%20QUERIES"></a><h3 id="show-continuous-queries">SHOW CONTINUOUS QUERIES</h3>
 
 <pre><code>show_continuous_queries_stmt = &#34;SHOW CONTINUOUS QUERIES&#34; .
 </code></pre>
@@ -1518,7 +1518,7 @@ available in the <code>SHOW QUERIES</code> output.</p>
 <h4 id="example-9">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- show all continuous queries
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">CONTINUOUS</span> <span class="n">QUERIES</span></code></pre></div>
-<h3 id="show-databases">SHOW DATABASES</h3>
+<a class="dashingAutolink" name="autolink-103"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20DATABASES"></a><h3 id="show-databases">SHOW DATABASES</h3>
 
 <pre><code>show_databases_stmt = &#34;SHOW DATABASES&#34; .
 </code></pre>
@@ -1526,13 +1526,13 @@ available in the <code>SHOW QUERIES</code> output.</p>
 <h4 id="example-10">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- show all databases
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">DATABASES</span></code></pre></div>
-<h3 id="show-diagnostics">SHOW DIAGNOSTICS</h3>
+<a class="dashingAutolink" name="autolink-104"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20DIAGNOSTICS"></a><h3 id="show-diagnostics">SHOW DIAGNOSTICS</h3>
 
 <p>Displays node information, such as build information, uptime, hostname, server configuration, memory usage, and Go runtime diagnostics.</p>
 
 <p>For more information on using the <code>SHOW DIAGNOSTICS</code> command, see <a href="https://docs.influxdata.com/platform/monitoring/influxdata-platform/tools/show-diagnostics/">Using the SHOW DIAGNOSTICS command for monitoring InfluxDB</a>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">show_diagnostics_stmt</span> <span class="o">=</span> <span class="s2">&#34;SHOW DIAGNOSTICS&#34;</span></code></pre></div>
-<h3 id="show-field-key-cardinality">SHOW FIELD KEY CARDINALITY</h3>
+<a class="dashingAutolink" name="autolink-105"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20FIELD%20KEY%20CARDINALITY"></a><h3 id="show-field-key-cardinality">SHOW FIELD KEY CARDINALITY</h3>
 
 <p>Estimates or counts exactly the cardinality of the field key set for the current database unless a database is specified using the <code>ON &lt;database&gt;</code> option.</p>
 
@@ -1549,7 +1549,7 @@ Filtering by <code>time</code> is only supported when Time Series Index (TSI) is
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">FIELD</span> <span class="k">KEY</span> <span class="k">CARDINALITY</span>
 <span class="c1">-- show exact cardinality on field key set of specified database
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">FIELD</span> <span class="k">KEY</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span> <span class="k">ON</span> <span class="n">mydb</span></code></pre></div>
-<h3 id="show-field-keys">SHOW FIELD KEYS</h3>
+<a class="dashingAutolink" name="autolink-106"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20FIELD%20KEYS"></a><h3 id="show-field-keys">SHOW FIELD KEYS</h3>
 
 <pre><code>show_field_keys_stmt = &#34;SHOW FIELD KEYS&#34; [on_clause] [ from_clause ] .
 </code></pre>
@@ -1560,7 +1560,7 @@ Filtering by <code>time</code> is only supported when Time Series Index (TSI) is
 
 <span class="c1">-- show field keys and field value data types from specified measurement
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">FIELD</span> <span class="n">KEYS</span> <span class="k">FROM</span> <span class="s2">&#34;cpu&#34;</span></code></pre></div>
-<h3 id="show-grants">SHOW GRANTS</h3>
+<a class="dashingAutolink" name="autolink-107"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20GRANTS"></a><h3 id="show-grants">SHOW GRANTS</h3>
 
 <pre><code>show_grants_stmt = &#34;SHOW GRANTS FOR&#34; user_name .
 </code></pre>
@@ -1585,7 +1585,7 @@ Filtering by <code>time</code> is only supported when TSI (Time Series Index) is
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">MEASUREMENT</span> <span class="k">CARDINALITY</span>
 <span class="c1">-- show exact cardinality of measurement set on specified database
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">MEASUREMENT</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span> <span class="k">ON</span> <span class="n">mydb</span></code></pre></div>
-<h3 id="show-measurements">SHOW MEASUREMENTS</h3>
+<a class="dashingAutolink" name="autolink-108"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20MEASUREMENTS"></a><h3 id="show-measurements">SHOW MEASUREMENTS</h3>
 
 <pre><code>show_measurements_stmt = &#34;SHOW MEASUREMENTS&#34; [on_clause] [ with_measurement_clause ] [ where_clause ] [ limit_clause ] [ offset_clause ] .
 </code></pre>
@@ -1599,7 +1599,7 @@ Filtering by <code>time</code> is only supported when TSI (Time Series Index) is
 
 <span class="c1">-- show measurements that start with &#39;h2o&#39;
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">MEASUREMENTS</span> <span class="k">WITH</span> <span class="n">MEASUREMENT</span> <span class="o">=~</span> <span class="o">/</span><span class="n">h2o</span><span class="p">.</span><span class="o">*/</span></code></pre></div>
-<h3 id="show-queries">SHOW QUERIES</h3>
+<a class="dashingAutolink" name="autolink-109"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20QUERIES"></a><h3 id="show-queries">SHOW QUERIES</h3>
 
 <pre><code>show_queries_stmt = &#34;SHOW QUERIES&#34; .
 </code></pre>
@@ -1608,7 +1608,7 @@ Filtering by <code>time</code> is only supported when TSI (Time Series Index) is
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- show all currently-running queries
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">QUERIES</span>
 <span class="c1">--</span></code></pre></div>
-<h3 id="show-retention-policies">SHOW RETENTION POLICIES</h3>
+<a class="dashingAutolink" name="autolink-110"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20RETENTION%20POLICIES"></a><h3 id="show-retention-policies">SHOW RETENTION POLICIES</h3>
 
 <pre><code>show_retention_policies_stmt = &#34;SHOW RETENTION POLICIES&#34; [on_clause] .
 </code></pre>
@@ -1616,14 +1616,14 @@ Filtering by <code>time</code> is only supported when TSI (Time Series Index) is
 <h4 id="example-14">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="c1">-- show all retention policies on a database
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">RETENTION</span> <span class="n">POLICIES</span> <span class="k">ON</span> <span class="s2">&#34;mydb&#34;</span></code></pre></div>
-<h3 id="show-series">SHOW SERIES</h3>
+<a class="dashingAutolink" name="autolink-111"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20SERIES"></a><h3 id="show-series">SHOW SERIES</h3>
 
 <pre><code>show_series_stmt = &#34;SHOW SERIES&#34; [on_clause] [ from_clause ] [ where_clause ] [ limit_clause ] [ offset_clause ] .
 </code></pre>
 
 <h4 id="example-15">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">SERIES</span> <span class="k">FROM</span> <span class="s2">&#34;telegraf&#34;</span><span class="p">.</span><span class="s2">&#34;autogen&#34;</span><span class="p">.</span><span class="s2">&#34;cpu&#34;</span> <span class="k">WHERE</span> <span class="n">cpu</span> <span class="o">=</span> <span class="s1">&#39;cpu8&#39;</span></code></pre></div>
-<h3 id="show-series-cardinality">SHOW SERIES CARDINALITY</h3>
+<a class="dashingAutolink" name="autolink-112"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20SERIES%20CARDINALITY"></a><h3 id="show-series-cardinality">SHOW SERIES CARDINALITY</h3>
 
 <p>Estimates or counts exactly the cardinality of the series for the current database unless a database is specified using the <code>ON &lt;database&gt;</code> option.</p>
 
@@ -1654,21 +1654,21 @@ show_series_exact_cardinality_stmt = &#34;SHOW SERIES EXACT CARDINALITY&#34; [ o
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">SERIES</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span>
 <span class="c1">-- show series cardinality of the series on specified database
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">SERIES</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span> <span class="k">ON</span> <span class="n">mydb</span></code></pre></div>
-<h3 id="show-shard-groups">SHOW SHARD GROUPS</h3>
+<a class="dashingAutolink" name="autolink-113"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20SHARD%20GROUPS"></a><h3 id="show-shard-groups">SHOW SHARD GROUPS</h3>
 
 <pre><code>show_shard_groups_stmt = &#34;SHOW SHARD GROUPS&#34; .
 </code></pre>
 
 <h4 id="example-16">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">SHARD</span> <span class="n">GROUPS</span></code></pre></div>
-<h3 id="show-shards">SHOW SHARDS</h3>
+<a class="dashingAutolink" name="autolink-114"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20SHARDS"></a><h3 id="show-shards">SHOW SHARDS</h3>
 
 <pre><code>show_shards_stmt = &#34;SHOW SHARDS&#34; .
 </code></pre>
 
 <h4 id="example-17">Example</h4>
 <div class="highlight"><pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span> <span class="n">SHARDS</span></code></pre></div>
-<h3 id="show-stats">SHOW STATS</h3>
+<a class="dashingAutolink" name="autolink-115"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20STATS"></a><h3 id="show-stats">SHOW STATS</h3>
 
 <p>Returns detailed statistics on available components of an InfluxDB node and available (enabled) components.</p>
 
@@ -1710,7 +1710,7 @@ show_series_exact_cardinality_stmt = &#34;SHOW SERIES EXACT CARDINALITY&#34; [ o
 <span class="n">batches_tx</span>      <span class="n">bytes_rx</span>        <span class="n">connections_active</span>      <span class="n">connections_handled</span>     <span class="n">points_rx</span>       <span class="n">points_tx</span>
 <span class="c1">----------      --------        ------------------      -------------------     ---------       ---------
 </span><span class="c1"></span><span class="mi">159</span>             <span class="mi">3999750</span>         <span class="mi">0</span>                       <span class="mi">1</span>                       <span class="mi">158110</span>          <span class="mi">158110</span></code></pre></div>
-<h3 id="show-subscriptions">SHOW SUBSCRIPTIONS</h3>
+<a class="dashingAutolink" name="autolink-116"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20SUBSCRIPTIONS"></a><h3 id="show-subscriptions">SHOW SUBSCRIPTIONS</h3>
 
 <pre><code>show_subscriptions_stmt = &#34;SHOW SUBSCRIPTIONS&#34; .
 </code></pre>
@@ -1737,7 +1737,7 @@ show_tag_key_exact_cardinality_stmt = &#34;SHOW TAG KEY EXACT CARDINALITY&#34; [
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">KEY</span> <span class="k">CARDINALITY</span>
 <span class="c1">-- show exact tag key cardinality
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">KEY</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span></code></pre></div>
-<h3 id="show-tag-keys">SHOW TAG KEYS</h3>
+<a class="dashingAutolink" name="autolink-117"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20TAG%20KEYS"></a><h3 id="show-tag-keys">SHOW TAG KEYS</h3>
 
 <pre><code>show_tag_keys_stmt = &#34;SHOW TAG KEYS&#34; [on_clause] [ from_clause ] [ where_clause ]
                      [ limit_clause ] [ offset_clause ] .
@@ -1755,7 +1755,7 @@ show_tag_key_exact_cardinality_stmt = &#34;SHOW TAG KEY EXACT CARDINALITY&#34; [
 
 <span class="c1">-- show all tag keys where the host key = &#39;serverA&#39;
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">TAG</span> <span class="n">KEYS</span> <span class="k">WHERE</span> <span class="s2">&#34;host&#34;</span> <span class="o">=</span> <span class="s1">&#39;serverA&#39;</span></code></pre></div>
-<h3 id="show-tag-values">SHOW TAG VALUES</h3>
+<a class="dashingAutolink" name="autolink-118"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20TAG%20VALUES"></a><h3 id="show-tag-values">SHOW TAG VALUES</h3>
 
 <pre><code>show_tag_values_stmt = &#34;SHOW TAG VALUES&#34; [on_clause] [ from_clause ] with_tag_clause [ where_clause ]
                        [ limit_clause ] [ offset_clause ] .
@@ -1797,7 +1797,7 @@ show_tag_values_exact_cardinality_stmt = &#34;SHOW TAG VALUES EXACT CARDINALITY&
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">VALUES</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span> <span class="k">WITH</span> <span class="k">KEY</span> <span class="o">=</span> <span class="s2">&#34;myTagKey&#34;</span>
 <span class="c1">-- show exact tag key values cardinality for a specified tag key
 </span><span class="c1"></span><span class="k">SHOW</span> <span class="n">TAG</span> <span class="k">VALUES</span> <span class="n">EXACT</span> <span class="k">CARDINALITY</span> <span class="k">WITH</span> <span class="k">KEY</span> <span class="o">=</span> <span class="s2">&#34;myTagKey&#34;</span></code></pre></div>
-<h3 id="show-users">SHOW USERS</h3>
+<a class="dashingAutolink" name="autolink-119"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SHOW%20USERS"></a><h3 id="show-users">SHOW USERS</h3>
 
 <pre><code>show_users_stmt = &#34;SHOW USERS&#34; .
 </code></pre>
@@ -1922,7 +1922,7 @@ user_name        = identifier .
 var_ref          = measurement .
 </code></pre>
 
-<h3 id="comments">Comments</h3>
+<a class="dashingAutolink" name="autolink-120"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Comments"></a><h3 id="comments">Comments</h3>
 
 <p>Use comments with InfluxQL statements to describe your queries.</p>
 
@@ -1960,7 +1960,7 @@ points. The emitter&rsquo;s job is to convert simple time/value points into the
 more complex result objects that are returned to the client.</p></li>
 </ol>
 
-<h3 id="understanding-iterators">Understanding iterators</h3>
+<a class="dashingAutolink" name="autolink-121"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Understanding%20iterators"></a><h3 id="understanding-iterators">Understanding iterators</h3>
 
 <p>Iterators are at the heart of the query engine. They provide a simple interface
 for looping over a set of points. For example, this is an iterator over Float
@@ -2000,7 +2000,7 @@ the derivative of the mean:</p>
 <pre><code>SELECT DERIVATIVE(MEAN(value), 20m) FROM cpu GROUP BY time(10m)
 </code></pre>
 
-<h3 id="understanding-auxiliary-fields">Understanding auxiliary fields</h3>
+<a class="dashingAutolink" name="autolink-122"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Understanding%20auxiliary%20fields"></a><h3 id="understanding-auxiliary-fields">Understanding auxiliary fields</h3>
 
 <p>Because InfluxQL allows users to use selector functions such as <code>FIRST()</code>,
 <code>LAST()</code>, <code>MIN()</code>, and <code>MAX()</code>, the engine must provide a way to return related
@@ -2015,7 +2015,7 @@ auxiliary fields of the point. These auxiliary fields are attached to the point
 until it is passed to the emitter where the fields get split off to their own
 iterator.</p>
 
-<h3 id="built-in-iterators">Built-in iterators</h3>
+<a class="dashingAutolink" name="autolink-123"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Built-in%20iterators"></a><h3 id="built-in-iterators">Built-in iterators</h3>
 
 <p>There are many helper iterators that let us build queries:</p>
 
@@ -2059,7 +2059,7 @@ from an input iterator. This is used for executing binary expressions.</p></li>
 intensive so it is only used for small queries such as meta query statements.</p></li>
 </ul>
 
-<h3 id="call-iterators">Call iterators</h3>
+<a class="dashingAutolink" name="autolink-124"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Call%20iterators"></a><h3 id="call-iterators">Call iterators</h3>
 
 <p>Function calls in InfluxQL are implemented at two levels. Some calls can be
 wrapped at multiple layers to improve efficiency. For example, a <code>COUNT()</code> can
