@@ -9,12 +9,26 @@
   "name": "InfluxDB",
   "package": "influxdb",
   "selectors": {
-    "h3": {
-      "matchpath": "query_language/(functions|math_operators|spec)/.*\\.html",
-      "regexp": "",
-      "replacement": "",
-      "type": "Query"
-    }
+    "h3": [
+      {
+        "matchpath": "query_language/spec/.*\\.html",
+        "regexp": "",
+        "replacement": "",
+        "type": "Query"
+      },
+      {
+        "matchpath": "query_language/functions/.*\\.html",
+        "regexp": "",
+        "replacement": "",
+        "type": "Function"
+      },
+      {
+        "matchpath": "query_language/math_operators/.*\\.html",
+        "regexp": "",
+        "replacement": "",
+        "type": "Operator"
+      }
+    ]
   },
   "url": "https://docs.influxdata.com/influxdb/v1.7/"
 }

@@ -900,7 +900,7 @@
 
 <h2 id="aggregations">Aggregations</h2>
 
-<a class="dashingAutolink" name="autolink-0"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/COUNT%28%29"></a><h3 id="count">COUNT()</h3>
+<a class="dashingAutolink" name="autolink-0"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/COUNT%28%29"></a><h3 id="count">COUNT()</h3>
 
 <p>Returns the number of non-null <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -982,7 +982,7 @@ The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fi
 </span><span class="c1"></span><span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">4</span></code></pre></div>
 <p>The query returns the number of unique field values for the <code>level description</code> field key and the <code>h2o_feet</code> measurement.</p>
 
-<a class="dashingAutolink" name="autolink-1"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Common%20Issues%20with%20COUNT%28%29"></a><h3 id="common-issues-with-count">Common Issues with COUNT()</h3>
+<a class="dashingAutolink" name="autolink-1"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/Common%20Issues%20with%20COUNT%28%29"></a><h3 id="common-issues-with-count">Common Issues with COUNT()</h3>
 
 <h4 id="count-and-fill">COUNT() and fill()</h4>
 
@@ -1013,7 +1013,7 @@ The second query includes <code>fill(800000)</code>; it replaces the zero in the
 </span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">18</span><span class="n">T21</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span>
 <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">18</span><span class="n">T21</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span>
 <span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">18</span><span class="n">T21</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">800000</span></code></pre></div>
-<a class="dashingAutolink" name="autolink-2"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DISTINCT%28%29"></a><h3 id="distinct">DISTINCT()</h3>
+<a class="dashingAutolink" name="autolink-2"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/DISTINCT%28%29"></a><h3 id="distinct">DISTINCT()</h3>
 
 <p>Returns the list of unique <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1086,7 +1086,7 @@ The query also <a href="../data_exploration/index.html#the-limit-and-slimit-clau
 </span><span class="c1"></span><span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">4</span></code></pre></div>
 <p>The query returns the number of unique field values in the <code>level description</code> field key and the <code>h2o_feet</code> measurement.</p>
 
-<a class="dashingAutolink" name="autolink-3"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Common%20Issues%20with%20DISTINCT%28%29"></a><h3 id="common-issues-with-distinct">Common Issues with DISTINCT()</h3>
+<a class="dashingAutolink" name="autolink-3"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/Common%20Issues%20with%20DISTINCT%28%29"></a><h3 id="common-issues-with-distinct">Common Issues with DISTINCT()</h3>
 
 <h4 id="distinct-and-the-into-clause">DISTINCT() and the INTO clause</h4>
 
@@ -1125,7 +1125,7 @@ When the system encounters duplicate points, it simply overwrites the previous p
 <span class="n">time</span>                   <span class="k">distinct</span>
 <span class="c1">----                   --------
 </span><span class="c1"></span><span class="mi">1970</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="k">at</span> <span class="k">or</span> <span class="n">greater</span> <span class="k">than</span> <span class="mi">9</span> <span class="n">feet</span></code></pre></div>
-<a class="dashingAutolink" name="autolink-4"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/INTEGRAL%28%29"></a><h3 id="integral">INTEGRAL()</h3>
+<a class="dashingAutolink" name="autolink-4"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/INTEGRAL%28%29"></a><h3 id="integral">INTEGRAL()</h3>
 
 <p>Returns the area under the curve for subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1210,7 +1210,7 @@ The <code>h2o_feet</code> measurement has on numerical field: <code>water_level<
 <p>The query returns the area under the curve (in minutes) for the field values associated with the <code>water_level</code> field key and in the <code>h2o_feet</code> measurement.
 It covers the <a href="../data_exploration/index.html#time-syntax">time range</a> between <code>2015-08-18T00:00:00Z</code> and <code>2015-08-18T00:30:00Z</code>, <a href="../data_exploration/index.html#group-by-time-intervals">groups</a> results into 12-minute intervals, and <a href="../data_exploration/index.html#the-limit-and-slimit-clauses">limits</a> the number of results returned to one.</p>
 
-<a class="dashingAutolink" name="autolink-5"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/MEAN%28%29"></a><h3 id="mean">MEAN()</h3>
+<a class="dashingAutolink" name="autolink-5"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/MEAN%28%29"></a><h3 id="mean">MEAN()</h3>
 
 <p>Returns the arithmetic mean (average) of <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1277,7 +1277,7 @@ The <code>h2o_feet</code> measurement has one numerical field: <code>water_level
 It covers the <a href="../data_exploration/index.html#time-syntax">time range</a> between <code>2015-08-17T23:48:00Z</code> and <code>2015-08-18T00:54:00Z</code> and <a href="../data_exploration/index.html#the-group-by-clause">groups</a> results into 12-minute time intervals and per tag.
 The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fill">fills</a> empty time intervals with <code>9.01</code> and <a href="../data_exploration/index.html#the-limit-and-slimit-clauses">limits</a> the number of points and series returned to seven and one.</p>
 
-<a class="dashingAutolink" name="autolink-6"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/MEDIAN%28%29"></a><h3 id="median">MEDIAN()</h3>
+<a class="dashingAutolink" name="autolink-6"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/MEDIAN%28%29"></a><h3 id="median">MEDIAN()</h3>
 
 <p>Returns the middle value from a sorted list of <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1348,7 +1348,7 @@ The <code>h2o_feet</code> measurement has one numerical field: <code>water_level
 It covers the <a href="../data_exploration/index.html#time-syntax">time range</a> between <code>2015-08-17T23:48:00Z</code> and <code>2015-08-18T00:54:00Z</code> and <a href="../data_exploration/index.html#the-group-by-clause">groups</a> results into 12-minute time intervals and per tag.
 The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fill">fills</a> empty time intervals with <code>700</code>, <a href="../data_exploration/index.html#the-limit-and-slimit-clauses">limits</a> the number of points and series returned to seven and one, and <a href="../data_exploration/index.html#the-offset-and-soffset-clauses">offsets</a> the series returned by one.</p>
 
-<a class="dashingAutolink" name="autolink-7"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/MODE%28%29"></a><h3 id="mode">MODE()</h3>
+<a class="dashingAutolink" name="autolink-7"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/MODE%28%29"></a><h3 id="mode">MODE()</h3>
 
 <p>Returns the most frequent value in a list of <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1416,7 +1416,7 @@ The <code>h2o_feet</code> measurement has two field keys: <code>level descriptio
 It covers the <a href="../data_exploration/index.html#time-syntax">time range</a> between <code>2015-08-17T23:48:00Z</code> and <code>2015-08-18T00:54:00Z</code> and <a href="../data_exploration/index.html#the-group-by-clause">groups</a> results into 12-minute time intervals and per tag.
 The query <a href="../data_exploration/index.html#the-limit-and-slimit-clauses">limits</a> the number of points and series returned to three and one, and it <a href="../data_exploration/index.html#the-offset-and-soffset-clauses">offsets</a> the series returned by one.</p>
 
-<a class="dashingAutolink" name="autolink-8"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SPREAD%28%29"></a><h3 id="spread">SPREAD()</h3>
+<a class="dashingAutolink" name="autolink-8"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/SPREAD%28%29"></a><h3 id="spread">SPREAD()</h3>
 
 <p>Returns the difference between the minimum and maximum <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1480,7 +1480,7 @@ The <code>h2o_feet</code> measurement has one numerical field: <code>water_level
 It covers the <a href="../data_exploration/index.html#time-syntax">time range</a> between <code>2015-08-17T23:48:00Z</code> and <code>2015-08-18T00:54:00Z</code>and <a href="../data_exploration/index.html#the-group-by-clause">groups</a> results into 12-minute time intervals and per tag.
 The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fill">fills</a> empty time intervals with <code>18</code>, <a href="../data_exploration/index.html#the-limit-and-slimit-clauses">limits</a> the number of points and series returned to three and one, and <a href="../data_exploration/index.html#the-offset-and-soffset-clauses">offsets</a> the series returned by one.</p>
 
-<a class="dashingAutolink" name="autolink-9"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/STDDEV%28%29"></a><h3 id="stddev">STDDEV()</h3>
+<a class="dashingAutolink" name="autolink-9"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/STDDEV%28%29"></a><h3 id="stddev">STDDEV()</h3>
 
 <p>Returns the standard deviation of <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1543,7 +1543,7 @@ The <code>h2o_feet</code> measurement has one numerical field: <code>water_level
 It covers the <a href="../data_exploration/index.html#time-syntax">time range</a> between <code>2015-08-17T23:48:00Z</code> and <code>2015-08-18T00:54:00Z</code> and <a href="../data_exploration/index.html#the-group-by-clause">groups</a> results into 12-minute time intervals and per tag.
 The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fill">fills</a> empty time intervals with <code>18000</code>, <a href="../data_exploration/index.html#the-limit-and-slimit-clauses">limits</a> the number of points and series returned to two and one, and <a href="../data_exploration/index.html#the-offset-and-soffset-clauses">offsets</a> the series returned by one.</p>
 
-<a class="dashingAutolink" name="autolink-10"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SUM%28%29"></a><h3 id="sum">SUM()</h3>
+<a class="dashingAutolink" name="autolink-10"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/SUM%28%29"></a><h3 id="sum">SUM()</h3>
 
 <p>Returns the sum of <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1609,7 +1609,7 @@ It covers the <a href="../data_exploration/index.html#time-syntax">time range</a
 
 <h2 id="selectors">Selectors</h2>
 
-<a class="dashingAutolink" name="autolink-11"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/BOTTOM%28%29"></a><h3 id="bottom">BOTTOM()</h3>
+<a class="dashingAutolink" name="autolink-11"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/BOTTOM%28%29"></a><h3 id="bottom">BOTTOM()</h3>
 
 <p>Returns the smallest <code>N</code> <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -1764,7 +1764,7 @@ It also writes those results to the <code>bottom_water_levels</code> measurement
 <span class="n">tagKey</span>
 <span class="c1">------
 </span><span class="c1"></span><span class="k">location</span></code></pre></div>
-<a class="dashingAutolink" name="autolink-12"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/FIRST%28%29"></a><h3 id="first">FIRST()</h3>
+<a class="dashingAutolink" name="autolink-12"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/FIRST%28%29"></a><h3 id="first">FIRST()</h3>
 
 <p>Returns the <a href="../../concepts/glossary/index.html#field-value">field value </a> with the oldest timestamp.</p>
 
@@ -1845,7 +1845,7 @@ The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fi
 The timestamps in the results indicate the the start of each 12-minute time interval;
 the first point in the results covers the time interval between <code>2015-08-17T23:48:00Z</code> and just before <code>2015-08-18T00:00:00Z</code> and the last point in the results covers the time interval between <code>2015-08-18T00:24:00Z</code> and just before <code>2015-08-18T00:36:00Z</code>.</p>
 
-<a class="dashingAutolink" name="autolink-13"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/LAST%28%29"></a><h3 id="last">LAST()</h3>
+<a class="dashingAutolink" name="autolink-13"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/LAST%28%29"></a><h3 id="last">LAST()</h3>
 
 <p>Returns the <a href="../../concepts/glossary/index.html#field-value">field value</a> with the most recent timestamp.</p>
 
@@ -1923,7 +1923,7 @@ The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fi
 The timestamps in the results indicate the the start of each 12-minute time interval;
 the first point in the results covers the time interval between <code>2015-08-17T23:48:00Z</code> and just before <code>2015-08-18T00:00:00Z</code> and the last point in the results covers the time interval between <code>2015-08-18T00:24:00Z</code> and just before <code>2015-08-18T00:36:00Z</code>.</p>
 
-<a class="dashingAutolink" name="autolink-14"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/MAX%28%29"></a><h3 id="max">MAX()</h3>
+<a class="dashingAutolink" name="autolink-14"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/MAX%28%29"></a><h3 id="max">MAX()</h3>
 
 <p>Returns the greatest <a href="../../concepts/glossary/index.html#field-value">field value</a>.</p>
 
@@ -2004,7 +2004,7 @@ The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fi
 The timestamps in the results indicate the the start of each 12-minute time interval;
 the first point in the results covers the time interval between <code>2015-08-17T23:48:00Z</code> and just before <code>2015-08-18T00:00:00Z</code> and the last point in the results covers the time interval between <code>2015-08-18T00:24:00Z</code> and just before <code>2015-08-18T00:36:00Z</code>.</p>
 
-<a class="dashingAutolink" name="autolink-15"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/MIN%28%29"></a><h3 id="min">MIN()</h3>
+<a class="dashingAutolink" name="autolink-15"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/MIN%28%29"></a><h3 id="min">MIN()</h3>
 
 <p>Returns the lowest <a href="../../concepts/glossary/index.html#field-value">field value</a>.</p>
 
@@ -2085,7 +2085,7 @@ The query <a href="../data_exploration/index.html#group-by-time-intervals-and-fi
 The timestamps in the results indicate the the start of each 12-minute time interval;
 the first point in the results covers the time interval between <code>2015-08-17T23:48:00Z</code> and just before <code>2015-08-18T00:00:00Z</code> and the last point in the results covers the time interval between <code>2015-08-18T00:24:00Z</code> and just before <code>2015-08-18T00:36:00Z</code>.</p>
 
-<a class="dashingAutolink" name="autolink-16"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/PERCENTILE%28%29"></a><h3 id="percentile">PERCENTILE()</h3>
+<a class="dashingAutolink" name="autolink-16"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/PERCENTILE%28%29"></a><h3 id="percentile">PERCENTILE()</h3>
 
 <p>Returns the <code>N</code>th percentile <a href="../../concepts/glossary/index.html#field-value">field value</a>.</p>
 
@@ -2173,7 +2173,7 @@ The timestamps in the results indicate the the start of each 24-minute time inte
 <li><code>PERCENTILE(&lt;field_key&gt;,0)</code> is not equivalent to <a href="index.html#min"><code>MIN(&lt;field_key&gt;)</code></a>. This is a known <a href="https://github.com/influxdata/influxdb/issues/4418">issue</a>.</li>
 </ul>
 
-<a class="dashingAutolink" name="autolink-17"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SAMPLE%28%29"></a><h3 id="sample">SAMPLE()</h3>
+<a class="dashingAutolink" name="autolink-17"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/SAMPLE%28%29"></a><h3 id="sample">SAMPLE()</h3>
 
 <p>Returns a random sample of <code>N</code> <a href="../../concepts/glossary/index.html#field-value">field values</a>.
 <code>SAMPLE()</code> uses <a href="https://en.wikipedia.org/wiki/Reservoir_sampling">reservoir sampling</a> to generate the random points.</p>
@@ -2290,7 +2290,7 @@ are not forced to match the start of the <code>GROUP BY time()</code> intervals.
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">126</span> <span class="o">|</span>
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">051</span> <span class="o">|</span> <span class="o">&lt;</span><span class="c1">------- Randomly-selected points for the second time interval
 </span><span class="c1"></span>                           <span class="c1">--</span></code></pre></div>
-<a class="dashingAutolink" name="autolink-18"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/TOP%28%29"></a><h3 id="top">TOP()</h3>
+<a class="dashingAutolink" name="autolink-18"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/TOP%28%29"></a><h3 id="top">TOP()</h3>
 
 <p>Returns the greatest <code>N</code> <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -2450,7 +2450,7 @@ It also writes those results to the <code>top_water_levels</code> measurement.</
 </span><span class="c1"></span><span class="k">location</span></code></pre></div>
 <h2 id="transformations">Transformations</h2>
 
-<a class="dashingAutolink" name="autolink-19"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ABS%28%29"></a><h3 id="abs">ABS()</h3>
+<a class="dashingAutolink" name="autolink-19"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ABS%28%29"></a><h3 id="abs">ABS()</h3>
 
 <p>Returns the absolute value of the field value.</p>
 
@@ -2599,7 +2599,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">1529845200000000000</span>  <span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">790836070736962</span></code></pre></div>
 <p>InfluxDB then calculates absolute values of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-20"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ACOS%28%29"></a><h3 id="acos">ACOS()</h3>
+<a class="dashingAutolink" name="autolink-20"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ACOS%28%29"></a><h3 id="acos">ACOS()</h3>
 
 <p>Returns the arccosine (in radians) of the field value. Field values must be between -1 and 1.</p>
 
@@ -2755,7 +2755,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">09</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">16</span></code></pre></div>
 <p>InfluxDB then calculates arccosine of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-21"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ASIN%28%29"></a><h3 id="asin">ASIN()</h3>
+<a class="dashingAutolink" name="autolink-21"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ASIN%28%29"></a><h3 id="asin">ASIN()</h3>
 
 <p>Returns the arcsine (in radians) of the field value. Field values must be between -1 and 1.</p>
 
@@ -2911,7 +2911,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">09</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">16</span></code></pre></div>
 <p>InfluxDB then calculates arcsine of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-22"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ATAN%28%29"></a><h3 id="atan">ATAN()</h3>
+<a class="dashingAutolink" name="autolink-22"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ATAN%28%29"></a><h3 id="atan">ATAN()</h3>
 
 <p>Returns the arctangent (in radians) of the field value. Field values must be between -1 and 1.</p>
 
@@ -3064,7 +3064,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">09</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>  <span class="mi">0</span><span class="p">.</span><span class="mi">16</span></code></pre></div>
 <p>InfluxDB then calculates arctangent of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-23"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ATAN2%28%29"></a><h3 id="atan2">ATAN2()</h3>
+<a class="dashingAutolink" name="autolink-23"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ATAN2%28%29"></a><h3 id="atan2">ATAN2()</h3>
 
 <p>Returns the the arctangent of <code>y/x</code> in radians.</p>
 
@@ -3233,7 +3233,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2018</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span><span class="n">T13</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>  <span class="mi">41184</span><span class="p">.</span><span class="mi">5</span>             <span class="mi">235799</span></code></pre></div>
 <p>InfluxDB then calculates the arctangents of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-24"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CEIL%28%29"></a><h3 id="ceil">CEIL()</h3>
+<a class="dashingAutolink" name="autolink-24"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/CEIL%28%29"></a><h3 id="ceil">CEIL()</h3>
 
 <p>Returns the subsequent value rounded up to the nearest integer.</p>
 
@@ -3375,7 +3375,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then rounds those averages up to the nearest integer.</p>
 
-<a class="dashingAutolink" name="autolink-25"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/COS%28%29"></a><h3 id="cos">COS()</h3>
+<a class="dashingAutolink" name="autolink-25"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/COS%28%29"></a><h3 id="cos">COS()</h3>
 
 <p>Returns the cosine of the field value.</p>
 
@@ -3518,7 +3518,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates cosine of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-26"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CUMULATIVE_SUM%28%29"></a><h3 id="cumulative-sum">CUMULATIVE_SUM()</h3>
+<a class="dashingAutolink" name="autolink-26"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/CUMULATIVE_SUM%28%29"></a><h3 id="cumulative-sum">CUMULATIVE_SUM()</h3>
 
 <p>Returns the running total of subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -3659,7 +3659,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 The second point in the final results (<code>4.167</code>) is the sum of <code>2.09</code> and <code>2.077</code>
 and the third point (<code>6.213</code>) is the sum of <code>2.09</code>, <code>2.077</code>, and <code>2.0460000000000003</code>.</p>
 
-<a class="dashingAutolink" name="autolink-27"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DERIVATIVE%28%29"></a><h3 id="derivative">DERIVATIVE()</h3>
+<a class="dashingAutolink" name="autolink-27"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/DERIVATIVE%28%29"></a><h3 id="derivative">DERIVATIVE()</h3>
 
 <p>Returns the rate of change between subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -3903,7 +3903,7 @@ InfluxDB calculates the difference between the field values and normalizes that 
 second field value - first field value
 </code></pre>
 
-<a class="dashingAutolink" name="autolink-28"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DIFFERENCE%28%29"></a><h3 id="difference">DIFFERENCE()</h3>
+<a class="dashingAutolink" name="autolink-28"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/DIFFERENCE%28%29"></a><h3 id="difference">DIFFERENCE()</h3>
 
 <p>Returns the result of subtraction between subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -4037,7 +4037,7 @@ This step is the same as using the <code>MAX()</code> function with the <code>GR
 <p>Next, InfluxDB calculates the difference between those maximum values.
 The first point in the final results (<code>0.009999999999999787</code>) is the difference between <code>2.126</code> and <code>2.116</code>, and the second point in the final results (<code>-0.07499999999999973</code>) is the difference between <code>2.051</code> and <code>2.126</code>.</p>
 
-<a class="dashingAutolink" name="autolink-29"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ELAPSED%28%29"></a><h3 id="elapsed">ELAPSED()</h3>
+<a class="dashingAutolink" name="autolink-29"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ELAPSED%28%29"></a><h3 id="elapsed">ELAPSED()</h3>
 
 <p>Returns the difference between subsequent <a href="../../concepts/glossary/index.html#field-value">field value&rsquo;s</a> timestamps.</p>
 
@@ -4127,7 +4127,7 @@ The query also <a href="../data_exploration/index.html#the-limit-and-slimit-clau
 
 <p>Notice that the result is negative; the <a href="../data_exploration/index.html#order-by-time-desc"><code>ORDER BY time DESC</code> clause</a> sorts timestamps in descending order so <code>ELAPSED()</code> calculates the difference between timestamps in reverse order.</p>
 
-<a class="dashingAutolink" name="autolink-30"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Common%20Issues%20with%20ELAPSED%28%29"></a><h3 id="common-issues-with-elapsed">Common Issues with ELAPSED()</h3>
+<a class="dashingAutolink" name="autolink-30"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/Common%20Issues%20with%20ELAPSED%28%29"></a><h3 id="common-issues-with-elapsed">Common Issues with ELAPSED()</h3>
 
 <h4 id="elapsed-and-units-greater-than-the-elapsed-time">ELAPSED() and units greater than the elapsed time</h4>
 
@@ -4179,7 +4179,7 @@ Because the timestamps are determined by the <code>GROUP BY time()</code> interv
 <span class="c1">----                   ---
 </span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">057</span>    <span class="o">&lt;</span><span class="c1">--- Actually occurs at 2015-08-18T00:42:00Z
 </span><span class="c1"></span><span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">1</span><span class="p">.</span><span class="mi">991</span></code></pre></div>
-<a class="dashingAutolink" name="autolink-31"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/EXP%28%29"></a><h3 id="exp">EXP()</h3>
+<a class="dashingAutolink" name="autolink-31"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/EXP%28%29"></a><h3 id="exp">EXP()</h3>
 
 <p>Returns the exponential of the field value.</p>
 
@@ -4323,7 +4323,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates the exponentials of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-32"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/FLOOR%28%29"></a><h3 id="floor">FLOOR()</h3>
+<a class="dashingAutolink" name="autolink-32"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/FLOOR%28%29"></a><h3 id="floor">FLOOR()</h3>
 
 <p>Returns the subsequent value rounded down to the nearest integer.</p>
 
@@ -4465,13 +4465,13 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then rounds those averages down to the nearest integer.</p>
 
-<a class="dashingAutolink" name="autolink-33"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/HISTOGRAM%28%29"></a><h3 id="histogram">HISTOGRAM()</h3>
+<a class="dashingAutolink" name="autolink-33"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/HISTOGRAM%28%29"></a><h3 id="histogram">HISTOGRAM()</h3>
 
 <p><em>InfluxQL does not currently support histogram generation.
 For information about creating histograms with data stored in InfluxDB, see
 <a href="https://docs.influxdata.com/flux/v0.7/functions/transformations/histogram">Flux&rsquo;s <code>histogram()</code> function</a>.</em></p>
 
-<a class="dashingAutolink" name="autolink-34"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/LN%28%29"></a><h3 id="ln">LN()</h3>
+<a class="dashingAutolink" name="autolink-34"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/LN%28%29"></a><h3 id="ln">LN()</h3>
 
 <p>Returns the natural logarithm of the field value.</p>
 
@@ -4614,7 +4614,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates the natural logarithms of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-35"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/LOG%28%29"></a><h3 id="log">LOG()</h3>
+<a class="dashingAutolink" name="autolink-35"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/LOG%28%29"></a><h3 id="log">LOG()</h3>
 
 <p>Returns the logarithm of the field value with base <code>b</code>.</p>
 
@@ -4757,7 +4757,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates the logarithm base 4 of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-36"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/LOG2%28%29"></a><h3 id="log2">LOG2()</h3>
+<a class="dashingAutolink" name="autolink-36"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/LOG2%28%29"></a><h3 id="log2">LOG2()</h3>
 
 <p>Returns the logarithm of the field value to the base 2.</p>
 
@@ -4897,7 +4897,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates the logarithm base 2 of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-37"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/LOG10%28%29"></a><h3 id="log10">LOG10()</h3>
+<a class="dashingAutolink" name="autolink-37"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/LOG10%28%29"></a><h3 id="log10">LOG10()</h3>
 
 <p>Returns the logarithm of the field value to the base 10.</p>
 
@@ -5040,7 +5040,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates the logarithm base 10 of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-38"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/MOVING_AVERAGE%28%29"></a><h3 id="moving-average">MOVING_AVERAGE()</h3>
+<a class="dashingAutolink" name="autolink-38"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/MOVING_AVERAGE%28%29"></a><h3 id="moving-average">MOVING_AVERAGE()</h3>
 
 <p>Returns the rolling average across a window of subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.</p>
 
@@ -5176,7 +5176,7 @@ This step is the same as using the <code>MAX()</code> function with the <code>GR
 <p>Next, InfluxDB calculates the rolling average across a two-value window using those maximum values.
 The first final result (<code>2.121</code>) is the average of the first two maximum values (<code>(2.116 + 2.126) / 2</code>).</p>
 
-<a class="dashingAutolink" name="autolink-39"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/NON_NEGATIVE_DERIVATIVE%28%29"></a><h3 id="non-negative-derivative">NON_NEGATIVE_DERIVATIVE()</h3>
+<a class="dashingAutolink" name="autolink-39"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/NON_NEGATIVE_DERIVATIVE%28%29"></a><h3 id="non-negative-derivative">NON_NEGATIVE_DERIVATIVE()</h3>
 
 <p>Returns the non-negative rate of change between subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.
 Non-negative rates of change include positive rates of change and rates of change that equal zero.</p>
@@ -5240,7 +5240,7 @@ Note that this behavior is different from the <a href="index.html#basic-syntax-4
 <p>See the examples in the <a href="index.html#examples-of-advanced-syntax-1"><code>DERIVATIVE()</code> documentation</a>.
 <code>NON_NEGATIVE_DERIVATIVE()</code> behaves the same as the <code>DERIVATIVE()</code> function but <code>NON_NEGATIVE_DERIVATIVE()</code> returns only positive rates of change or rates of change that equal zero.</p>
 
-<a class="dashingAutolink" name="autolink-40"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/NON_NEGATIVE_DIFFERENCE%28%29"></a><h3 id="non-negative-difference">NON_NEGATIVE_DIFFERENCE()</h3>
+<a class="dashingAutolink" name="autolink-40"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/NON_NEGATIVE_DIFFERENCE%28%29"></a><h3 id="non-negative-difference">NON_NEGATIVE_DIFFERENCE()</h3>
 
 <p>Returns the non-negative result of subtraction between subsequent <a href="../../concepts/glossary/index.html#field-value">field values</a>.
 Non-negative results of subtraction include positive differences and differences that equal zero.</p>
@@ -5294,7 +5294,7 @@ The query first calculates the results for the nested function at the specified 
 <p>See the examples in the <a href="index.html#examples-of-advanced-syntax-2"><code>DIFFERENCE()</code> documentation</a>.
 <code>NON_NEGATIVE_DIFFERENCE()</code> behaves the same as the <code>DIFFERENCE()</code> function but <code>NON_NEGATIVE_DIFFERENCE()</code> returns only positive differences or differences that equal zero.</p>
 
-<a class="dashingAutolink" name="autolink-41"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/POW%28%29"></a><h3 id="pow">POW()</h3>
+<a class="dashingAutolink" name="autolink-41"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/POW%28%29"></a><h3 id="pow">POW()</h3>
 
 <p>Returns the field value to the power of <code>x</code>.</p>
 
@@ -5437,7 +5437,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates those averages multiplied to the power of 4.</p>
 
-<a class="dashingAutolink" name="autolink-42"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/ROUND%28%29"></a><h3 id="round">ROUND()</h3>
+<a class="dashingAutolink" name="autolink-42"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/ROUND%28%29"></a><h3 id="round">ROUND()</h3>
 
 <p>Returns the subsequent value rounded to the nearest integer.</p>
 
@@ -5579,7 +5579,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then rounds those averages to the nearest integer.</p>
 
-<a class="dashingAutolink" name="autolink-43"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SIN%28%29"></a><h3 id="sin">SIN()</h3>
+<a class="dashingAutolink" name="autolink-43"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/SIN%28%29"></a><h3 id="sin">SIN()</h3>
 
 <p>Returns the sine of the field value.</p>
 
@@ -5721,7 +5721,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates sine of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-44"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/SQRT%28%29"></a><h3 id="sqrt">SQRT()</h3>
+<a class="dashingAutolink" name="autolink-44"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/SQRT%28%29"></a><h3 id="sqrt">SQRT()</h3>
 
 <p>Returns the square root of field value.</p>
 
@@ -5864,7 +5864,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 <span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">18</span><span class="n">T00</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">00</span><span class="n">Z</span>   <span class="mi">2</span><span class="p">.</span><span class="mi">0460000000000003</span></code></pre></div>
 <p>InfluxDB then calculates the square roots of those averages.</p>
 
-<a class="dashingAutolink" name="autolink-45"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/TAN%28%29"></a><h3 id="tan">TAN()</h3>
+<a class="dashingAutolink" name="autolink-45"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/TAN%28%29"></a><h3 id="tan">TAN()</h3>
 
 <p>Returns the tangent of the field value.</p>
 
@@ -6008,7 +6008,7 @@ This step is the same as using the <code>MEAN()</code> function with the <code>G
 
 <h2 id="predictors">Predictors</h2>
 
-<a class="dashingAutolink" name="autolink-46"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/HOLT_WINTERS%28%29"></a><h3 id="holt-winters">HOLT_WINTERS()</h3>
+<a class="dashingAutolink" name="autolink-46"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/HOLT_WINTERS%28%29"></a><h3 id="holt-winters">HOLT_WINTERS()</h3>
 
 <p>Returns N number of predicted <a href="../../concepts/glossary/index.html#field-value">field values</a> using the
 <a href="https://www.otexts.org/fpp/7/5">Holt-Winters</a> seasonal method.</p>
@@ -6124,7 +6124,7 @@ application in other industries and use cases as well.</p>
 <a href="index.html#triple-exponential-derivative">TRIPLE_EXPONENTIAL_DERIVATIVE()</a><br/>
 <a href="index.html#relative-strength-index">RELATIVE_STRENGTH_INDEX()</a></p>
 
-<a class="dashingAutolink" name="autolink-47"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Arguments"></a><h3 id="arguments">Arguments</h3>
+<a class="dashingAutolink" name="autolink-47"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/Arguments"></a><h3 id="arguments">Arguments</h3>
 
 <p>Along with a <a href="../../concepts/glossary/index.html#field-key">field key</a>,
 technical analysis function accept the following arguments:</p>
@@ -6265,7 +6265,7 @@ defaults to <code>PERIOD - 1</code>.</p>
 <a href="index.html#chande-momentum-oscillator"><code>CHANDE_MOMENTUM_OSCILLATOR()</code></a> function.</p>
 </blockquote>
 
-<a class="dashingAutolink" name="autolink-48"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/CHANDE_MOMENTUM_OSCILLATOR%28%29"></a><h3 id="chande-momentum-oscillator">CHANDE_MOMENTUM_OSCILLATOR()</h3>
+<a class="dashingAutolink" name="autolink-48"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/CHANDE_MOMENTUM_OSCILLATOR%28%29"></a><h3 id="chande-momentum-oscillator">CHANDE_MOMENTUM_OSCILLATOR()</h3>
 
 <p>The Chande Momentum Oscillator (CMO) is a technical momentum indicator developed by Tushar Chande.
 The CMO indicator is created by calculating the difference between the sum of all
@@ -6320,7 +6320,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>CHANDE_MOMENTUM_OSCILLATOR()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-49"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/EXPONENTIAL_MOVING_AVERAGE%28%29"></a><h3 id="exponential-moving-average">EXPONENTIAL_MOVING_AVERAGE()</h3>
+<a class="dashingAutolink" name="autolink-49"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/EXPONENTIAL_MOVING_AVERAGE%28%29"></a><h3 id="exponential-moving-average">EXPONENTIAL_MOVING_AVERAGE()</h3>
 
 <p>An exponential moving average (EMA) is a type of moving average that is similar
 to a <a href="index.html#moving-average">simple moving average</a>, except that more weight is given to the latest data.
@@ -6375,7 +6375,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>EXPONENTIAL_MOVING_AVERAGE()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-50"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/DOUBLE_EXPONENTIAL_MOVING_AVERAGE%28%29"></a><h3 id="double-exponential-moving-average">DOUBLE_EXPONENTIAL_MOVING_AVERAGE()</h3>
+<a class="dashingAutolink" name="autolink-50"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/DOUBLE_EXPONENTIAL_MOVING_AVERAGE%28%29"></a><h3 id="double-exponential-moving-average">DOUBLE_EXPONENTIAL_MOVING_AVERAGE()</h3>
 
 <p>The Double Exponential Moving Average (DEMA) attempts to remove the inherent lag
 associated to Moving Averages by placing more weight on recent values.
@@ -6432,7 +6432,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>DOUBLE_EXPONENTIAL_MOVING_AVERAGE()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-51"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/KAUFMANS_EFFICIENCY_RATIO%28%29"></a><h3 id="kaufmans-efficiency-ratio">KAUFMANS_EFFICIENCY_RATIO()</h3>
+<a class="dashingAutolink" name="autolink-51"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/KAUFMANS_EFFICIENCY_RATIO%28%29"></a><h3 id="kaufmans-efficiency-ratio">KAUFMANS_EFFICIENCY_RATIO()</h3>
 
 <p>Kaufman&rsquo;s Efficiency Ration, or simply &ldquo;Efficiency Ratio&rdquo; (ER), is calculated by
 dividing the data change over a period by the absolute sum of the data movements
@@ -6490,7 +6490,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>KAUFMANS_EFFICIENCY_RATIO()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-52"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/KAUFMANS_ADAPTIVE_MOVING_AVERAGE%28%29"></a><h3 id="kaufmans-adaptive-moving-average">KAUFMANS_ADAPTIVE_MOVING_AVERAGE()</h3>
+<a class="dashingAutolink" name="autolink-52"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/KAUFMANS_ADAPTIVE_MOVING_AVERAGE%28%29"></a><h3 id="kaufmans-adaptive-moving-average">KAUFMANS_ADAPTIVE_MOVING_AVERAGE()</h3>
 
 <p>Kaufman&rsquo;s Adaptive Moving Average (KAMA) is a moving average designed to
 account for sample noise or volatility.
@@ -6545,7 +6545,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>KAUFMANS_ADAPTIVE_MOVING_AVERAGE()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-53"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/TRIPLE_EXPONENTIAL_MOVING_AVERAGE%28%29"></a><h3 id="triple-exponential-moving-average">TRIPLE_EXPONENTIAL_MOVING_AVERAGE()</h3>
+<a class="dashingAutolink" name="autolink-53"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/TRIPLE_EXPONENTIAL_MOVING_AVERAGE%28%29"></a><h3 id="triple-exponential-moving-average">TRIPLE_EXPONENTIAL_MOVING_AVERAGE()</h3>
 
 <p>The triple exponential moving average (TEMA) was developed to filter out
 volatility from conventional moving averages.
@@ -6602,7 +6602,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>TRIPLE_EXPONENTIAL_MOVING_AVERAGE()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-54"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/TRIPLE_EXPONENTIAL_DERIVATIVE%28%29"></a><h3 id="triple-exponential-derivative">TRIPLE_EXPONENTIAL_DERIVATIVE()</h3>
+<a class="dashingAutolink" name="autolink-54"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/TRIPLE_EXPONENTIAL_DERIVATIVE%28%29"></a><h3 id="triple-exponential-derivative">TRIPLE_EXPONENTIAL_DERIVATIVE()</h3>
 
 <p>The triple exponential derivative indicator, commonly referred to as &ldquo;TRIX,&rdquo; is
 an oscillator used to identify oversold and overbought markets, and can also be
@@ -6667,7 +6667,7 @@ and the default hold period and warmup type.</p>
 <p>The basic syntax supports <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-tags">group by tags</a> but not <code>GROUP BY</code> clauses that <a href="../data_exploration/index.html#group-by-time-intervals">group by time</a>.
 See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how to use <code>TRIPLE_EXPONENTIAL_DERIVATIVE()</code> with a <code>GROUP BY time()</code> clause.</p>
 
-<a class="dashingAutolink" name="autolink-55"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/RELATIVE_STRENGTH_INDEX%28%29"></a><h3 id="relative-strength-index">RELATIVE_STRENGTH_INDEX()</h3>
+<a class="dashingAutolink" name="autolink-55"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/RELATIVE_STRENGTH_INDEX%28%29"></a><h3 id="relative-strength-index">RELATIVE_STRENGTH_INDEX()</h3>
 
 <p>The relative strength index (RSI) is a momentum indicator that compares the magnitude of recent increases and decreases over a specified time period to measure speed and change of data movements.</p>
 
@@ -6721,11 +6721,11 @@ See the <a href="index.html#advanced-syntax">Advanced Syntax</a> section for how
 
 <h2 id="other">Other</h2>
 
-<a class="dashingAutolink" name="autolink-56"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Sample%20Data"></a><h3 id="sample-data">Sample Data</h3>
+<a class="dashingAutolink" name="autolink-56"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/Sample%20Data"></a><h3 id="sample-data">Sample Data</h3>
 
 <p>The data used in this document are available for download on the <a href="../data_download/index.html">Sample Data</a> page.</p>
 
-<a class="dashingAutolink" name="autolink-57"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/General%20Syntax%20for%20Functions"></a><h3 id="general-syntax-for-functions">General Syntax for Functions</h3>
+<a class="dashingAutolink" name="autolink-57"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/General%20Syntax%20for%20Functions"></a><h3 id="general-syntax-for-functions">General Syntax for Functions</h3>
 
 <h4 id="specify-multiple-functions-in-the-select-clause">Specify Multiple Functions in the SELECT Clause</h4>
 
@@ -6835,7 +6835,7 @@ Without the <code>AS</code> clauses, the  query returns <code>median</code> and 
 Include <code>fill()</code> at the end of the <code>GROUP BY</code> clause to change that value.
 See <a href="../data_exploration/index.html#group-by-time-intervals-and-fill">Data Exploration</a> for a complete discussion of <code>fill()</code>.</p>
 
-<a class="dashingAutolink" name="autolink-58"></a><a class="dashAnchor" name="//apple_ref/cpp/Query/Common%20Issues%20with%20Functions"></a><h3 id="common-issues-with-functions">Common Issues with Functions</h3>
+<a class="dashingAutolink" name="autolink-58"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/Common%20Issues%20with%20Functions"></a><h3 id="common-issues-with-functions">Common Issues with Functions</h3>
 
 <p>The following sections describe frequent sources of confusion with all functions, aggregation functions, and selector functions.
 See the function-specific documentation for common issues with individual functions:</p>

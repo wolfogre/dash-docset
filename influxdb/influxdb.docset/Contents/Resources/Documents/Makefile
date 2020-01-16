@@ -1,6 +1,6 @@
 URL=$(shell yq read dashing.yaml url)
 DOMAINS=$(shell yq read dashing.yaml domains)
-LOGO=$(shell yq rean dashing.yaml logo)
+LOGO=$(shell yq read dashing.yaml logo)
 
 html:
 	# see https://www.linuxjournal.com/content/downloading-entire-web-site-wget
