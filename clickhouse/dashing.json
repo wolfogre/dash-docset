@@ -9,18 +9,22 @@
   "name": "ClickHouse",
   "package": "clickhouse",
   "selectors": {
-    "h1": {
-      "matchpath": "data_types/.*\\.html",
-      "regexp": "¶",
-      "replacement": "",
-      "type": "Type"
-    },
-    "h2": {
-      "matchpath": "query_language/.*\\.html",
-      "regexp": "¶",
-      "replacement": "",
-      "type": "Query"
-    }
+    "h1": [
+      {
+        "matchpath": "data_types/.*\\.html",
+        "regexp": "¶",
+        "replacement": "",
+        "type": "Type"
+      }
+    ],
+    "h2": [
+      {
+        "matchpath": "query_language/.*\\.html",
+        "regexp": "¶",
+        "replacement": "",
+        "type": "Query"
+      }
+    ]
   },
   "url": "https://clickhouse.yandex/docs/zh/"
 }

@@ -3,15 +3,15 @@ package: "clickhouse"
 index: "html/clickhouse.yandex/docs/zh/index.html"
 selectors:
   h1:
-    type: "Type"
-    matchpath: "data_types/.*\\.html"
-    regexp: "¶"
-    replacement: ""
+    - type: "Type"
+      matchpath: "data_types/.*\\.html"
+      regexp: "¶"
+      replacement: ""
   h2:
-    type: "Query"
-    matchpath: "query_language/.*\\.html"
-    regexp: "¶"
-    replacement: ""
+    - type: "Query"
+      matchpath: "query_language/.*\\.html"
+      regexp: "¶"
+      replacement: ""
 ignore: []
 icon32x32: "logo/logo.png"
 allowJS: false
