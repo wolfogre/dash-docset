@@ -1,0 +1,32 @@
+{
+  "allowJS": false,
+  "domains": "gohugo.io",
+  "externalURL": "",
+  "icon32x32": "logo/logo.png",
+  "ignore": [
+    "Note"
+  ],
+  "index": "html/docs.influxdata.com/influxdb/v1.7/index.html",
+  "logo": "html/gohugo.io/favicon-32x32.png",
+  "name": "Hugo",
+  "package": "hugo",
+  "selectors": {
+    ".prose dl dt": [
+      {
+        "matchpath": "variables/.*index\\.html",
+        "regexp": "",
+        "replacement": "",
+        "type": "Variable"
+      }
+    ],
+    "header h1": [
+      {
+        "matchpath": "functions/.*index\\.html",
+        "regexp": "",
+        "replacement": "",
+        "type": "Function"
+      }
+    ]
+  },
+  "url": "https://gohugo.io/"
+}
